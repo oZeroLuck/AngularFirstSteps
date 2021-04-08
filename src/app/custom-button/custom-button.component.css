@@ -1,0 +1,35 @@
+.text {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+}
+
+.primary-btn {
+  background: #0674c2;
+  color: white;
+  cursor: pointer;
+  display: inline-flex;
+  border-radius: 3px;
+  outline: 0;
+  padding: 10px 20px 10px 20px;
+}
+
+.secondary-btn {
+  background: #b3b1b1;
+  color: white;
+  cursor: pointer;
+  display: inline-flex;
+  border-radius: 3px;
+  outline: 0;
+  padding: 10px 20px 10px 20px;
+}
+
+.warning-btn {
+  background: #ff272d;
+  color: white;
+  cursor: pointer;
+  display: inline-flex;
+  border-radius: 3px;
+  outline: 0;
+  padding: 10px 20px 10px 20px;
+}
