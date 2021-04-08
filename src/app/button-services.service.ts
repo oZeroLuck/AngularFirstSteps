@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable, Input} from '@angular/core';
 import { MyButtonConfig } from './button-config';
 import { BtnCONFIGS } from './btnconfigs';
 
@@ -6,11 +6,11 @@ import { BtnCONFIGS } from './btnconfigs';
   providedIn: 'root'
 })
 export class ButtonServicesService {
+  configs = BtnCONFIGS;
 
   constructor() { }
 
-  getButtons(): MyButtonConfig[] {
-    return BtnCONFIGS;
+  getButton(sName: string): MyButtonConfig {
+    return this.configs.find(btn => btn.name === sName);
   }
-
 }
