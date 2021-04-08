@@ -1,4 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
+import { MyButtonConfig } from '../button-config';
+import { BtnCONFIGS } from '../btnconfigs';
 
 enum ButtonType {
   Primary = 'Primary',
@@ -12,20 +14,13 @@ enum ButtonType {
   styleUrls: ['./custom-button.component.css']
 })
 export class CustomButtonComponent implements OnInit {
-  @Input() text: string;
-  @Input() btnType: string;
+  configs = BtnCONFIGS;
+  @Input() configName: string;
 
   constructor() { }
 
-  get buttonType(): string {
-    switch (this.btnType) {
-      case ButtonType.Primary:
-        return 'primary-btn';
-      case ButtonType.Secondary:
-        return 'secondary-btn';
-      case ButtonType.Warning:
-        return 'warning-btn';
-    }
+  get buttonType(): MyButtonConfig {
+        return this.configs.find(btn => btn.name === this.configName);
   }
 
   ngOnInit(): void {
