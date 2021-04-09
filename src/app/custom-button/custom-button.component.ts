@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import { MyButtonConfig } from '../button-config';
+import {MyButtonConfig} from '../button-config';
 
 @Component({
   selector: 'app-custom-button',
@@ -7,13 +7,9 @@ import { MyButtonConfig } from '../button-config';
   styleUrls: ['./custom-button.component.css']
 })
 export class CustomButtonComponent implements OnInit {
-  @Input() buttonConfig: MyButtonConfig;
+  @Input() btnType: MyButtonConfig;
 
   constructor() { }
-
-  get buttonType(): MyButtonConfig {
-        return this.buttonConfig;
-  }
 
   ngOnInit(): void {
   }

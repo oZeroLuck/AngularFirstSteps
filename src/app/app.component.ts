@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
-import { ButtonServicesService } from './button-services.service';
-import { MyButtonConfig } from './button-config';
+import {MyButtonConfig} from './button-config';
+import {PrimaryButton} from './primaryBtn';
 
 @Component({
   selector: 'app-root',
@@ -9,11 +9,9 @@ import { MyButtonConfig } from './button-config';
 })
 export class AppComponent {
 
-  constructor(private buttonServices: ButtonServicesService) {}
+  primaryButton = PrimaryButton;
+
+  constructor() {}
 
   title = 'AngularFistSteps';
-
-  getButton(configName: string): MyButtonConfig {
-    return this.buttonServices.getButton(configName);
-  }
 }
