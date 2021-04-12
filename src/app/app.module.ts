@@ -6,6 +6,7 @@ import { CustomButtonComponent } from './custom-button/custom-button.component';
 import { CustomTableComponent } from './custom-table/custom-table.component';
 import { MatIconModule } from '@angular/material/icon';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { MatTableModule } from '@angular/material/table';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
   imports: [
     BrowserModule,
     MatIconModule,
+    MatTableModule,
     NgbModule
   ],
   providers: [],
