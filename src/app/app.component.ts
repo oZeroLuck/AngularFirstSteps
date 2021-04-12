@@ -2,6 +2,8 @@ import {Component, Input} from '@angular/core';
 import {PrimaryButton} from './primaryBtn';
 import {TestTable} from './tableTestConfig';
 import {UserList} from './mock-data';
+import {VehicleTable} from './table-vehicle-config';
+import {VEHICLE_LIST} from './mock-vehicles';
 
 @Component({
   selector: 'app-root',
@@ -10,9 +12,11 @@ import {UserList} from './mock-data';
 })
 export class AppComponent {
 
-  data = UserList;
+  users = UserList;
   primaryButton = PrimaryButton;
   testTable = TestTable;
+  vehicleTable = VehicleTable;
+  vehicles = VEHICLE_LIST;
 
   constructor() {}
 

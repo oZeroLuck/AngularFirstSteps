@@ -7,6 +7,7 @@ import { CustomTableComponent } from './custom-table/custom-table.component';
 import { MatIconModule } from '@angular/material/icon';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MatTableModule } from '@angular/material/table';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { MatTableModule } from '@angular/material/table';
     BrowserModule,
     MatIconModule,
     MatTableModule,
-    NgbModule
+    NgbModule,
+    MatButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]
