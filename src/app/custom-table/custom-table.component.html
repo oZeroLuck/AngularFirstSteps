@@ -1,4 +1,4 @@
-<table mat-table [dataSource]="dataSource" class="table table-striped">
+<table mat-table [dataSource]="dataSource">
   <ng-container  *ngFor="let header of tableConfig.headers">
     <ng-container matColumnDef="{{header.key}}">
       <th mat-header-cell *matHeaderCellDef> {{header.label}} </th>
