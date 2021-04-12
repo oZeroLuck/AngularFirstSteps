@@ -1,7 +1,7 @@
 import {UsersClass} from './usersClass';
 
 export const UserList: UsersClass[] = [
-  {name: 'Giada', surname: 'Sborchia'},
-  {name: 'Francesca', surname: 'Mecca'},
-  {name: 'Alice', surname: 'Erba'}
+  {name: 'Giada', lastName: 'Sborchia'},
+  {name: 'Francesca', lastName: 'Mecca'},
+  {name: 'Alice', lastName: 'Erba'}
 ];
