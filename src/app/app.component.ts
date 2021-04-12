@@ -1,6 +1,7 @@
 import {Component, Input} from '@angular/core';
-import {MyButtonConfig} from './button-config';
 import {PrimaryButton} from './primaryBtn';
+import {TestTable} from './tableTestConfig';
+import {UserList} from './mock-data';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +10,9 @@ import {PrimaryButton} from './primaryBtn';
 })
 export class AppComponent {
 
+  data = UserList;
   primaryButton = PrimaryButton;
+  testTable = TestTable;
 
   constructor() {}
 

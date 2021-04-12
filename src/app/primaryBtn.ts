@@ -1,7 +1,7 @@
 import { MyButtonConfig } from './button-config';
 
 export const PrimaryButton: MyButtonConfig = {
-  customCssClass: 'primary-btn',
+  customCssClass: 'btn btn-primary',
   text: 'Primary',
-  icon: 'Placeholder'
+  icon: 'star_outline'
 };

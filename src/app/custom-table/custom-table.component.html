@@ -1,2 +1,24 @@
-<p>custom-table works!</p>
-<!-- TODO: Model the html -->
+<table class="custom-table">
+  <tr>
+    <th *ngFor="let header of tableConfig.headers">{{header.label}}</th>
+  </tr>
+  <tr *ngFor="let item of data">
+    <td >
+      {{item.name}}
+    </td>
+    <td>
+      {{item.surname}}
+    </td>
+    <td class="form-inline">
+      <div class="col">
+        <app-custom-button [btnType]="primaryBtn"></app-custom-button>
+      </div>
+      <div class="col">
+        <app-custom-button [btnType]="secondaryBtn"></app-custom-button>
+      </div>
+      <div class="col">
+        <app-custom-button [btnType]="warningBtn"></app-custom-button>
+      </div>
+    </td>
+  </tr>
+</table>
