@@ -4,6 +4,7 @@ import {TestTable} from './tableTestConfig';
 import {UserList} from './mock-data';
 import {VehicleTable} from './table-vehicle-config';
 import {VEHICLE_LIST} from './mock-vehicles';
+import {SecondaryButton} from './secondaryBtn';
 
 @Component({
   selector: 'app-root',
@@ -14,6 +15,7 @@ export class AppComponent {
 
   users = UserList;
   primaryButton = PrimaryButton;
+  secondaryButton = SecondaryButton;
   testTable = TestTable;
   vehicleTable = VehicleTable;
   vehicles = VEHICLE_LIST;

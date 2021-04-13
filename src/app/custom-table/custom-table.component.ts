@@ -1,9 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {CustomTableConfig} from '../tableConfig';
-import {PrimaryButton} from '../primaryBtn';
-import {SecondaryButton} from '../secondaryBtn';
-import {WarningButton} from '../warningBtn';
-import {TableService} from '../table-service.service';
+import {MyButtonConfig} from '../button-config';
 
 @Component({
   selector: 'app-custom-table',
@@ -14,16 +11,11 @@ import {TableService} from '../table-service.service';
 export class CustomTableComponent implements OnInit {
   @Input() tableConfig: CustomTableConfig;
   @Input() dataSource: any[];
-  primaryBtn = PrimaryButton;
-  secondaryBtn = SecondaryButton;
-  warningBtn = WarningButton;
-  displayedColumns: string[] = [];
+  @Input() buttons: MyButtonConfig[];
 
-  constructor(private tableService: TableService) { }
+  constructor() { }
 
   ngOnInit(): void {
-    this.displayedColumns = this.tableService.getKeys(this.tableConfig);
-    this.displayedColumns.push('action');
   }
 
 }
