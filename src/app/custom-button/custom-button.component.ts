@@ -10,10 +10,16 @@ export class CustomButtonComponent implements OnInit {
   @Input() btnType: MyButtonConfig;
   @Input() route: string;
 
+  @Output() outPut = new EventEmitter<any>();
+
   constructor() { }
 
   btnClicked(): void {
-    this.btnType.btnAction(this.route);
+    this.outPut.emit(this.route);
+  }
+
+  displayEmit(event: Event): Event {
+    return event;
   }
 
   ngOnInit(): void { }

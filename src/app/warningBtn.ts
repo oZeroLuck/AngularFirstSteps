@@ -5,6 +5,6 @@ export const WarningButton: MyButtonConfig = {
   text: 'Warning Button',
   icon: 'error_outline',
   btnAction(stringa: string): void {
-    this.text = stringa;
+    this.text = stringa.concat('Warning');
   }
 };

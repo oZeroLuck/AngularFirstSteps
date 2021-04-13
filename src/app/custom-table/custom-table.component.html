@@ -13,7 +13,7 @@
     </td>
     <td class="form-inline">
       <div class="col" *ngFor="let button of buttons">
-        <app-custom-button [btnType]="button" [route]="'Hello'"></app-custom-button>
+        <app-custom-button [btnType]="button" [route]="'Hello'" (outPut)="button.btnAction($event)"></app-custom-button>
       </div>
     </td>
   </tr>
