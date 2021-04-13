@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {MyButtonConfig} from '../button-config';
 
 @Component({
@@ -8,10 +8,14 @@ import {MyButtonConfig} from '../button-config';
 })
 export class CustomButtonComponent implements OnInit {
   @Input() btnType: MyButtonConfig;
+  @Input() route: string;
 
   constructor() { }
 
-  ngOnInit(): void {
+  btnClicked(): void {
+    this.btnType.btnAction(this.route);
   }
 
-}
+  ngOnInit(): void { }
+
+  }
