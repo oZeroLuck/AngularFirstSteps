@@ -5,6 +5,6 @@ export const PrimaryButton: MyButtonConfig = {
   text: 'Primary',
   icon: 'star_outline',
   btnAction(stringa: string): void {
-    this.text = stringa;
+    this.text = stringa.toLocaleLowerCase();
   }
 };

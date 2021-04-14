@@ -2,6 +2,22 @@ table {
   width: 100%
 }
 
-td:hover {
-  color: aqua;
+.hover:hover {
+  background-color: aqua;
+}
+
+.form-inline.border-bottom{
+  border-bottom: pink;
+}
+
+.clickable:hover {
+  cursor: pointer;
+}
+
+.vertical-align {
+  vertical-align: middle;
+}
+
+.align-content-right {
+  horiz-align: right;
 }

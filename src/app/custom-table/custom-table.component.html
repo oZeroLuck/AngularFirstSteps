@@ -1,20 +1,46 @@
-<table class="table table-bordered table-striped">
-  <tr>
-    <th *ngFor="let header of tableConfig.headers">
-      {{header.label}}
-    </th>
-    <th>
-      Actions
-    </th>
-  </tr>
-  <tr *ngFor="let item of dataSource">
-    <td *ngFor="let header of tableConfig.headers">
-      {{item[header.key]}}
-    </td>
-    <td class="form-inline">
-      <div class="col" *ngFor="let button of buttons">
-        <app-custom-button [btnType]="button" [route]="'Hello'" (outPut)="button.btnAction($event)"></app-custom-button>
-      </div>
-    </td>
-  </tr>
-</table>
+<div class="container">
+  <div class="d-flex flex-row-reverse mb-2">
+    <div class="form-inline">
+        <input #searchBox (input)="searchBy(searchBox.value, selectBox.value)" class="input-group-text mr-1" style="background-color: white">
+        <select #selectBox class="custom-select custom-select-sm">
+          <ng-container *ngFor="let option of tableConfig.search.columns">
+          <option value="{{option}}">
+            <ng-container *ngFor="let header of tableConfig.headers">
+              <ng-container *ngIf="option === header.key">
+                {{header.label}}
+              </ng-container>
+            </ng-container>
+          </option>
+          </ng-container>
+        </select>
+    </div>
+  </div>
+  <table class="table table-bordered table-striped align-content-end">
+    <tr>
+      <th class="clickable" *ngFor="let header of tableConfig.headers" (click)="orderBy(header.key)">
+        {{header.label}}
+        <ng-container *ngIf="header.key === lastSortedColumn">
+          <ng-container class="align-self-center" *ngIf="orderType; else elseBlock">
+            <mat-icon class="material-icons-round vertical-align">expand_less</mat-icon>
+          </ng-container>
+          <ng-template #elseBlock>
+            <mat-icon class="material-icons-round vertical-align">keyboard_arrow_down</mat-icon>
+          </ng-template>
+        </ng-container>
+      </th>
+      <th style="width: 40%">
+        Actions
+      </th>
+    </tr>
+    <tr class="hover" *ngFor="let item of filteredList">
+      <td *ngFor="let header of tableConfig.headers">
+        {{item[header.key]}}
+      </td>
+      <td>
+          <ng-container *ngFor="let button of buttons">
+            <app-custom-button [btnType]="button" [route]="item" (outPut)="button.btnAction($event)"></app-custom-button>
+          </ng-container>
+      </td>
+    </tr>
+  </table>
+</div>
