@@ -17,6 +17,14 @@ export class CustomTableComponent implements OnInit {
   lastSortedColumn: string;
   orderType: boolean;
   filteredList: any[];
+  pagedData: any[];
+  currentPage: number;
+  pagesNumber: number;
+  currentElementPerPage: number;
+  linkNumber: number[] = [];
+
+  test: any;
+  test2: any;
 
   constructor() { }
 
@@ -26,6 +34,10 @@ export class CustomTableComponent implements OnInit {
     this.orderType = this.getType(this.tableConfig.order.orderType);
     this.searchBy('', '');
     this.orderBy(this.lastSortedColumn);
+    this.currentPage = 1;
+    this.currentElementPerPage = this.tableConfig.pagination.itemPerPage;
+    this.selectPage(this.currentElementPerPage.toString(), this.currentPage);
+    // this.makePageLinks();
   }
 
   getFirstKey(header: MyHeaders[]): void {
@@ -57,7 +69,7 @@ export class CustomTableComponent implements OnInit {
     }
 
     if (this.orderType) {
-      this.filteredList = this.filteredList.sort((a, b) => {
+      this.pagedData = this.filteredList.sort((a, b) => {
         if (a[label] < b[label]) {
           return -1;
         }
@@ -69,7 +81,7 @@ export class CustomTableComponent implements OnInit {
         return 0;
       });
     } else {
-      this.filteredList = this.filteredList.sort((a, b) => {
+      this.pagedData = this.filteredList.sort((a, b) => {
         if (a[label] < b[label]) {
           return 1;
         }
@@ -80,6 +92,37 @@ export class CustomTableComponent implements OnInit {
 
         return 0;
       });
+    }
+    this.selectPage(this.tableConfig.pagination.itemPerPage.toString(), 1);
+  }
+
+  selectPage(pageSize: string, selectedPage: number): void {
+    this.currentPage = selectedPage;
+    this.pagesNumber = _.ceil(_.size(this.filteredList) / parseInt(pageSize, 10));
+    this.currentElementPerPage = parseInt(pageSize, 10);
+    const start = (selectedPage - 1) * 5;
+    const end = start + parseInt(pageSize, 10);
+    this.test = start;
+    this.test2 = end;
+    this.pagedData = _.slice(this.filteredList, start, end);
+    this.makePageLinks();
+  }
+
+  nextPage(): void {
+    this.currentPage += 1;
+    this.selectPage(this.currentElementPerPage.toString(), this.currentPage);
+  }
+
+
+  previousPage(): void {
+    this.currentPage -= 1;
+    this.selectPage(this.currentElementPerPage.toString(), this.currentPage);
+  }
+
+  makePageLinks(): void {
+    this.linkNumber = [];
+    for (let i = 1; i <= this.pagesNumber; i++) {
+      this.linkNumber.push(i);
     }
   }
 

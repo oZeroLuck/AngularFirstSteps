@@ -8,7 +8,7 @@ import {MyButtonConfig} from '../button-config';
 })
 export class CustomButtonComponent implements OnInit {
   @Input() btnType: MyButtonConfig;
-  @Input() route: string[];
+  @Input() route: string;
 
   @Output() outPut = new EventEmitter<any>();
 

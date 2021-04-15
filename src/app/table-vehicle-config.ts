@@ -1,4 +1,4 @@
-import {CustomTableConfig, MyHeaders, MyOrder, MySearch} from './tableConfig';
+import {CustomTableConfig, MyHeaders, MyOrder, MyPagination, MySearch} from './tableConfig';
 
 const TheHeaders: MyHeaders[] = [
   {key: 'plate', label: 'Licence Plate'},
@@ -15,9 +15,15 @@ const TheSearch: MySearch = {
   columns: ['plate', 'brand', 'model']
 };
 
+const ThePagination: MyPagination = {
+  itemPerPage: 3,
+  itemPerPageOptions: [3, 6, 9, 12]
+};
+
 export const VehicleTable: CustomTableConfig = {
   headers: TheHeaders,
   order: TheOrder,
-  search: TheSearch
+  search: TheSearch,
+  pagination: ThePagination
 };
 

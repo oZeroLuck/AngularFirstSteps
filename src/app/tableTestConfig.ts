@@ -1,4 +1,4 @@
-import {CustomTableConfig, MyHeaders, MyOrder, MySearch} from './tableConfig';
+import {CustomTableConfig, MyHeaders, MyOrder, MySearch, MyPagination} from './tableConfig';
 
 const TheHeaders: MyHeaders[] = [
   {key: 'name', label: 'Name'},
@@ -14,8 +14,14 @@ const TheSearch: MySearch = {
   columns: ['name', 'lastName']
 };
 
+const ThePagination: MyPagination = {
+  itemPerPage: 5,
+  itemPerPageOptions: [5, 10, 15, 20]
+};
+
 export const TestTable: CustomTableConfig = {
   headers: TheHeaders,
   order : TheOrder,
-  search: TheSearch
+  search: TheSearch,
+  pagination: ThePagination
 };

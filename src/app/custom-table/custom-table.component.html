@@ -1,7 +1,16 @@
-<div class="container">
-  <div class="d-flex flex-row-reverse mb-2">
-    <div class="form-inline">
-        <input #searchBox (input)="searchBy(searchBox.value, selectBox.value)" class="input-group-text mr-1" style="background-color: white">
+<div class="container p-2">
+  <div class="d-flex flex-row-reverse">
+      <div>
+        <select #nOfPages class="custom-select-sm" (input)="selectPage(nOfPages.value, 1)">
+          <ng-container *ngFor="let option of tableConfig.pagination.itemPerPageOptions">
+            <option value="{{option}}">
+              {{option}}
+            </option>
+          </ng-container>
+        </select>
+      </div>
+      <div>
+        <input #searchBox (input)="searchBy(searchBox.value, selectBox.value); selectPage(currentElementPerPage.toString(), 1);" class="input-group-text mr-1" style="background-color: white">
         <select #selectBox class="custom-select custom-select-sm">
           <ng-container *ngFor="let option of tableConfig.search.columns">
           <option value="{{option}}">
@@ -13,8 +22,8 @@
           </option>
           </ng-container>
         </select>
+      </div>
     </div>
-  </div>
   <table class="table table-bordered table-striped align-content-end">
     <tr>
       <th class="clickable" *ngFor="let header of tableConfig.headers" (click)="orderBy(header.key)">
@@ -32,15 +41,39 @@
         Actions
       </th>
     </tr>
-    <tr class="hover" *ngFor="let item of filteredList">
+    <tr class="hover" *ngFor="let item of pagedData">
       <td *ngFor="let header of tableConfig.headers">
         {{item[header.key]}}
+        <ng-container *ngFor="test > 0;">
+
+        </ng-container>
       </td>
       <td>
           <ng-container *ngFor="let button of buttons">
-            <app-custom-button [btnType]="button" [route]="item" (outPut)="button.btnAction($event)"></app-custom-button>
+            <app-custom-button [btnType]="button" [route]="item[firstHeader]" (outPut)="button.btnAction($event)"></app-custom-button>
           </ng-container>
       </td>
     </tr>
   </table>
+  <div class="d-flex justify-content-center" style="border: black">
+    <div class="mr-2">
+      <ng-container *ngIf="currentPage > 1">
+        <button type="button" class="btn btn-info" (click)="previousPage()"><</button>
+      </ng-container>
+    </div>
+    <div class="d-inline-flex">
+      CurrentPage: {{currentPage}} | Elements from {{test}} to {{test2}} | No. of ELements {{currentElementPerPage}}
+      <ng-container *ngFor="let pageLink of linkNumber">
+        <button type="button" class="btn btn-info" (click)="selectPage(currentElementPerPage.toString(), pageLink)">
+          {{pageLink}}
+        </button>
+      </ng-container>
+    </div>
+    <div class="ml-2">
+      <ng-container *ngIf="currentPage < pagesNumber">
+        <button type="button" class="btn btn-info" (click)="nextPage()">></button>
+      </ng-container>
+    </div>
+  </div>
+
 </div>
