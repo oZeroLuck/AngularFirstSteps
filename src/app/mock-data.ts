@@ -10,7 +10,7 @@ export const UserList: UsersClass[] = [
   {name: 'Francesca', lastName: 'Serratore'},
   {name: 'Aurora', lastName: 'Pelizzoni'},
   {name: 'Emma', lastName: 'Minoggio'},
-  {name: 'Carlo', lastName: 'Amato'},
+  {name: 'Carlo', lastName: 'Amante'},
   {name: 'Alessandro', lastName: 'De Benedettis'},
   {name: 'Milena', lastName: 'Coffetti'},
   {name: 'Stefano', lastName: 'Viscardi'}

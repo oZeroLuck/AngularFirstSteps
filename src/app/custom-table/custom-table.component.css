@@ -6,10 +6,6 @@ table {
   background-color: aqua;
 }
 
-.form-inline.border-bottom{
-  border-bottom: pink;
-}
-
 .clickable:hover {
   cursor: pointer;
 }

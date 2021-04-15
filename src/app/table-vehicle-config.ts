@@ -1,4 +1,6 @@
 import {CustomTableConfig, MyHeaders, MyOrder, MyPagination, MySearch} from './tableConfig';
+import {PrimaryButton} from './primaryBtn';
+import {SecondaryButton} from './secondaryBtn';
 
 const TheHeaders: MyHeaders[] = [
   {key: 'plate', label: 'Licence Plate'},
@@ -24,6 +26,7 @@ export const VehicleTable: CustomTableConfig = {
   headers: TheHeaders,
   order: TheOrder,
   search: TheSearch,
-  pagination: ThePagination
+  pagination: ThePagination,
+  actions: [PrimaryButton, SecondaryButton]
 };
 

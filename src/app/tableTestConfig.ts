@@ -1,4 +1,7 @@
-import {CustomTableConfig, MyHeaders, MyOrder, MySearch, MyPagination} from './tableConfig';
+import {CustomTableConfig, MyHeaders, MyOrder, MyPagination, MySearch} from './tableConfig';
+import {PrimaryButton} from './primaryBtn';
+import {SecondaryButton} from './secondaryBtn';
+import {WarningButton} from './warningBtn';
 
 const TheHeaders: MyHeaders[] = [
   {key: 'name', label: 'Name'},
@@ -23,5 +26,6 @@ export const TestTable: CustomTableConfig = {
   headers: TheHeaders,
   order : TheOrder,
   search: TheSearch,
-  pagination: ThePagination
+  pagination: ThePagination,
+  actions: [PrimaryButton, SecondaryButton, WarningButton]
 };

@@ -1,6 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {CustomTableConfig, MyHeaders} from '../tableConfig';
-import {MyButtonConfig} from '../button-config';
 import * as _ from 'lodash';
 
 @Component({
@@ -12,7 +11,6 @@ import * as _ from 'lodash';
 export class CustomTableComponent implements OnInit {
   @Input() tableConfig: CustomTableConfig;
   @Input() dataSource: any[];
-  @Input() buttons: MyButtonConfig[];
   firstHeader: string;
   lastSortedColumn: string;
   orderType: boolean;

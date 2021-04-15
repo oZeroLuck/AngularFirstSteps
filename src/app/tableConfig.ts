@@ -1,8 +1,11 @@
+import {MyButtonConfig} from './button-config';
+
 export class CustomTableConfig {
   headers: MyHeaders[];
   order: MyOrder;
   search: MySearch;
   pagination: MyPagination;
+  actions: MyButtonConfig[];
 }
 
 export class MyHeaders {
