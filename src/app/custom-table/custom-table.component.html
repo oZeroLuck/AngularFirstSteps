@@ -104,7 +104,11 @@
       </ng-template>
     </div>
   </div>
-  <ng-container *ngIf="test !== null">
-    Selected: {{test[0].name}} | {{test[0].lastName}} | {{test[1]}}
+    <ng-container *ngIf="test !== null">
+      Selected:
+      <ng-container *ngFor="let header of tableConfig.headers">
+         {{test[0][header.key]}} |
+      </ng-container>
+       {{test[1]}}
   </ng-container>
 </div>
