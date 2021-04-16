@@ -4,7 +4,7 @@
   </div>
   <div class="d-flex flex-row-reverse">
       <div>
-        <select #nOfPages class="custom-select custom-select-sm" (input)="selectPage(nOfPages.value, 1)">
+        <select #nOfPages class="custom-select custom-select-sm" (input)="countPages(nOfPages.value); setCurrentPage(0)">
           <ng-container *ngFor="let option of tableConfig.pagination.itemPerPageOptions">
             <option value="{{option}}">
               {{option}}
@@ -13,7 +13,7 @@
         </select>
       </div>
       <div>
-        <input #searchBox (input)="searchBy(searchBox.value, selectBox.value); selectPage(currentElementPerPage.toString(), 1);" class="input-group-text mr-1" style="background-color: white">
+        <input #searchBox (input)="searchBy(searchBox.value, selectBox.value); countPages(currentElementPerPage.toString());" class="input-group-text mr-1" style="background-color: white">
         <select #selectBox class="custom-select custom-select-sm">
           <ng-container *ngFor="let option of tableConfig.search.columns">
           <option value="{{option}}">
@@ -28,9 +28,9 @@
       </div>
     </div>
   <div class="d-flex justify-content-center">
-    CurrentPage: {{currentPage}} | Elements from {{test}} to
-    <ng-container *ngIf="found > test2; else foundBlock">
-      {{test2}}
+    CurrentPage: {{currentPage + 1}} | Elements from {{currentPage * currentElementPerPage}} to
+    <ng-container *ngIf="found > (currentPage * currentElementPerPage) + currentElementPerPage; else foundBlock">
+      {{(currentPage * currentElementPerPage) + currentElementPerPage}}
     </ng-container>
     <ng-template #foundBlock>
       {{found}}
@@ -54,7 +54,7 @@
         Actions
       </th>
     </tr>
-    <tr class="hover" *ngFor="let item of pagedData">
+    <tr class="hover" *ngFor="let item of filteredList | slice:currentPage * currentElementPerPage: (currentPage * currentElementPerPage) + currentElementPerPage">
       <td *ngFor="let header of tableConfig.headers">
         {{item[header.key]}}
       </td>
@@ -66,9 +66,9 @@
     </tr>
   </table>
   <div class="d-flex justify-content-center">
-    CurrentPage: {{currentPage}} | Elements from {{test}} to
-    <ng-container *ngIf="found > test2; else foundBlock">
-      {{test2}}
+    CurrentPage: {{currentPage + 1}} | Elements from {{currentPage * currentElementPerPage}} to
+    <ng-container *ngIf="found > (currentPage * currentElementPerPage) + currentElementPerPage; else foundBlock">
+      {{(currentPage * currentElementPerPage) + currentElementPerPage}}
     </ng-container>
     <ng-template #foundBlock>
       {{found}}
@@ -77,22 +77,48 @@
   </div>
   <div class="d-flex justify-content-center">
     <div class="mr-2">
-      <ng-container *ngIf="currentPage > 1">
-        <button type="button" class="btn btn-info" (click)="previousPage()"><</button>
+      <ng-container *ngIf="currentPage > 0">
+        <button type="button" class="btn btn-info" (click)="setCurrentPage(currentPage - 1)"><</button>
       </ng-container>
     </div>
     <div class="d-inline-flex vertical-align">
       <ng-container *ngFor="let pageLink of linkNumber">
-        <button type="button" class="btn btn-info" (click)="selectPage(currentElementPerPage.toString(), pageLink)">
+        <button type="button" class="btn btn-info" (click)="setCurrentPage(pageLink - 1)">
           {{pageLink}}
         </button>
       </ng-container>
     </div>
     <div class="ml-2">
-      <ng-container *ngIf="currentPage < pagesNumber">
-        <button type="button" class="btn btn-info" (click)="nextPage()">></button>
+      <ng-container *ngIf="currentPage < pagesNumber - 1">
+        <button type="button" class="btn btn-info" (click)="setCurrentPage(currentPage + 1)">></button>
       </ng-container>
     </div>
   </div>
   Selected: {{test}}
 </div>
+
+<table>
+  <tr>
+    <th class="clickable" *ngFor="let header of tableConfig.headers" (click)="orderBy(header.key)">
+      {{header.label}}
+      <ng-container *ngIf="header.key === lastSortedColumn">
+        <ng-container class="align-self-center" *ngIf="orderType; else elseBlock">
+          <mat-icon class="material-icons-round vertical-align">expand_less</mat-icon>
+        </ng-container>
+        <ng-template #elseBlock>
+          <mat-icon class="material-icons-round vertical-align">keyboard_arrow_down</mat-icon>
+        </ng-template>
+      </ng-container>
+    </th>
+  </tr>
+  <tr class="hover" *ngFor="let item of filteredList | slice:0:5">
+    <td *ngFor="let header of tableConfig.headers">
+      {{item[header.key]}}
+    </td>
+    <td>
+      <ng-container *ngFor="let button of tableConfig.actions">
+        <app-custom-button [btnType]="button" [route]="item[firstHeader]" (outPut)="btnAction($event)"></app-custom-button>
+      </ng-container>
+    </td>
+  </tr>
+</table>
