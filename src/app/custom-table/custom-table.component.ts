@@ -15,11 +15,16 @@ export class CustomTableComponent implements OnInit {
   lastSortedColumn: string;
   orderType: boolean;
   filteredList: any[];
+
+
   pagedData: any[];
+  start: number;
+  end: number;
   currentPage: number;
   pagesNumber: number;
   currentElementPerPage: number;
   linkNumber: number[] = [];
+  found: number;
 
   test: any;
   test2: any;
@@ -55,7 +60,7 @@ export class CustomTableComponent implements OnInit {
     } else {
       this.filteredList = this.dataSource;
     }
-
+    this.countElements();
   }
 
   orderBy(label: string): void {
@@ -98,10 +103,10 @@ export class CustomTableComponent implements OnInit {
     this.currentPage = selectedPage;
     this.pagesNumber = _.ceil(_.size(this.filteredList) / parseInt(pageSize, 10));
     this.currentElementPerPage = parseInt(pageSize, 10);
-    const start = (selectedPage - 1) * 5;
+    const start = (selectedPage - 1) * this.currentElementPerPage;
     const end = start + parseInt(pageSize, 10);
-    this.test = start;
-    this.test2 = end;
+    this.start = start;
+    this.end = end;
     this.pagedData = _.slice(this.filteredList, start, end);
     this.makePageLinks();
   }
@@ -124,4 +129,15 @@ export class CustomTableComponent implements OnInit {
     }
   }
 
+  btnAction(obj: any): void {
+    this.test = obj.toString();
+  }
+
+  countElements(): void {
+    this.found = this.filteredList.length;
+  }
+
+  newOutput($event: string): void {
+    this.test2 = $event;
+  }
 }
