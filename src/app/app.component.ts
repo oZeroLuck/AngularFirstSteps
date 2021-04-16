@@ -14,8 +14,6 @@ import {SecondaryButton} from './secondaryBtn';
 export class AppComponent {
 
   users = UserList;
-  primaryButton = PrimaryButton;
-  secondaryButton = SecondaryButton;
   testTable = TestTable;
   vehicleTable = VehicleTable;
   vehicles = VEHICLE_LIST;

@@ -9,12 +9,14 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import {MatPaginatorModule} from '@angular/material/paginator';
+import { PaginatorPipe } from './paginator.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     CustomButtonComponent,
-    CustomTableComponent
+    CustomTableComponent,
+    PaginatorPipe
   ],
   imports: [
     BrowserModule,
