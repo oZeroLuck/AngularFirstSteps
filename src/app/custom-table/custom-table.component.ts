@@ -12,7 +12,7 @@ export class CustomTableComponent implements OnInit {
   @Input() tableConfig: CustomTableConfig;
   @Input() dataSource: any[];
 
-  @Output() event = new EventEmitter<any>();
+  @Output() emitter = new EventEmitter<any>();
 
   lastSortedColumn: string;
   orderType: boolean;
@@ -28,7 +28,6 @@ export class CustomTableComponent implements OnInit {
   found: number;
 
   test: any;
-  test2: any;
 
   constructor() { }
 
@@ -114,14 +113,11 @@ export class CustomTableComponent implements OnInit {
   }
 
   newEvent($event: any): void {
-    this.event = $event;
+    this.test = $event;
+    this.emitter.emit(this.test);
   }
 
   countElements(): void {
     this.found = this.filteredList.length;
-  }
-
-  newOutput($event: string): void {
-    this.test2 = $event;
   }
 }
