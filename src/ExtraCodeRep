@@ -23,3 +23,16 @@
   </tr>
 </table>
 <br>
+
+----Select Page method---
+selectPage(pageSize: string, selectedPage: number): void {
+    this.currentPage = selectedPage;
+    this.pagesNumber = _.ceil(_.size(this.filteredList) / parseInt(pageSize, 10));
+    this.currentElementPerPage = parseInt(pageSize, 10);
+    const start = (selectedPage - 1) * this.currentElementPerPage;
+    const end = start + parseInt(pageSize, 10);
+    this.start = start;
+    this.end = end;
+    this.pagedData = _.slice(this.filteredList, start, end);
+    this.makePageLinks();
+  }
