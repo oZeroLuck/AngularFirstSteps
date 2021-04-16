@@ -7,7 +7,7 @@ export const SecondaryButton: MyButtonConfig = {
   btnClick(input: any): any {
     const result = [];
     result.push(input);
-    result.push('Primary');
+    result.push('Secondary');
     return result;
   }
 };

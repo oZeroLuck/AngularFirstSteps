@@ -7,7 +7,7 @@ export const WarningButton: MyButtonConfig = {
   btnClick(input: any): any {
     const result = [];
     result.push(input);
-    result.push('Primary');
+    result.push('Warning');
     return result;
   }
 };
