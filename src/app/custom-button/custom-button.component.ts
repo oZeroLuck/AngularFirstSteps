@@ -8,14 +8,14 @@ import {MyButtonConfig} from '../button-config';
 })
 export class CustomButtonComponent implements OnInit {
   @Input() btnType: MyButtonConfig;
-  @Input() route: string;
+  @Input() route: any;
 
   @Output() outPut = new EventEmitter<any>();
 
   constructor() { }
 
   btnClicked(): void {
-    this.outPut.emit(this.route);
+    this.outPut.emit(this.btnType.btnClick(this.route));
   }
 
   ngOnInit(): void { }

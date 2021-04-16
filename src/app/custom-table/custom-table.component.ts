@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {CustomTableConfig, MyHeaders} from '../tableConfig';
 import * as _ from 'lodash';
 
@@ -11,11 +11,12 @@ import * as _ from 'lodash';
 export class CustomTableComponent implements OnInit {
   @Input() tableConfig: CustomTableConfig;
   @Input() dataSource: any[];
-  firstHeader: string;
+
+  @Output() event = new EventEmitter<any>();
+
   lastSortedColumn: string;
   orderType: boolean;
   filteredList: any[];
-
 
   pagedData: any[];
   start: number;
@@ -32,16 +33,11 @@ export class CustomTableComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    this.getFirstKey(this.tableConfig.headers);
     this.lastSortedColumn = this.tableConfig.order.defaultColumn;
     this.orderType = this.getType(this.tableConfig.order.orderType);
     this.currentElementPerPage = this.tableConfig.pagination.itemPerPage;
     this.searchBy('', '');
     this.orderBy(this.lastSortedColumn);
-  }
-
-  getFirstKey(header: MyHeaders[]): void {
-    this.firstHeader = header[0].key;
   }
 
   getType(type: string): boolean {
@@ -117,8 +113,8 @@ export class CustomTableComponent implements OnInit {
     }
   }
 
-  btnAction(obj: any): void {
-    this.test = obj.toString();
+  newEvent($event: any): void {
+    this.event = $event;
   }
 
   countElements(): void {

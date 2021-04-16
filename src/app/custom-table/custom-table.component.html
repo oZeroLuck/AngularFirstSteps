@@ -1,7 +1,4 @@
 <div class="container p-2">
-  <div class="row">
-
-  </div>
   <div class="d-flex flex-row-reverse">
       <div>
         <select #nOfPages class="custom-select custom-select-sm" (input)="countPages(nOfPages.value); setCurrentPage(0)">
@@ -54,13 +51,13 @@
         Actions
       </th>
     </tr>
-    <tr class="hover" *ngFor="let item of filteredList | slice:currentPage * currentElementPerPage: (currentPage * currentElementPerPage) + currentElementPerPage">
+    <tr class="hover" *ngFor="let item of filteredList | paginator:currentPage:currentElementPerPage">
       <td *ngFor="let header of tableConfig.headers">
         {{item[header.key]}}
       </td>
       <td>
           <ng-container *ngFor="let button of tableConfig.actions">
-            <app-custom-button [btnType]="button" [route]="item[firstHeader]" (outPut)="btnAction($event)"></app-custom-button>
+            <app-custom-button [btnType]="button" [route]="item" (outPut)="newEvent($event)"></app-custom-button>
           </ng-container>
       </td>
     </tr>
@@ -77,48 +74,37 @@
   </div>
   <div class="d-flex justify-content-center">
     <div class="mr-2">
-      <ng-container *ngIf="currentPage > 0">
+      <ng-container *ngIf="currentPage > 0; else previousDisabled">
         <button type="button" class="btn btn-info" (click)="setCurrentPage(currentPage - 1)"><</button>
       </ng-container>
+      <ng-template #previousDisabled>
+        <button type="button" class="btn btn-info" disabled><</button>
+      </ng-template>
     </div>
     <div class="d-inline-flex vertical-align">
       <ng-container *ngFor="let pageLink of linkNumber">
-        <button type="button" class="btn btn-info" (click)="setCurrentPage(pageLink - 1)">
-          {{pageLink}}
-        </button>
+        <ng-container *ngIf="pageLink != currentPage + 1; else disabledBtn">
+          <button type="button" class="btn btn-info" (click)="setCurrentPage(pageLink - 1)">
+            {{pageLink}}
+          </button>
+        </ng-container>
+        <ng-template #disabledBtn>
+          <button type="button" class="btn btn-info" disabled>
+            {{pageLink}}
+          </button>
+        </ng-template>
       </ng-container>
     </div>
     <div class="ml-2">
-      <ng-container *ngIf="currentPage < pagesNumber - 1">
+      <ng-container *ngIf="currentPage < pagesNumber - 1; else nextDisabled">
         <button type="button" class="btn btn-info" (click)="setCurrentPage(currentPage + 1)">></button>
       </ng-container>
+      <ng-template #nextDisabled>
+        <button type="button" class="btn btn-info" disabled>></button>
+      </ng-template>
     </div>
   </div>
-  Selected: {{test}}
+  <ng-container *ngIf="event !== null">
+    Selected: {{event[0].name}} | {{event[1]}}
+  </ng-container>
 </div>
-
-<table>
-  <tr>
-    <th class="clickable" *ngFor="let header of tableConfig.headers" (click)="orderBy(header.key)">
-      {{header.label}}
-      <ng-container *ngIf="header.key === lastSortedColumn">
-        <ng-container class="align-self-center" *ngIf="orderType; else elseBlock">
-          <mat-icon class="material-icons-round vertical-align">expand_less</mat-icon>
-        </ng-container>
-        <ng-template #elseBlock>
-          <mat-icon class="material-icons-round vertical-align">keyboard_arrow_down</mat-icon>
-        </ng-template>
-      </ng-container>
-    </th>
-  </tr>
-  <tr class="hover" *ngFor="let item of filteredList | slice:0:5">
-    <td *ngFor="let header of tableConfig.headers">
-      {{item[header.key]}}
-    </td>
-    <td>
-      <ng-container *ngFor="let button of tableConfig.actions">
-        <app-custom-button [btnType]="button" [route]="item[firstHeader]" (outPut)="btnAction($event)"></app-custom-button>
-      </ng-container>
-    </td>
-  </tr>
-</table>
