@@ -19,6 +19,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService } from './in-memory-data.service';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
+import { UserChangeComponent } from './user-change/user-change.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { NavBarComponent } from './nav-bar/nav-bar.component';
     AdminHomepageComponent,
     CarParkComponent,
     LoginComponent,
-    NavBarComponent
+    NavBarComponent,
+    UserChangeComponent
   ],
   imports: [
     BrowserModule,
