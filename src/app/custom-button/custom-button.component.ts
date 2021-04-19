@@ -15,7 +15,6 @@ export class CustomButtonComponent implements OnInit {
 
   btnClicked(action: string): void {
     this.emitter.emit(action);
-    console.log(action);
   }
 
   ngOnInit(): void { }
