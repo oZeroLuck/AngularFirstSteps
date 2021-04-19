@@ -1,7 +1,7 @@
 <script src="custom-button.component.ts"></script>
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-<button type="button" class="{{btnType.customCssClass}} mr-3"">
+<button type="button" class="{{btnType.customCssClass}} mr-3" (click)="btnClicked(btnType.action)">
   <span class="material-icons md-24">{{btnType.icon}}</span>
   {{btnType.text}}
 </button>

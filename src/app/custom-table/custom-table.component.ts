@@ -37,6 +37,8 @@ export class CustomTableComponent implements OnInit {
     this.currentElementPerPage = this.tableConfig.pagination.itemPerPage;
     this.searchBy('', '');
     this.orderBy(this.lastSortedColumn);
+
+    this.test = null;
   }
 
   getType(type: string): boolean {
@@ -112,8 +114,9 @@ export class CustomTableComponent implements OnInit {
     }
   }
 
-  btnClicked(actionType: string, item: any): void {
+  btnClicked(actionType: any, item: any): void {
     const obj = {obj: item, action: actionType};
+    console.log(actionType);
     this.test = obj;
     this.emitter.emit(obj);
   }
