@@ -29,7 +29,7 @@
   </div>
   <hr>
   <div class="d-flex justify-content-center">
-    CurrentPage: {{currentPage + 1}} | Elements from {{currentPage * currentElementPerPage}} to
+    CurrentPage: {{currentPage + 1}} | Elements from {{currentPage * currentElementPerPage + 1}} to
     <ng-container *ngIf="found > (currentPage * currentElementPerPage) + currentElementPerPage; else foundBlock">
       {{(currentPage * currentElementPerPage) + currentElementPerPage}}
     </ng-container>
@@ -67,7 +67,7 @@
     </tr>
   </table>
   <div class="d-flex justify-content-center">
-    CurrentPage: {{currentPage + 1}} | Elements from {{currentPage * currentElementPerPage}} to
+    CurrentPage: {{currentPage + 1}} | Elements from {{currentPage * currentElementPerPage + 1}} to
     <ng-container *ngIf="found > (currentPage * currentElementPerPage) + currentElementPerPage; else foundBlock">
       {{(currentPage * currentElementPerPage) + currentElementPerPage}}
     </ng-container>
@@ -116,3 +116,4 @@
      {{test.action}}
   </ng-container>
 </div>
+
