@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {CustomTableConfig, MyHeaders} from '../tableConfig';
 import * as _ from 'lodash';
+import {Subject} from 'rxjs';
 
 @Component({
   selector: 'app-custom-table',
@@ -18,7 +19,6 @@ export class CustomTableComponent implements OnInit {
   orderType: boolean;
   filteredList: any[];
 
-  pagedData: any[];
   start: number;
   end: number;
   currentPage: number;
@@ -68,7 +68,7 @@ export class CustomTableComponent implements OnInit {
     }
 
     if (this.orderType) {
-      this.pagedData = this.filteredList.sort((a, b) => {
+      this.filteredList.sort((a, b) => {
         if (a[label] < b[label]) {
           return -1;
         }
@@ -80,7 +80,7 @@ export class CustomTableComponent implements OnInit {
         return 0;
       });
     } else {
-      this.pagedData = this.filteredList.sort((a, b) => {
+      this.filteredList.sort((a, b) => {
         if (a[label] < b[label]) {
           return 1;
         }
@@ -116,11 +116,9 @@ export class CustomTableComponent implements OnInit {
 
   btnClicked(actionType: any, item: any): void {
     const obj = {obj: item, action: actionType};
-    console.log(actionType);
     this.test = obj;
     this.emitter.emit(obj);
   }
-
 
   countElements(): void {
     this.found = this.filteredList.length;
