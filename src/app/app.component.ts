@@ -1,24 +1,17 @@
-import {Component, Input} from '@angular/core';
-import {PrimaryButton} from './primaryBtn';
-import {TestTable} from './tableTestConfig';
-import {UserList} from './mock-data';
+import {Component, OnInit} from '@angular/core';
 import {VehicleTable} from './table-vehicle-config';
-import {VEHICLE_LIST} from './mock-vehicles';
-import {SecondaryButton} from './secondaryBtn';
+
+import {VehicleClass} from './vehicle-class';
+import {VehicleService} from './vehicle.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
-
-  users = UserList;
-  testTable = TestTable;
-  vehicleTable = VehicleTable;
-  vehicles = VEHICLE_LIST;
+export class AppComponent{
+  title = 'AngularFirstSteps';
 
   constructor() {}
 
-  title = 'AngularFistSteps';
 }

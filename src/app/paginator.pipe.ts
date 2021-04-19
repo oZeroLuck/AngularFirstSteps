@@ -2,7 +2,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 import * as _ from 'lodash';
 
 @Pipe({
-  name: 'paginator'
+  name: 'paginator',
+  pure: false
 })
 export class PaginatorPipe implements PipeTransform {
 
