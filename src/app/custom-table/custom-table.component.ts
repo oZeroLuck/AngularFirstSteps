@@ -112,10 +112,12 @@ export class CustomTableComponent implements OnInit {
     }
   }
 
-  newEvent($event: any): void {
-    this.test = $event;
-    this.emitter.emit(this.test);
+  btnClicked(actionType: string, item: any): void {
+    const obj = {obj: item, action: actionType};
+    this.test = obj;
+    this.emitter.emit(obj);
   }
+
 
   countElements(): void {
     this.found = this.filteredList.length;

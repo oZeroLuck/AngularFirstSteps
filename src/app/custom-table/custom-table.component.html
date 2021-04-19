@@ -1,18 +1,23 @@
 <div class="container p-2">
-  <div class="d-flex flex-row-reverse">
-      <div>
-        <select #nOfPages class="custom-select custom-select-sm" (input)="countPages(nOfPages.value); setCurrentPage(0)">
-          <ng-container *ngFor="let option of tableConfig.pagination.itemPerPageOptions">
-            <option value="{{option}}">
-              {{option}}
-            </option>
-          </ng-container>
-        </select>
-      </div>
-      <div>
-        <input #searchBox (input)="searchBy(searchBox.value, selectBox.value); countPages(currentElementPerPage.toString());" class="input-group-text mr-1" style="background-color: white">
-        <select #selectBox class="custom-select custom-select-sm">
-          <ng-container *ngFor="let option of tableConfig.search.columns">
+  <div class="d-flex flex-lg-row justify-content-center">
+    <div>
+      Show :
+      <select #nOfPages class="custom-select custom-select-sm" (input)="countPages(nOfPages.value); setCurrentPage(0)">
+        <ng-container *ngFor="let option of tableConfig.pagination.itemPerPageOptions">
+          <option value="{{option}}">
+            {{option}}
+          </option>
+        </ng-container>
+      </select>
+       Elements
+    </div>
+    <div>
+      <input #searchBox (input)="searchBy(searchBox.value, selectBox.value); countPages(currentElementPerPage.toString());"
+            placeholder="Search..." class="input-group-text mr-1" style="background-color: white">
+    </div>
+    <div>
+      <select #selectBox class="custom-select custom-select-sm">
+        <ng-container *ngFor="let option of tableConfig.search.columns">
           <option value="{{option}}">
             <ng-container *ngFor="let header of tableConfig.headers">
               <ng-container *ngIf="option === header.key">
@@ -20,10 +25,10 @@
               </ng-container>
             </ng-container>
           </option>
-          </ng-container>
-        </select>
-      </div>
+        </ng-container>
+      </select>
     </div>
+  </div>
   <div class="d-flex justify-content-center">
     CurrentPage: {{currentPage + 1}} | Elements from {{currentPage * currentElementPerPage}} to
     <ng-container *ngIf="found > (currentPage * currentElementPerPage) + currentElementPerPage; else foundBlock">
@@ -57,7 +62,7 @@
       </td>
       <td>
           <ng-container *ngFor="let button of tableConfig.actions">
-            <app-custom-button [btnType]="button" [route]="item" (outPut)="newEvent($event)"></app-custom-button>
+            <app-custom-button [btnType]="button" [route]="item" (click)="btnClicked(button.text, item)"></app-custom-button>
           </ng-container>
       </td>
     </tr>
@@ -107,8 +112,8 @@
     <ng-container *ngIf="test !== null">
       Selected:
       <ng-container *ngFor="let header of tableConfig.headers">
-         {{test[0][header.key]}} |
+         {{test.item[header.key]}} |
       </ng-container>
-       {{test[1]}}
+       {{test.action}}
   </ng-container>
 </div>
