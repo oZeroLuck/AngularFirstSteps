@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { InMemoryDbService } from 'angular-in-memory-web-api';
-import { UsersClass } from './usersClass';
 
 @Injectable({
   providedIn: 'root'
@@ -23,11 +22,13 @@ export class InMemoryDataService implements InMemoryDbService {
       {id: 12, name: 'Milena', lastName: 'Coffetti'},
       {id: 13, name: 'Stefano', lastName: 'Viscardi'}
     ];
-    return { usersList };
+    const vehicleList = [
+      {id: 1, plate: 'DS635TD', brand: 'Ford', model: 'Fiesta'},
+      {id: 2, plate: 'AS231FS', brand: 'Suzuki', model: 'Swift'},
+      {id: 3, plate: 'ER268DS', brand: 'Hyundai', model: 'Kona'},
+      {id: 4, plate: 'YT632BA', brand: 'Toyota', model: 'Yaris'}
+    ];
+    return { usersList, vehicleList };
     }
   constructor() { }
 }
-/*
-  genId(users: UsersClass[]): number {
-    return users.length > 0 ? Math.max(...users.map(user => user.id)) + 1 : 1;
-*/
