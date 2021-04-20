@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { VehicleTable } from '../../../configs/table-cfg/table-vehicle-config';
-import { VehicleClass } from '../../../models/vehicle-class';
-import { VehicleService } from '../../../services/vehicle.service';
-import { ActionWrapper } from '../../../models/action-wrapper';
+import { VehicleTable } from '../../../resources/custom-configs/table-cfg/table-vehicle-config';
+import { VehicleClass } from '../../../resources/models/vehicle-class';
+import { VehicleService } from '../../../resources/services/vehicle.service';
+import { ActionWrapper } from '../../../resources/models/action-wrapper';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
@@ -38,7 +38,9 @@ export class CarParkComponent implements OnInit {
         this.router.navigate(['./vehicle/edit/' + $event.obj.id], {relativeTo: this.route});
         break;
       case 'delete':
-        this.delete($event.obj);
+        if (confirm('Are you sure?')) {
+          this.delete($event.obj);
+        }
         break;
       default:
         console.log('WRONG OP CODE');

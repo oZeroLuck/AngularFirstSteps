@@ -1,8 +1,4 @@
-import {Component, OnInit} from '@angular/core';
-import {VehicleTable} from '../configs/table-cfg/table-vehicle-config';
-
-import {VehicleClass} from '../models/vehicle-class';
-import {VehicleService} from '../services/vehicle.service';
+import {Component} from '@angular/core';
 
 @Component({
   selector: 'app-root',

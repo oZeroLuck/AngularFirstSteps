@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {MyButtonConfig} from '../../../configs/buttons/button-config';
+import {MyButtonConfig} from '../../../resources/custom-configs/buttons/button-config';
 
 @Component({
   selector: 'app-custom-button',
