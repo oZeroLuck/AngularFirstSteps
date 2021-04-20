@@ -3,4 +3,5 @@ export interface VehicleClass {
   plate: string;
   brand: string;
   model: string;
+  regYear: number;
 }

@@ -29,6 +29,7 @@ export class CustomTableComponent implements OnInit {
   found: number;
 
   test: any;
+  date: Date;
 
   constructor() { }
 
@@ -123,5 +124,10 @@ export class CustomTableComponent implements OnInit {
 
   countElements(): void {
     this.found = this.filteredList.length;
+  }
+
+  isDate(value: any): boolean {
+    const datedValue = Date.parse(value);
+    return isNaN(value) && !isNaN(datedValue);
   }
 }

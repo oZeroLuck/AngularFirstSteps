@@ -6,7 +6,8 @@ import { DeleteBtn } from '../buttons/delete-btn';
 const TheHeaders: MyHeaders[] = [
   {key: 'plate', label: 'Licence Plate'},
   {key: 'brand', label: 'Brand'},
-  {key: 'model', label: 'Model'}
+  {key: 'model', label: 'Model'},
+  {key: 'regYear', label: 'Year of Registration'}
 ];
 
 const TheOrder: MyOrder = {

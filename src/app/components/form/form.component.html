@@ -2,10 +2,18 @@
 <div class="container p-5">
 <ng-container *ngFor="let key of keys">
   <ng-container *ngIf="key !== 'id'">
-    <div class="row mb-2">
-      <label for="user-{{key}}" class="col-form-label mr-2">{{key}}:</label>
-      <input id="user-{{key}}" type="text" [(ngModel)]="object[key]" class="form-text"/>
-    </div>
+    <ng-container *ngIf="isDate(object[key]); else elseBlock">
+      <div class="row mb-2">
+        <label for="user-{{key}}" class="col-form-label mr-2">{{key}}:</label>
+        <input type="date" [(ngModel)]="object[key]" min="{{object[key]}}">
+      </div>
+    </ng-container>
+    <ng-template #elseBlock>
+      <div class="row mb-2">
+        <label for="user-{{key}}" class="col-form-label mr-2">{{key}}:</label>
+        <input id="user-{{key}}" type="text" [(ngModel)]="object[key]" class="form-text"/>
+      </div>
+    </ng-template>
   </ng-container>
 </ng-container>
   <div class="row form-inline">

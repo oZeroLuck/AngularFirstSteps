@@ -6,6 +6,7 @@ import {DeleteBtn} from '../buttons/delete-btn';
 const TheHeaders: MyHeaders[] = [
   {key: 'name', label: 'Name'},
   {key: 'lastName', label: 'Surname'},
+  {key: 'dateOfBirth', label: 'Date of Birth'}
 ];
 
 const TheOrder: MyOrder = {

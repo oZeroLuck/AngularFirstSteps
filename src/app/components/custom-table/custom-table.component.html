@@ -60,8 +60,14 @@
     </tr>
     <tr class="hover" *ngFor="let item of filteredList | paginator:currentPage:currentElementPerPage">
       <td *ngFor="let header of tableConfig.headers">
-        {{item[header.key]}}
+        <ng-container *ngIf="isDate(item[header.key]); else notDate">
+          {{item[header.key] | date: 'dd/MM/yyyy'}}
+        </ng-container>
+        <ng-template #notDate>
+          {{item[header.key]}}
+        </ng-template>
       </td>
+
       <td>
           <ng-container *ngFor="let button of tableConfig.actions">
             <app-custom-button [btnType]="button" (emitter)="btnClicked($event, item)"></app-custom-button>

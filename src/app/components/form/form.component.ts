@@ -7,6 +7,7 @@ import { EventEmitter } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { EditBtn } from '../../../resources/custom-configs/buttons/edit-btn';
 import { VehicleService } from '../../../resources/services/vehicle.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-form',
@@ -66,11 +67,12 @@ export class FormComponent implements OnInit {
     switch (theClass) {
       case 'customer':
         this.classService = this.userService;
-        this.object = {id: null, name: '', lastName: ''};
+        this.object = {id: null, name: '', lastName: '', dateOfBirth: new Date()};
+        this.object.dateOfBirth = moment(this.object.dateOfBirth).format('YYYY-MM-DD');
         break;
       case 'vehicle':
         this.classService = this.vehicleService;
-        this.object = {id: null, plate: '', brand: '', model: ''};
+        this.object = {id: null, plate: '', brand: '', model: '', regYear: null};
         break;
       default:
         console.log('Ops');
@@ -93,5 +95,10 @@ export class FormComponent implements OnInit {
 
   back(): void {
     this.location.back();
+  }
+
+  isDate(value: any): boolean {
+    const datedValue = moment(value);
+    return (datedValue.isValid());
   }
 }
