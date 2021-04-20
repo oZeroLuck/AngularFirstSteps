@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { AddBtn } from '../../../buttons/add-btn';
-import { CancelBtn } from '../../../buttons/cancel-btn';
+import { AddBtn } from '../../../configs/buttons/add-btn';
+import { CancelBtn } from '../../../configs/buttons/cancel-btn';
 import { Location } from '@angular/common';
 import { UsersService } from '../../../services/users.service';
 import { EventEmitter } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { EditBtn } from '../../../buttons/edit-btn';
+import { EditBtn } from '../../../configs/buttons/edit-btn';
 import { VehicleService } from '../../../services/vehicle.service';
 
 @Component({

@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { CustomTableConfig } from '../../table-cfg/table-config';
+import { CustomTableConfig } from '../../../configs/table-cfg/table-config';
 import * as _ from 'lodash';
-import { AddBtn } from '../../../buttons/add-btn';
+import { AddBtn } from '../../../configs/buttons/add-btn';
 
 @Component({
   selector: 'app-custom-table',

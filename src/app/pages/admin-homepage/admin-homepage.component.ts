@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserClass } from '../../../models/user-class';
-import { UserTable } from '../../table-cfg/table-user-config';
+import { UserTable } from '../../../configs/table-cfg/table-user-config';
 import { UsersService } from '../../../services/users.service';
 import { Observable } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
