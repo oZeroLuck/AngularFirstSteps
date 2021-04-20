@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
-import { CustomButtonComponent } from './custom-button/custom-button.component';
-import { CustomTableComponent } from './custom-table/custom-table.component';
+import { CustomButtonComponent } from './components/custom-button/custom-button.component';
+import { CustomTableComponent } from './components/custom-table/custom-table.component';
 import { MatIconModule } from '@angular/material/icon';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MatTableModule } from '@angular/material/table';
@@ -11,15 +11,17 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { PaginatorPipe } from './paginator.pipe';
 import { AppRoutingModule } from './app-routing.module';
-import { AdminHomepageComponent } from './admin-homepage/admin-homepage.component';
-import { CarParkComponent } from './car-park/car-park.component';
-import { LoginComponent } from './login/login.component';
+import { AdminHomepageComponent } from './pages/admin-homepage/admin-homepage.component';
+import { CarParkComponent } from './pages/car-park/car-park.component';
+import { LoginComponent } from './pages/login/login.component';
 
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService } from './in-memory-data.service';
-import { NavBarComponent } from './nav-bar/nav-bar.component';
-import { UserChangeComponent } from './user-change/user-change.component';
+import { NavBarComponent } from './components/nav-bar/nav-bar.component';
+import { FormComponent } from './components/form/form.component';
+import { ReservationsComponent } from './pages/reservations/reservations.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -31,7 +33,8 @@ import { UserChangeComponent } from './user-change/user-change.component';
     CarParkComponent,
     LoginComponent,
     NavBarComponent,
-    UserChangeComponent
+    FormComponent,
+    ReservationsComponent
   ],
   imports: [
     BrowserModule,
@@ -43,8 +46,9 @@ import { UserChangeComponent } from './user-change/user-change.component';
     AppRoutingModule,
     HttpClientModule,
     HttpClientInMemoryWebApiModule.forRoot(
-      InMemoryDataService, { dataEncapsulation: false }
-    )
+      InMemoryDataService, {dataEncapsulation: false}
+    ),
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
