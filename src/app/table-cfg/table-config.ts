@@ -1,4 +1,4 @@
-import {MyButtonConfig} from './button-config';
+import { MyButtonConfig } from '../../buttons/button-config';
 
 export class CustomTableConfig {
   headers: MyHeaders[];

@@ -1,6 +1,7 @@
-import {CustomTableConfig, MyHeaders, MyOrder, MyPagination, MySearch} from './tableConfig';
-import {PrimaryButton} from './primaryBtn';
-import {SecondaryButton} from './secondaryBtn';
+import { CustomTableConfig, MyHeaders, MyOrder, MyPagination, MySearch } from './table-config';
+import { PrimaryButton } from '../../buttons/primaryBtn';
+import { EditBtn } from '../../buttons/edit-btn';
+import { DeleteBtn } from '../../buttons/delete-btn';
 
 const TheHeaders: MyHeaders[] = [
   {key: 'plate', label: 'Licence Plate'},
@@ -27,6 +28,6 @@ export const VehicleTable: CustomTableConfig = {
   order: TheOrder,
   search: TheSearch,
   pagination: ThePagination,
-  actions: [PrimaryButton, SecondaryButton]
+  actions: [PrimaryButton, EditBtn, DeleteBtn]
 };
 

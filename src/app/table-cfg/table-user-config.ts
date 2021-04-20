@@ -1,7 +1,7 @@
-import {CustomTableConfig, MyHeaders, MyOrder, MyPagination, MySearch} from './tableConfig';
-import {PrimaryButton} from './primaryBtn';
-import {SecondaryButton} from './secondaryBtn';
-import {WarningButton} from './warningBtn';
+import {CustomTableConfig, MyHeaders, MyOrder, MyPagination, MySearch} from './table-config';
+import {PrimaryButton} from '../../buttons/primaryBtn';
+import {EditBtn} from '../../buttons/edit-btn';
+import {DeleteBtn} from '../../buttons/delete-btn';
 
 const TheHeaders: MyHeaders[] = [
   {key: 'name', label: 'Name'},
@@ -22,10 +22,10 @@ const ThePagination: MyPagination = {
   itemPerPageOptions: [5, 10, 15, 20]
 };
 
-export const TestTable: CustomTableConfig = {
+export const UserTable: CustomTableConfig = {
   headers: TheHeaders,
   order : TheOrder,
   search: TheSearch,
   pagination: ThePagination,
-  actions: [PrimaryButton, SecondaryButton, WarningButton]
+  actions: [PrimaryButton, EditBtn, DeleteBtn]
 };

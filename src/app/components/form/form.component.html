@@ -1,0 +1,21 @@
+<app-nav-bar></app-nav-bar>
+<div class="container p-5">
+<ng-container *ngFor="let key of keys">
+  <ng-container *ngIf="key !== 'id'">
+    <div class="row mb-2">
+      <label for="user-{{key}}" class="col-form-label mr-2">{{key}}:</label>
+      <input id="user-{{key}}" type="text" [(ngModel)]="object[key]" class="form-text"/>
+    </div>
+  </ng-container>
+</ng-container>
+  <div class="row form-inline">
+    <ng-container *ngIf="actionType === 'add'; else editBlock">
+      <app-custom-button [btnType]="addBtn" (emitter)="actionDispatcher($event)"></app-custom-button>
+    </ng-container>
+    <ng-template #editBlock>
+      <app-custom-button [btnType]="editBtn" (emitter)="actionDispatcher($event)"></app-custom-button>
+    </ng-template>
+    <app-custom-button [btnType]="cancelBtn" (emitter)="back()"></app-custom-button>
+  </div>
+</div>
+<h1 *ngIf="error" style="color: red"> Error </h1>

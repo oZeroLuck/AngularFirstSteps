@@ -1,7 +1,7 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {CustomTableConfig, MyHeaders} from '../tableConfig';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { CustomTableConfig } from '../../table-cfg/table-config';
 import * as _ from 'lodash';
-import {Subject} from 'rxjs';
+import { AddBtn } from '../../../buttons/add-btn';
 
 @Component({
   selector: 'app-custom-table',
@@ -19,6 +19,7 @@ export class CustomTableComponent implements OnInit {
   orderType: boolean;
   filteredList: any[];
 
+  addBtn = AddBtn;
   start: number;
   end: number;
   currentPage: number;

@@ -1,0 +1,7 @@
+<app-nav-bar></app-nav-bar>
+<div *ngIf="vehicles$ | async as itemList">
+  <app-custom-table [tableConfig]="vehicleTable" [dataSource]="itemList" (emitter)="dispatch($event)"></app-custom-table>
+</div>
+  <!--
+<div *ngIf="users$ | async as itemList">
+</div>-->

@@ -1,6 +1,9 @@
 <div class="container p-2">
   <div class="row justify-content-center">
     <div class="col">
+      <app-custom-button [btnType]="addBtn" (emitter)="btnClicked('add', '')"></app-custom-button>
+    </div>
+    <div class="col">
       Show :
       <select #nOfPages class="custom-select custom-select-sm" style="width: min-content" (input)="countPages(nOfPages.value); setCurrentPage(0)">
         <ng-container *ngFor="let option of tableConfig.pagination.itemPerPageOptions">
@@ -12,7 +15,7 @@
        Elements
     </div>
     <div class="form-inline">
-      <input #searchBox (input)="searchBy(searchBox.value, selectBox.value); countPages(currentElementPerPage.toString());"
+      <input #searchBox (keyup.enter)="searchBy(searchBox.value, selectBox.value); countPages(currentElementPerPage.toString());"
             placeholder="Search..." class="input-group-text mr-1" style="background-color: white">
       <select #selectBox class="custom-select custom-select-sm">
         <ng-container *ngFor="let option of tableConfig.search.columns">

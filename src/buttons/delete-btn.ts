@@ -1,8 +1,8 @@
 import { MyButtonConfig } from './button-config';
 
-export const WarningButton: MyButtonConfig = {
+export const DeleteBtn: MyButtonConfig = {
   customCssClass: 'btn btn-danger',
-  text: 'Warning Button',
+  text: 'Delete',
   icon: 'error_outline',
-  action: 'warning'
+  action: 'delete'
 };

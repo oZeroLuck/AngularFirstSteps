@@ -1,8 +1,8 @@
 import { MyButtonConfig } from './button-config';
 
-export const SecondaryButton: MyButtonConfig = {
+export const EditBtn: MyButtonConfig = {
   customCssClass: 'btn btn-secondary',
-  text: 'Secondary Button',
+  text: 'Edit',
   icon: 'edit',
-  action: 'secondary'
+  action: 'edit'
 };
