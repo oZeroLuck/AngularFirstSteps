@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { VehicleTable } from '../../../resources/custom-configs/table-cfg/table-vehicle-config';
-import { VehicleClass } from '../../../resources/models/vehicle-class';
-import { VehicleService } from '../../../resources/services/vehicle.service';
-import { ActionWrapper } from '../../../resources/models/action-wrapper';
+import { VehicleTable } from '../../resources/custom-configs/table-cfg/table-vehicle-config';
+import { VehicleClass } from '../../resources/models/vehicle-class';
+import { VehicleService } from '../../resources/services/vehicle.service';
+import { ActionWrapper } from '../../resources/models/action-wrapper';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 

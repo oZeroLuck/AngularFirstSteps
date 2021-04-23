@@ -1,0 +1,33 @@
+<div class="container" *ngIf="reservation">
+    <div class="row">
+      <div class="col">
+        <label for="startDate"></label>
+        <input #startDate id="startDate" type="date" min="{{reservation.startDate}}" [(ngModel)]="reservation.startDate">
+      </div>
+      <div class="col">
+        <label for="endDate"></label>
+        <input #endDate id="endDate" type="date" min="{{reservation.endDate}}" [(ngModel)]="reservation.endDate">
+      </div>
+      <div class="col">
+        <button type="button" class="btn btn-info" (click)="getAvailable(startDate.value, endDate.value)">Search</button>
+      </div>
+    </div>
+  <ng-container *ngIf="available$ | async as Vehicles; else noVehicles">
+    <app-custom-table [tableConfig]="tableConfig" [dataSource]="Vehicles"></app-custom-table>
+  </ng-container>
+  <ng-template #noVehicles>
+    <h1>No vehicles available between the selected dates</h1>
+  </ng-template>
+    <div class="row">
+      <app-custom-button [btnType]="cancelBtn" (emitter)="btnAction($event)"></app-custom-button>
+    </div>
+</div>
+<hr>
+<br>
+<div class="row" *ngIf="allRes$ | async as ItemList">
+  <app-custom-table [tableConfig]="resTable" [dataSource]="ItemList"></app-custom-table>
+</div>
+
+<div class="row" *ngFor="let item of test">
+  -----------------------{{item.plate}}
+</div>

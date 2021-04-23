@@ -1,7 +1,8 @@
-import {CustomTableConfig, MyHeaders, MyOrder, MyPagination, MySearch} from './table-config';
-import {PrimaryButton} from '../buttons/primaryBtn';
-import {EditBtn} from '../buttons/edit-btn';
-import {DeleteBtn} from '../buttons/delete-btn';
+import { CustomTableConfig, MyHeaders, MyOrder, MyPagination, MySearch } from './table-config';
+import { ReservationsBtn } from '../buttons/reservations-btn';
+import { EditBtn } from '../buttons/edit-btn';
+import { DeleteBtn } from '../buttons/delete-btn';
+import { AddBtn } from '../buttons/add-btn';
 
 const TheHeaders: MyHeaders[] = [
   {key: 'name', label: 'Name'},
@@ -15,7 +16,7 @@ const TheOrder: MyOrder = {
 };
 
 const TheSearch: MySearch = {
-  columns: ['name', 'lastName']
+  columns: ['name', 'lastName', 'dateOfBirth']
 };
 
 const ThePagination: MyPagination = {
@@ -28,5 +29,5 @@ export const UserTable: CustomTableConfig = {
   order : TheOrder,
   search: TheSearch,
   pagination: ThePagination,
-  actions: [PrimaryButton, EditBtn, DeleteBtn]
+  actions: [ReservationsBtn, EditBtn, DeleteBtn, AddBtn]
 };

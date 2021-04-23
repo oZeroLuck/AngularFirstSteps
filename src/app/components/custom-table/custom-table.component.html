@@ -1,6 +1,6 @@
 <div class="container p-2">
   <div class="row justify-content-center">
-    <div class="col">
+    <div class="col" *ngIf="addBtn">
       <app-custom-button [btnType]="addBtn" (emitter)="btnClicked('add', '')"></app-custom-button>
     </div>
     <div class="col">
@@ -60,17 +60,18 @@
     </tr>
     <tr class="hover" *ngFor="let item of filteredList | paginator:currentPage:currentElementPerPage">
       <td *ngFor="let header of tableConfig.headers">
-        <ng-container *ngIf="isDate(item[header.key]); else notDate">
+        <ng-container *ngIf="isDate(item[header.key], header.key); else notDate">
           {{item[header.key] | date: 'dd/MM/yyyy'}}
         </ng-container>
         <ng-template #notDate>
           {{item[header.key]}}
         </ng-template>
       </td>
-
       <td>
           <ng-container *ngFor="let button of tableConfig.actions">
-            <app-custom-button [btnType]="button" (emitter)="btnClicked($event, item)"></app-custom-button>
+            <ng-container *ngIf="addBtn && button !== addBtn">
+              <app-custom-button [btnType]="button" (emitter)="btnClicked($event, item)"></app-custom-button>
+            </ng-container>
           </ng-container>
       </td>
     </tr>

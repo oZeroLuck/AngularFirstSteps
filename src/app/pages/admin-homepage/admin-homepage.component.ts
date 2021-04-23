@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { UserClass } from '../../../resources/models/user-class';
-import { UserTable } from '../../../resources/custom-configs/table-cfg/table-user-config';
-import { UsersService } from '../../../resources/services/users.service';
+import { UserClass } from '../../resources/models/user-class';
+import { UserTable } from '../../resources/custom-configs/table-cfg/table-user-config';
+import { UsersService } from '../../resources/services/users.service';
 import { Observable } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ActionWrapper } from '../../../resources/models/action-wrapper';
+import { ActionWrapper } from '../../resources/models/action-wrapper';
 
 @Component({
   selector: 'app-admin-homepage',
@@ -42,6 +42,9 @@ export class AdminHomepageComponent implements OnInit {
         if (confirm('Are you sure?')) {
           this.delete($event.obj);
         } else {return; }
+        break;
+      case 'reservations':
+        this.router.navigate(['./reservations/' + $event.obj.id], {relativeTo: this.route});
         break;
       default :
         console.log('WRONG OP CODE');

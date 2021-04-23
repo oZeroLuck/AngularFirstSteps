@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { AddBtn } from '../../../resources/custom-configs/buttons/add-btn';
-import { CancelBtn } from '../../../resources/custom-configs/buttons/cancel-btn';
+import { AddBtn } from '../../resources/custom-configs/buttons/add-btn';
+import { CancelBtn } from '../../resources/custom-configs/buttons/cancel-btn';
 import { Location } from '@angular/common';
-import { UsersService } from '../../../resources/services/users.service';
+import { UsersService } from '../../resources/services/users.service';
 import { EventEmitter } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { EditBtn } from '../../../resources/custom-configs/buttons/edit-btn';
-import { VehicleService } from '../../../resources/services/vehicle.service';
+import { EditBtn } from '../../resources/custom-configs/buttons/edit-btn';
+import { VehicleService } from '../../resources/services/vehicle.service';
 import * as moment from 'moment';
 
 @Component({

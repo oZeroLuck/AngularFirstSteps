@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { CustomTableConfig } from '../../../resources/custom-configs/table-cfg/table-config';
+import { CustomTableConfig } from '../../resources/custom-configs/table-cfg/table-config';
 import * as _ from 'lodash';
-import { AddBtn } from '../../../resources/custom-configs/buttons/add-btn';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-custom-table',
@@ -19,7 +19,7 @@ export class CustomTableComponent implements OnInit {
   orderType: boolean;
   filteredList: any[];
 
-  addBtn = AddBtn;
+  addBtn: any;
   start: number;
   end: number;
   currentPage: number;
@@ -27,13 +27,14 @@ export class CustomTableComponent implements OnInit {
   currentElementPerPage: number;
   linkNumber: number[] = [];
   found: number;
+  dateKeys = [];
 
   test: any;
-  date: Date;
 
   constructor() { }
 
   ngOnInit(): void {
+    this.hasAddBtn(this.tableConfig.actions);
     this.lastSortedColumn = this.tableConfig.order.defaultColumn;
     this.orderType = this.getType(this.tableConfig.order.orderType);
     this.currentElementPerPage = this.tableConfig.pagination.itemPerPage;
@@ -43,16 +44,32 @@ export class CustomTableComponent implements OnInit {
     this.test = null;
   }
 
+  hasAddBtn(buttons: any[]): void {
+    // tslint:disable-next-line:only-arrow-functions
+    this.addBtn = _.find(buttons, function(ob): any { return ob.action === 'add'; });
+  }
+
   getType(type: string): boolean {
     return !(type === 'ascending');
   }
 
   searchBy(filter: string, type: string): void {
+    let doSearch = true;
     if (filter.trim()) {
       // tslint:disable-next-line:only-arrow-functions
-      this.filteredList = _.filter(this.filteredList, function(ob): any {
-        return ob[type].toLowerCase().indexOf(filter.toLocaleLowerCase()) > -1;
-      });
+      if (_.includes(this.dateKeys, type)) {
+        console.log('Is date');
+        filter = moment(filter).format('yyyy-MM-dd');
+        doSearch = moment(filter).isValid();
+        console.log('date not valid');
+      }
+      if (doSearch) {
+        console.log('Doing Search');
+        // tslint:disable-next-line:only-arrow-functions
+        this.filteredList = _.filter(this.dataSource, function(ob): any {
+          return ob[type].toLowerCase().indexOf(filter.toLocaleLowerCase()) > -1;
+        });
+      }
     } else {
       this.filteredList = this.dataSource;
     }
@@ -61,7 +78,7 @@ export class CustomTableComponent implements OnInit {
     this.setCurrentPage(0);
   }
 
-  orderBy(label: string): void {
+orderBy(label: string): void {
     if (this.lastSortedColumn === label) {
       this.orderType = !this.orderType;
     } else {
@@ -126,8 +143,13 @@ export class CustomTableComponent implements OnInit {
     this.found = this.filteredList.length;
   }
 
-  isDate(value: any): boolean {
-    const datedValue = Date.parse(value);
-    return isNaN(value) && !isNaN(datedValue);
+  isDate(value: any, key: string): boolean {
+    const datedValue = moment(value);
+    if (datedValue.isValid() && isNaN(value)) {
+      this.dateKeys.push(key);
+      return true;
+    } else {
+      return false;
+    }
   }
 }

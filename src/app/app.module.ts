@@ -9,7 +9,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatPaginatorModule } from '@angular/material/paginator';
-import { PaginatorPipe } from '../resources/pipes/paginator.pipe';
+import { PaginatorPipe } from './resources/pipes/paginator.pipe';
 import { AppRoutingModule } from './app-routing.module';
 import { AdminHomepageComponent } from './pages/admin-homepage/admin-homepage.component';
 import { CarParkComponent } from './pages/car-park/car-park.component';
@@ -17,11 +17,12 @@ import { LoginComponent } from './pages/login/login.component';
 
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
-import { InMemoryDataService } from '../resources/services/in-memory-data.service';
+import { InMemoryDataService } from './resources/services/in-memory-data.service';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
-import { FormComponent } from './components/form/form.component';
+import { FormComponent } from './pages/form/form.component';
 import { ReservationsComponent } from './pages/reservations/reservations.component';
 import { FormsModule } from '@angular/forms';
+import { ResFormComponent } from './res-form/res-form.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { FormsModule } from '@angular/forms';
     LoginComponent,
     NavBarComponent,
     FormComponent,
-    ReservationsComponent
+    ReservationsComponent,
+    ResFormComponent
   ],
   imports: [
     BrowserModule,

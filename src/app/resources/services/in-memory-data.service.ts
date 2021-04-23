@@ -28,7 +28,13 @@ export class InMemoryDataService implements InMemoryDbService {
       {id: 3, plate: 'ER268DS', brand: 'Hyundai', model: 'Kona', regYear: '2013'},
       {id: 4, plate: 'YT632BA', brand: 'Toyota', model: 'Yaris', regYear: '2005'}
     ];
-    return { usersList, vehicleList };
+    const reservationList = [
+      {id: 1, userId: 1, vehicleId: 1, startDate: '2021-04-21', endDate: '2021-04-23', status: 'pending'},
+      {id: 2, userId: 1, vehicleId: 2, startDate: '2021-04-22', endDate: '2021-05-28', status: 'approved'},
+      {id: 3, userId: 1, vehicleId: 3, startDate: '2021-04-23', endDate: '2021-05-29', status: 'denied'},
+      {id: 4, userId: 2, vehicleId: 4, startDate: '2021-04-24', endDate: '2021-05-30', status: 'pending'},
+    ];
+    return { usersList, vehicleList, reservationList };
     }
   constructor() { }
 }
