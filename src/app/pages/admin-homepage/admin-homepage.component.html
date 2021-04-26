@@ -2,3 +2,5 @@
 <div *ngIf="users$ | async as itemList">
   <app-custom-table [tableConfig]="testTable" [dataSource]="itemList" (emitter)="dispatch($event)"></app-custom-table>
 </div>
+
+<button type="button" (click)="ping()">Ping</button>

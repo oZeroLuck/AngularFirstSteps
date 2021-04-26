@@ -5,6 +5,7 @@ import { UsersService } from '../../resources/services/users.service';
 import { Observable } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ActionWrapper } from '../../resources/models/action-wrapper';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-admin-homepage',
@@ -19,7 +20,8 @@ export class AdminHomepageComponent implements OnInit {
   constructor(
     private usersService: UsersService,
     private router: Router,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute,
+    public http: HttpClient) { }
 
   ngOnInit(): void {
     this.getUsers();
@@ -57,5 +59,12 @@ export class AdminHomepageComponent implements OnInit {
     this.usersService.delete(user)
       .subscribe();
     this.getUsers();
+  }
+
+  ping(): void {
+    this.http.get('api/usersList').subscribe(
+      (data) => console.log(data),
+      (err) => console.log(err)
+    );
   }
 }

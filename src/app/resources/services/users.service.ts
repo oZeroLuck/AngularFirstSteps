@@ -17,7 +17,8 @@ export class UsersService {
   constructor(private http: HttpClient) { }
 
   getUsers(): Observable<UserClass[]> {
-    return this.http.get<UserClass[]>(this.usersUrl)
+    const url = `${this.usersUrl}/?isAdmin=false`;
+    return this.http.get<UserClass[]>(url)
       .pipe(
         tap(_ => console.log('Fetched Users')),
         catchError(this.handleError<UserClass[]>('getUsers', []))
