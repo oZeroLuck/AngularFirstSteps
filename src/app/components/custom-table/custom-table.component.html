@@ -69,7 +69,7 @@
       </td>
       <td>
           <ng-container *ngFor="let button of tableConfig.actions">
-            <ng-container *ngIf="addBtn && button !== addBtn">
+            <ng-container *ngIf="button !== addBtn">
               <app-custom-button [btnType]="button" (emitter)="btnClicked($event, item)"></app-custom-button>
             </ng-container>
           </ng-container>

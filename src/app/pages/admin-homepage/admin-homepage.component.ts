@@ -30,6 +30,7 @@ export class AdminHomepageComponent implements OnInit {
   }
 
   dispatch($event: ActionWrapper): void {
+    console.log($event.action);
     switch ($event.action) {
       case 'add':
         console.log('Im here');

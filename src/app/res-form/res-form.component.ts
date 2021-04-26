@@ -7,10 +7,13 @@ import { VehicleService } from '../resources/services/vehicle.service';
 import { VehicleClass } from '../resources/models/vehicle-class';
 import * as moment from 'moment';
 import * as _ from 'lodash';
-import {VehicleTable} from '../resources/custom-configs/table-cfg/table-vehicle-config';
-import {Observable, of} from 'rxjs';
-import {ReservationTable} from '../resources/custom-configs/table-cfg/table-reservation-config';
-import {map} from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { ReservationTable } from '../resources/custom-configs/table-cfg/table-reservation-config';
+import { NewResTable } from '../resources/custom-configs/table-cfg/table-new-reservation-config';
+import { ReserveBtn } from '../resources/custom-configs/buttons/reserve-btn';
+import {ActionWrapper} from '../resources/models/action-wrapper';
+import {EditBtn} from '../resources/custom-configs/buttons/edit-btn';
+import {isEmpty} from 'rxjs/operators';
 
 
 @Component({
@@ -20,16 +23,21 @@ import {map} from 'rxjs/operators';
 })
 export class ResFormComponent implements OnInit {
 
-  tableConfig = VehicleTable;
+  tableConfig = NewResTable;
   resTable = ReservationTable;
 
+  editBtn = EditBtn;
   cancelBtn = CancelBtn;
+
   currentUser: string;
   reservation: ReservationClass;
   action: string;
   available$: Observable<VehicleClass[]>;
   allRes$: Observable<ReservationClass[]>;
   finalList$: Observable<VehicleClass[]>;
+
+  allVehicles: VehicleClass[];
+  allReservations: ReservationClass[];
 
   test: VehicleClass[];
 
@@ -41,8 +49,13 @@ export class ResFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.getReservation();
+  }
+
+  getAvailable(startDate, endDate): void {
     this.available$ = this.vehicleService.getVehicles();
-    this.getAvailable(this.reservation.startDate, this.reservation.endDate);
+    this.allRes$ = this.resService.getResByDates(startDate, endDate);
+
+    console.log(this.test);
   }
 
   getReservation(): void {
@@ -62,33 +75,78 @@ export class ResFormComponent implements OnInit {
         endDate: moment(new Date()).add(3, 'days').format('YYYY-MM-DD'),
         status: 'pending'
       };
-      console.log(this.reservation.startDate);
-      console.log(this.reservation.endDate);
+      this.getAvailable(this.reservation.startDate, this.reservation.endDate);
     }
   }
 
-  getAvailable(startDate: string, endDate: string): void {
-    this.allRes$ = this.resService.getResByDates(startDate, endDate);
-    this.available$.forEach((vehicles) => vehicles.forEach( (vehicle, index) => {
-        if (this.allRes$.pipe(
-          map(res => { res.find(r => { if (r.vehicleId === vehicle.id) { return true; } }); return true; })
-        )) {
-          console.log('');
-          console.log('Splice at' + index);
-          vehicles.splice(index, 1);
-        } this.available$ = of(vehicles); }));
-  }
-
-  btnAction($event: string): void {
-    if ($event === 'add') {
-      console.log('Added res');
+  btnAction($event: ActionWrapper): void {
+    if ($event.action === 'book') {
+      this.reservation.vehicleId = $event.obj.id;
+      this.addReservation(this.reservation);
     } else {
-      this.router.navigate(['../'], {relativeTo: this.route});
+      this.reservation.status = 'Pending';
+      this.updateReservation(this.reservation);
     }
+  }
+
+  updateReservation(reservation: ReservationClass): void {
+    if (this.checkDates(reservation)) {
+      this.resService.update(reservation)
+        .subscribe();
+      this.router.navigate(['../../'], {relativeTo: this.route});
+    } else {
+      console.log('Error');
+    }
+  }
+
+  addReservation(reservation: ReservationClass): void {
+    if (this.checkDates(reservation)) {
+      this.resService.add(reservation)
+        .subscribe();
+      this.router.navigate(['../'], {relativeTo: this.route});
+    } else {
+      console.log('Error');
+    }
+  }
+
+  checkDates(reservation: ReservationClass): boolean {
+    let noError = true;
+    let message = 'No errors';
+    const mStartDate = moment(reservation.startDate);
+    const mEndDate = moment(reservation.endDate);
+    if (mEndDate.isBefore(mStartDate) || mStartDate === mEndDate) {
+      message = 'End is before start';
+      noError = false;
+    }
+    if (this.resService.getResByDates(reservation.startDate, reservation.endDate).pipe(
+      (rs) => _.find(rs, ['vehicleId', reservation.vehicleId]))) {
+      message = 'There are other reservations by the same dates';
+      noError = false;
+    }
+    if (mStartDate.isBefore(moment(new Date()).add(1, 'days'))) {
+      message = 'Dates are before today + 2';
+      noError = false;
+    }
+    console.log(message);
+    return noError;
   }
 }
 
 /*
+
+  getAvailable(startDate: string, endDate: string): void {
+    this.allRes$ = this.resService.getResByDates(startDate, endDate);
+    this.available$ = this.vehicleService.getVehicles();
+    this.available$.pipe(
+      map((vehicles) => vehicles.forEach( (vehicle, index) => {
+        this.allRes$.pipe(
+          map(res => { if (_.find(res, ['vehicleId', vehicle.id]))
+            {
+            }})
+        );
+         this.available$ = of(vehicles); })));
+  }
+
 available.filter(
         (v, index) => {
           if (this.allRes$.pipe(
@@ -108,4 +166,12 @@ available.filter(
         )) { return true;
         }
     })));
+
+        console.log('pipeday');
+    this.available$.pipe(
+      map((vs) => { vs.forEach((v, index) => { if (this.allRes$.pipe(
+        map((rs) => _.find(rs, ['vehicleId', v.id])))) {
+        console.log('hello');
+        vs.splice(index, 1);
+      } else {console.log('nosplice'); }}); this.available$ = of(vs); }));
 */
