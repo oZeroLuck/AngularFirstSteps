@@ -22,7 +22,7 @@ import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { FormComponent } from './pages/form/form.component';
 import { ReservationsComponent } from './pages/reservations/reservations.component';
 import { FormsModule } from '@angular/forms';
-import { ResFormComponent } from './res-form/res-form.component';
+import { ResFormComponent } from './pages/res-form/res-form.component';
 
 @NgModule({
   declarations: [
