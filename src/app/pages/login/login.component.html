@@ -1,7 +1,25 @@
-Welcome!
-<nav>
-  <a routerLink="admin/homepage">Homepage</a>
-  |
-  <a routerLink="carPark">Car Park</a>
-</nav>
+<div class="container">
+  <div class="card">
+    <div class="card-header text-center">
+      <h1>LOGIN</h1>
+    </div>
+    <div class="card-body justify-content-center">
+      <form>
+        <div class="mb-3">
+          <label for="username" class="form-label">Username</label>
+          <input #username type="text" class="form-control" id="username">
+        </div>
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input type="password" class="form-control" id="password">
+        </div>
+        <div class="mb-3 form-check">
+          <input type="checkbox" class="form-check-input" id="remember_me">
+          <label #password class="form-check-label" for="remember_me">Remember me</label>
+        </div>
+        <app-custom-button [btnType]="loginBtn" (click)="login(username.value, password.value)"></app-custom-button>
+      </form>
+    </div>
+  </div>
+</div>
 <router-outlet></router-outlet>
