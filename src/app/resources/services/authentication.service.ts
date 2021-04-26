@@ -3,28 +3,20 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 
 import { UserClass } from '../models/user-class';
+import { UsersService } from './users.service';
+import { Observable } from 'rxjs';
 
-export class User{
-  constructor(
-    public status: string
-  ) {}
-}
-
-export class JwtResponse{
-  constructor(
-    public jwttoken: string
-  ) {}
-
-}
 @Injectable({
   providedIn: 'root'
 })
-
 export class AuthenticationService {
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private userService: UsersService) { }
 
-  authenticate(username: string, password: string): any {
+  authenticate(username: string, password: string): Observable<any> {
+    if (this.userService.getByUsername(username)) {
     return this.http.post<any>('api/authenticate', {username, password})
       .pipe(
         map(
@@ -36,6 +28,11 @@ export class AuthenticationService {
           }
         )
       );
+    }
+  }
+
+  getCurrentUser(): any {
+    return sessionStorage.getItem('username');
   }
 
   isUserLoggedIn(): boolean {
@@ -48,4 +45,16 @@ export class AuthenticationService {
     sessionStorage.removeItem('username');
   }
 
+}
+
+export class User{
+  constructor(
+    public status: string
+  ) {}
+}
+
+export class JwtResponse{
+  constructor(
+    public jwttoken: string
+  ) {}
 }

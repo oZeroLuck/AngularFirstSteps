@@ -25,6 +25,7 @@ import { FormsModule } from '@angular/forms';
 import { ResFormComponent } from './pages/res-form/res-form.component';
 
 import { JwtModule } from '@auth0/angular-jwt';
+import { ProfileComponent } from './pages/profile/profile.component';
 
 export function tokenGetter(): any {
   return localStorage.getItem('access_token');
@@ -42,7 +43,8 @@ export function tokenGetter(): any {
     NavBarComponent,
     FormComponent,
     ReservationsComponent,
-    ResFormComponent
+    ResFormComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -56,16 +58,19 @@ export function tokenGetter(): any {
     HttpClientInMemoryWebApiModule.forRoot(
       InMemoryDataService, {dataEncapsulation: false}
     ),
-    JwtModule.forRoot({
-      config: {
-        tokenGetter: tokenGetter,
-        allowedDomains: ['http://localhost:4200/dashboard'],
-        disallowedRoutes: ['http://example.com/examplebadroute/']
-      }
-    }),
     FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+/*
+JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        allowedDomains: ['http://localhost:4200/dashboard'],
+        disallowedRoutes: ['http://example.com/examplebadroute/']
+      }
+    }),
+ */

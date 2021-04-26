@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpRequest, HttpHandler } from '@angular/common/http';
-import { AuthenticationService} from './resources/services/authentication.service';
+import { AuthenticationService } from './resources/services/authentication.service';
 
 @Injectable({
   providedIn: 'root'

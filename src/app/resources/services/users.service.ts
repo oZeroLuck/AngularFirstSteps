@@ -33,6 +33,14 @@ export class UsersService {
     );
   }
 
+  getByUsername(username: string): Observable<UserClass> {
+    const url = `${this.usersUrl}/?username=${username}`;
+    return this.http.get<UserClass>(url).pipe(
+      tap(_ => console.log(`Fetched username=${username}`)),
+      catchError(this.handleError<UserClass>(`User usename=${username}`))
+    );
+  }
+
   add(customer: UserClass): Observable<UserClass> {
     return this.http.post<UserClass>(this.usersUrl, customer, this.httpOptions).pipe(
       tap((newCustomer: UserClass) => console.log(`Added new Customer w/ id=${newCustomer.id}`)),

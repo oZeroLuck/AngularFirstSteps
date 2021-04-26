@@ -11,11 +11,11 @@
         </div>
         <div class="mb-3">
           <label for="password" class="form-label">Password</label>
-          <input type="password" class="form-control" id="password">
+          <input #password type="password" class="form-control" id="password">
         </div>
         <div class="mb-3 form-check">
           <input type="checkbox" class="form-check-input" id="remember_me">
-          <label #password class="form-check-label" for="remember_me">Remember me</label>
+          <label class="form-check-label" for="remember_me">Remember me</label>
         </div>
         <app-custom-button [btnType]="loginBtn" (click)="login(username.value, password.value)"></app-custom-button>
       </form>
