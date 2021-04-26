@@ -8,19 +8,20 @@ export class InMemoryDataService implements InMemoryDbService {
   // tslint:disable-next-line:typedef
   createDb() {
     const usersList = [
-      {id: 1, name: 'Giada', lastName: 'Sborchia', dateOfBirth: '1999-12-16'},
-      {id: 2, name: 'Francesca', lastName: 'Mecca', dateOfBirth: new Date(1998, 12, 18)},
-      {id: 3, name: 'Alice', lastName: 'Erba', dateOfBirth: new Date(2005, 9, 7)},
-      {id: 4, name: 'Manuel', lastName: 'Tocchi', dateOfBirth: new Date(1989, 6, 23)},
-      {id: 5, name: 'Luigi', lastName: 'Durso', dateOfBirth: new Date(1990, 5, 14)},
-      {id: 6, name: 'Lorenzo', lastName: 'Gaggero', dateOfBirth: new Date(1993, 8, 12)},
-      {id: 7, name: 'Francesca', lastName: 'Serratore', dateOfBirth: new Date(1970, 3, 15)},
-      {id: 8, name: 'Aurora', lastName: 'Pelizzoni', dateOfBirth: new Date(2001, 7, 16)},
-      {id: 9, name: 'Emma', lastName: 'Minoggio', dateOfBirth: new Date(1997, 11, 21)},
-      {id: 10, name: 'Carlo', lastName: 'Amante', dateOfBirth: new Date(1995, 2, 21)},
-      {id: 11, name: 'Alessandro', lastName: 'De Benedettis', dateOfBirth: new Date(1980, 1, 18)},
-      {id: 12, name: 'Milena', lastName: 'Coffetti', dateOfBirth: new Date(1994, 3, 13)},
-      {id: 13, name: 'Stefano', lastName: 'Viscardi', dateOfBirth: new Date(1987, 6, 28)}
+      {id: -1, name: 'Fabio', lastName: 'Hu', dateOfBirth: '1997-12-29', isAdmin: true, username: 'Admin'},
+      {id: 1, name: 'Giada', lastName: 'Sborchia', dateOfBirth: '1999-12-16', isAdmin: false, username: 'User.Giada'},
+      {id: 2, name: 'Francesca', lastName: 'Mecca', dateOfBirth: '1998-12-18', isAdmin: false, username: 'User.Franci'},
+      {id: 3, name: 'Alice', lastName: 'Erba', dateOfBirth: '2005-09-07', isAdmin: false, username: 'User.Alice'},
+      {id: 4, name: 'Manuel', lastName: 'Tocchi', dateOfBirth: '1989-06-23', isAdmin: false, username: 'User.Manuel'},
+      {id: 5, name: 'Luigi', lastName: 'Durso', dateOfBirth: '1990-05-14', isAdmin: false, username: 'User.Luigi'},
+      {id: 6, name: 'Lorenzo', lastName: 'Gaggero', dateOfBirth: '1993-08-12', isAdmin: false, username: 'User.Lorenzo'},
+      {id: 7, name: 'Francesca', lastName: 'Serratore', dateOfBirth: '1970-03-15', isAdmin: false, username: 'User.Francesca'},
+      {id: 8, name: 'Aurora', lastName: 'Pelizzoni', dateOfBirth: '2001-07-16', isAdmin: false, username: 'User.Aurora'},
+      {id: 9, name: 'Emma', lastName: 'Minoggio', dateOfBirth: '1997-11-21', isAdmin: false, username: 'User.Emma'},
+      {id: 10, name: 'Carlo', lastName: 'Amante', dateOfBirth: '1995-02-21', isAdmin: false, username: 'User.Carlo'},
+      {id: 11, name: 'Alessandro', lastName: 'De Benedettis', dateOfBirth: '1980-01-18', isAdmin: false, username: 'User.Alessandro'},
+      {id: 12, name: 'Milena', lastName: 'Coffetti', dateOfBirth: '1994-03-13', isAdmin: false, username: 'User.Milena'},
+      {id: 13, name: 'Stefano', lastName: 'Viscardi', dateOfBirth: '1987-06-02', isAdmin: false, username: 'User.Stefano'}
     ];
     const vehicleList = [
       {id: 1, plate: 'DS635TD', brand: 'Ford', model: 'Fiesta', regYear: '2007'},

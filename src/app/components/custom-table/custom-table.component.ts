@@ -42,6 +42,7 @@ export class CustomTableComponent implements OnInit {
     this.orderBy(this.lastSortedColumn);
 
     this.test = null;
+    console.log(this.dateKeys);
   }
 
   hasAddBtn(buttons: any[]): void {
@@ -57,7 +58,7 @@ export class CustomTableComponent implements OnInit {
     let doSearch = true;
     if (filter.trim()) {
       // tslint:disable-next-line:only-arrow-functions
-      if (_.includes(this.dateKeys, type)) {
+      if (this.isInDate(type)) {
         console.log('Is date');
         filter = moment(filter).format('yyyy-MM-dd');
         doSearch = moment(filter).isValid();
@@ -146,10 +147,17 @@ orderBy(label: string): void {
   isDate(value: any, key: string): boolean {
     const datedValue = moment(value);
     if (datedValue.isValid() && isNaN(value)) {
-      this.dateKeys.push(key);
+      if (!_.includes(this.dateKeys, key)) {
+        this.dateKeys.push(key);
+      }
       return true;
     } else {
       return false;
     }
+  }
+
+  isInDate(key: string): boolean {
+    console.log(_.includes(this.dateKeys, key));
+    return _.includes(this.dateKeys, key);
   }
 }

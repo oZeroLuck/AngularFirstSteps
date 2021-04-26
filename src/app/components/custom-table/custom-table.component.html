@@ -1,4 +1,6 @@
-<div class="container p-2">
+<div class="container-lg">
+<div class="card">
+  <div class="card-header">
   <div class="row justify-content-center">
     <div class="col" *ngIf="addBtn">
       <app-custom-button [btnType]="addBtn" (emitter)="btnClicked('add', '')"></app-custom-button>
@@ -15,9 +17,14 @@
        Elements
     </div>
     <div class="form-inline">
-      <input #searchBox (keyup.enter)="searchBy(searchBox.value, selectBox.value); countPages(currentElementPerPage.toString());"
+      <ng-container *ngIf="isInDate(selectBox.value); else textBox">
+        <input #searchDate type="date" (keyup)="searchBy(searchDate.value, selectBox.value)">
+      </ng-container>
+      <ng-template #textBox>
+      <input #searchBox (input)="searchBy(searchBox.value, selectBox.value); countPages(currentElementPerPage.toString());"
             placeholder="Search..." class="input-group-text mr-1" style="background-color: white">
-      <select #selectBox class="custom-select custom-select-sm">
+      </ng-template>
+      <select #selectBox class="custom-select custom-select-sm" (change)="isInDate(selectBox.value)">
         <ng-container *ngFor="let option of tableConfig.search.columns">
           <option value="{{option}}">
             <ng-container *ngFor="let header of tableConfig.headers">
@@ -30,7 +37,7 @@
       </select>
     </div>
   </div>
-  <hr>
+    <hr>
   <div class="d-flex justify-content-center">
     CurrentPage: {{currentPage + 1}} | Elements from {{currentPage * currentElementPerPage + 1}} to
     <ng-container *ngIf="found > (currentPage * currentElementPerPage) + currentElementPerPage; else foundBlock">
@@ -41,6 +48,8 @@
     </ng-template>
     | No. of Elements {{found}}
   </div>
+  </div>
+  <div class="card-body">
   <table class="table table-bordered table-striped align-content-end">
     <tr>
       <th class="clickable" *ngFor="let header of tableConfig.headers" (click)="orderBy(header.key)">
@@ -76,6 +85,8 @@
       </td>
     </tr>
   </table>
+  </div>
+  <div class="card-footer">
   <div class="d-flex justify-content-center">
     CurrentPage: {{currentPage + 1}} | Elements from {{currentPage * currentElementPerPage + 1}} to
     <ng-container *ngIf="found > (currentPage * currentElementPerPage) + currentElementPerPage; else foundBlock">
@@ -86,6 +97,7 @@
     </ng-template>
     | No. of Elements {{found}}
   </div>
+    <hr>
   <div class="d-flex justify-content-center">
     <div class="mr-2">
       <ng-container *ngIf="currentPage > 0; else previousDisabled">
@@ -118,6 +130,7 @@
       </ng-template>
     </div>
   </div>
+  </div>
   <ng-container *ngIf="test !== null">
     Selected:
     <ng-container *ngFor="let header of tableConfig.headers">
@@ -125,5 +138,10 @@
     </ng-container>
      {{test.action}}
   </ng-container>
+  </div>
 </div>
-
+<br>
+<hr>
+<div class="row" *ngFor="let key of dateKeys">
+  {{key}}
+</div>

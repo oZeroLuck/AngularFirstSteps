@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import { CustomButtonComponent } from './components/custom-button/custom-button.component';
-import { CustomTableComponent } from './components/custom-table/custom-table.component';
+import { CustomTableComponent} from './components/custom-table/custom-table.component';
 import { MatIconModule } from '@angular/material/icon';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MatTableModule } from '@angular/material/table';
@@ -23,6 +23,12 @@ import { FormComponent } from './pages/form/form.component';
 import { ReservationsComponent } from './pages/reservations/reservations.component';
 import { FormsModule } from '@angular/forms';
 import { ResFormComponent } from './pages/res-form/res-form.component';
+
+import { JwtModule } from '@auth0/angular-jwt';
+
+export function tokenGetter(): any {
+  return localStorage.getItem('access_token');
+}
 
 @NgModule({
   declarations: [
@@ -50,6 +56,13 @@ import { ResFormComponent } from './pages/res-form/res-form.component';
     HttpClientInMemoryWebApiModule.forRoot(
       InMemoryDataService, {dataEncapsulation: false}
     ),
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        allowedDomains: ['http://localhost:4200/dashboard'],
+        disallowedRoutes: ['http://example.com/examplebadroute/']
+      }
+    }),
     FormsModule
   ],
   providers: [],
