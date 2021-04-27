@@ -18,7 +18,10 @@ export class FormComponent implements OnInit {
   addBtn = AddBtn;
   cancelBtn = CancelBtn;
   editBtn = EditBtn;
+
   actionType: string;
+  theClass: string;
+
   classService: any;
   object: any;
   error = false;
@@ -63,8 +66,8 @@ export class FormComponent implements OnInit {
   }
 
   getClass(): void {
-    const theClass = this.route.snapshot.paramMap.get('class');
-    switch (theClass) {
+    this.theClass = this.route.snapshot.paramMap.get('class');
+    switch (this.theClass) {
       case 'customer':
         this.classService = this.userService;
         this.object = {id: null, name: '', lastName: '', dateOfBirth: new Date()};
@@ -78,7 +81,6 @@ export class FormComponent implements OnInit {
         console.log('Ops');
     }
     this.keys = Object.keys(this.object);
-    console.log(theClass);
   }
 
   getActionType(): void {
