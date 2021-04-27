@@ -7,6 +7,7 @@ import { ReservationsComponent } from './pages/reservations/reservations.compone
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import {ResFormComponent} from './pages/res-form/res-form.component';
 import {LoginComponent} from './pages/login/login.component';
+import {ProfileComponent} from './pages/profile/profile.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/dashboard', pathMatch: 'full'},
@@ -30,7 +31,8 @@ const routes: Routes = [
       {path: '', component: CarParkComponent},
       {path: ':class/:action', component: FormComponent},
       {path: ':class/:action/:id', component: FormComponent},
-    ]}
+    ]},
+  {path: 'profile', component: ProfileComponent}
 ];
 
 @NgModule({

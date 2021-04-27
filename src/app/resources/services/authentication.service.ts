@@ -11,19 +11,28 @@ import { Observable } from 'rxjs';
 })
 export class AuthenticationService {
 
+  private apiUrl = 'api/tokenDb';
+
   constructor(
     private http: HttpClient,
     private userService: UsersService) { }
 
   authenticate(username: string, password: string): Observable<any> {
     if (this.userService.getByUsername(username)) {
-    return this.http.post<any>('api/authenticate', {username, password})
+    return this.http.post<any>(this.apiUrl, {username, password})
       .pipe(
         map(
           userData => {
             sessionStorage.setItem('username', username);
             const tokenStr = 'Bearer ' + userData.token;
             sessionStorage.setItem('token', tokenStr);
+            if (this.userService.getByUsername(username).pipe(
+              map(user => user.isAdmin)
+            )) {
+              sessionStorage.setItem('role', 'ADMIN');
+            } else {
+              sessionStorage.setItem('role', 'CUSTOMER');
+            }
             return userData;
           }
         )

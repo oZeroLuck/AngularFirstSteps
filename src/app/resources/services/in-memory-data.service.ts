@@ -35,7 +35,9 @@ export class InMemoryDataService implements InMemoryDbService {
       {id: 3, userId: 1, vehicleId: 3, startDate: '2021-04-23', endDate: '2021-05-29', status: 'denied'},
       {id: 4, userId: 2, vehicleId: 4, startDate: '2021-04-24', endDate: '2021-05-30', status: 'pending'},
     ];
-    return { usersList, vehicleList, reservationList };
+    const tokenDb = [{id: 1, username: 'null', password: 'null'}];
+    return { usersList, vehicleList, reservationList, tokenDb };
     }
+
   constructor() { }
 }
