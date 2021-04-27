@@ -1,5 +1,10 @@
 <app-nav-bar></app-nav-bar>
-<div class="container p-5">
+<div class="container">
+  <div class="card">
+    <div class="card-header">
+      <h2>{{actionType}} {{theClass}}</h2>
+    </div>
+    <div class="card-body">
 <ng-container *ngFor="let key of keys">
   <ng-container *ngIf="key !== 'id'">
     <ng-container *ngIf="isDate(object[key]); else elseBlock">
@@ -16,6 +21,8 @@
     </ng-template>
   </ng-container>
 </ng-container>
+    </div>
+    <div class="card-footer">
   <div class="row form-inline">
     <ng-container *ngIf="actionType === 'add'; else editBlock">
       <app-custom-button [btnType]="addBtn" (emitter)="actionDispatcher($event)"></app-custom-button>
@@ -25,5 +32,7 @@
     </ng-template>
     <app-custom-button [btnType]="cancelBtn" (emitter)="back()"></app-custom-button>
   </div>
+    </div>
+</div>
 </div>
 <h1 *ngIf="error" style="color: red"> Error </h1>
