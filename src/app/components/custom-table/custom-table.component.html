@@ -63,9 +63,11 @@
           </ng-template>
         </ng-container>
       </th>
-      <th style="width: 40%">
-        Actions
-      </th>
+      <ng-container *ngIf="tableConfig.actions.length > 0">
+        <th style="width: 40%">
+          Actions
+        </th>
+      </ng-container>
     </tr>
     <tr class="hover" *ngFor="let item of filteredList | paginator:currentPage:currentElementPerPage">
       <td *ngFor="let header of tableConfig.headers">
@@ -76,13 +78,15 @@
           {{item[header.key]}}
         </ng-template>
       </td>
-      <td>
+      <ng-container *ngIf="tableConfig.actions.length > 0">
+        <td>
           <ng-container *ngFor="let button of tableConfig.actions">
             <ng-container *ngIf="button !== addBtn">
               <app-custom-button [btnType]="button" (emitter)="btnClicked($event, item)"></app-custom-button>
             </ng-container>
           </ng-container>
-      </td>
+        </td>
+      </ng-container>
     </tr>
   </table>
   </div>
@@ -142,6 +146,3 @@
 </div>
 <br>
 <hr>
-<div class="row" *ngFor="let key of dateKeys">
-  {{key}}
-</div>
