@@ -1,12 +1,13 @@
 <app-nav-bar></app-nav-bar>
 <h2>{{user.name}}'s Reservations</h2>
-<div *ngIf="reservations$ | async as ItemList">
-  <app-custom-table [dataSource]="ItemList" [tableConfig]="tableConfig" (emitter)="dispatch($event)"></app-custom-table>
-</div>
-<br>
-<hr>
-<br>
-<div *ngIf="reservations$ | async as ItemList">
-  <app-custom-table [dataSource]="ItemList" [tableConfig]="adminResTable" (emitter)="dispatch($event)"></app-custom-table>
-</div>
+<ng-container *ngIf="!currentRole; else adminBlock">
+  <div *ngIf="reservations$ | async as ItemList">
+    <app-custom-table [dataSource]="ItemList" [tableConfig]="tableConfig" (emitter)="dispatch($event)"></app-custom-table>
+  </div>
+</ng-container>
+<ng-template #adminBlock>
+  <div *ngIf="reservations$ | async as ItemList">
+    <app-custom-table [dataSource]="ItemList" [tableConfig]="adminResTable" (emitter)="dispatch($event)"></app-custom-table>
+  </div>
+</ng-template>
 

@@ -3,11 +3,13 @@ import { ReservationsService } from '../../resources/services/reservations.servi
 import { ActivatedRoute, Router } from '@angular/router';
 import { ReservationClass } from '../../resources/models/reservation-class';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { ReservationTable } from '../../resources/custom-configs/table-cfg/table-reservation-config';
 import { UsersService } from '../../resources/services/users.service';
 import { UserClass } from '../../resources/models/user-class';
 import { ActionWrapper } from '../../resources/models/action-wrapper';
 import { AdminResTable } from '../../resources/custom-configs/table-cfg/table-admin-res-config';
+import {AuthenticationService} from '../../resources/services/authentication.service';
 
 @Component({
   selector: 'app-reservations',
@@ -16,6 +18,7 @@ import { AdminResTable } from '../../resources/custom-configs/table-cfg/table-ad
 })
 export class ReservationsComponent implements OnInit {
 
+  currentRole: boolean;
   adminResTable = AdminResTable;
   tableConfig = ReservationTable;
   reservations$: Observable<ReservationClass[]>;
@@ -24,10 +27,12 @@ export class ReservationsComponent implements OnInit {
   constructor(
     private resService: ReservationsService,
     private userService: UsersService,
+    private authService: AuthenticationService,
     private router: Router,
     private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.isAdmin();
     this.getReservations();
   }
 
@@ -87,5 +92,13 @@ export class ReservationsComponent implements OnInit {
     return !(status.toLowerCase() === 'approved' || status.toLowerCase() === 'denied');
   }
 
-
+  isAdmin(): void {
+    console.log(!!this.userService.getByUsername(this.authService.getCurrentUser()).pipe(
+      map(u => u.isAdmin)
+    ));
+    this.currentRole = !!this.userService.getByUsername(this.authService.getCurrentUser()).pipe(
+      map(u => u.isAdmin)
+    );
+    console.log(this.currentRole);
+  }
 }
