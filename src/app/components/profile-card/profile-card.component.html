@@ -1,0 +1,36 @@
+<div class="container">
+  <div class="card">
+    <div class="card-header">
+      <div class="row">
+        <div class="col">
+          <h2>{{userData.username}}'s Profile</h2>
+        </div>
+        <div class="col col-sm-3">
+          <app-custom-button [btnType]="editBtn"></app-custom-button>
+        </div>
+      </div>
+    </div>
+      <ng-container >
+        <div class="card-body">
+          <div class="row">
+            <div class="col">
+              <label for="name" class="mr-2">Name: </label>
+              <input id="name" type="text" [(ngModel)]="userData.name" class="form form-text">
+            </div>
+            <div class="col">
+              <label for="lastname" class="mr-2">Last Name: </label>
+              <input id="lastname" type="text" [(ngModel)]="userData.lastName" class="form form-text">
+            </div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <div class="d-flex flex-row-reverse">
+            <app-custom-button [btnType]="logoutBtn" (click)="logout()"></app-custom-button>
+          </div>
+        </div>
+      </ng-container>
+  </div>
+</div>
+<div class="row" *ngIf="toDisplay.username === 'Admin'">
+  It works?
+</div>
