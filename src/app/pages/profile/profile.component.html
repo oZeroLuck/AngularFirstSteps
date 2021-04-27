@@ -1,27 +1,45 @@
+<app-nav-bar></app-nav-bar>
+<ng-container *ngIf="currentUser$ | async as user ">
+  <app-profile-card [userData]="user"></app-profile-card>
+</ng-container>
+Not working??
+<router-outlet></router-outlet>
+
+<!--
+<div class="container">
 <div class="card">
   <div class="card-header">
-    <h2>Profile</h2>
+    <div class="row">
+      <div class="col">
+        <h2>{{currentUser.username}}'s Profile</h2>
+      </div>
+      <div class="col col-sm-3">
+        <app-custom-button [btnType]="editBtn"></app-custom-button>
+      </div>
+    </div>
   </div>
   <ng-container *ngIf="currentUser">
     <ng-container >
       <div class="card-body">
         <div class="row">
           <div class="col">
-            <label for="name">Name</label>
-            <input id="name" type="text" [(ngModel)]="currentUser.name">{{currentUser.name}}
+            <label for="name" class="mr-2">Name: </label>
+            <input id="name" type="text" [(ngModel)]="currentUser.username" class="form form-text">
           </div>
           <div class="col">
-            <label for="lastname">Last Name</label>
-            <input id="lastname" type="text" [(ngModel)]="currentUser.lastName">{{currentUser.lastName}}
+            <label for="lastname" class="mr-2">Last Name: </label>
+            <input id="lastname" type="text" [(ngModel)]="currentUser.lastName" class="form form-text">
           </div>
         </div>
       </div>
       <div class="card-footer">
-        <app-custom-button [btnType]="logoutBtn" (click)="logout()"></app-custom-button>
+        <div class="d-flex flex-row-reverse">
+          <app-custom-button [btnType]="logoutBtn" (click)="logout()"></app-custom-button>
+        </div>
       </div>
     </ng-container>
   </ng-container>
-  {{currentUser.name}}
 </div>
-<router-outlet></router-outlet>
+</div>
+-->
 
