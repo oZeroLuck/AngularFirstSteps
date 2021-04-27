@@ -15,7 +15,7 @@ import { AdminHomepageComponent } from './pages/admin-homepage/admin-homepage.co
 import { CarParkComponent } from './pages/car-park/car-park.component';
 import { LoginComponent } from './pages/login/login.component';
 
-import { HttpClientModule } from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService } from './resources/services/in-memory-data.service';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
@@ -24,8 +24,9 @@ import { ReservationsComponent } from './pages/reservations/reservations.compone
 import { FormsModule } from '@angular/forms';
 import { ResFormComponent } from './pages/res-form/res-form.component';
 
-import { JwtModule } from '@auth0/angular-jwt';
 import { ProfileComponent } from './pages/profile/profile.component';
+import { ProfileCardComponent } from './components/profile-card/profile-card.component';
+import { AuthInterceptorService } from './auth-interceptor.service';
 
 export function tokenGetter(): any {
   return localStorage.getItem('access_token');
@@ -44,7 +45,8 @@ export function tokenGetter(): any {
     FormComponent,
     ReservationsComponent,
     ResFormComponent,
-    ProfileComponent
+    ProfileComponent,
+    ProfileCardComponent
   ],
   imports: [
     BrowserModule,
@@ -60,17 +62,13 @@ export function tokenGetter(): any {
     ),
     FormsModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptorService,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
-
-/*
-JwtModule.forRoot({
-      config: {
-        tokenGetter: tokenGetter,
-        allowedDomains: ['http://localhost:4200/dashboard'],
-        disallowedRoutes: ['http://example.com/examplebadroute/']
-      }
-    }),
- */
