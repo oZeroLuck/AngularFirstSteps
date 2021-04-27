@@ -1,7 +1,9 @@
 <app-nav-bar></app-nav-bar>
 <div *ngIf="vehicles$ | async as itemList">
-  <app-custom-table [tableConfig]="vehicleTable" [dataSource]="itemList" (emitter)="dispatch($event)"></app-custom-table>
+  <ng-container *ngIf="currentUserRole(); else customerBlock">
+    <app-custom-table [tableConfig]="vehicleTable" [dataSource]="itemList" (emitter)="dispatch($event)"></app-custom-table>
+  </ng-container>
+  <ng-template #customerBlock>
+    <app-custom-table [tableConfig]="cVehicleTable" [dataSource]="itemList"></app-custom-table>
+  </ng-template>
 </div>
-  <!--
-<div *ngIf="users$ | async as itemList">
-</div>-->

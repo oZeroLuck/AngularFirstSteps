@@ -61,10 +61,4 @@ export class AdminHomepageComponent implements OnInit {
     this.getUsers();
   }
 
-  ping(): void {
-    this.http.get('api/usersList').subscribe(
-      (data) => console.log(data),
-      (err) => console.log(err)
-    );
-  }
 }

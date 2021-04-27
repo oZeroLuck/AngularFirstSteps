@@ -5,6 +5,7 @@ import { VehicleService } from '../../resources/services/vehicle.service';
 import { ActionWrapper } from '../../resources/models/action-wrapper';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import {CustomerVehicleTable} from '../../resources/custom-configs/table-cfg/table-customer-vehicle-config';
 
 @Component({
   selector: 'app-car-park',
@@ -13,6 +14,7 @@ import { Observable } from 'rxjs';
 })
 export class CarParkComponent implements OnInit {
 
+  cVehicleTable = CustomerVehicleTable;
   vehicleTable = VehicleTable;
   vehicles$: Observable<VehicleClass[]>;
 
@@ -52,5 +54,9 @@ export class CarParkComponent implements OnInit {
     this.vehicleService.delete(vehicle)
       .subscribe();
     this.getVehicles();
+  }
+
+  currentUserRole(): boolean {
+    return sessionStorage.getItem('role') === 'ADMIN';
   }
 }
