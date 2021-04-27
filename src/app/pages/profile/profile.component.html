@@ -1,1 +1,27 @@
-<p>profile works!</p>
+<div class="card">
+  <div class="card-header">
+    <h2>Profile</h2>
+  </div>
+  <ng-container *ngIf="currentUser">
+    <ng-container >
+      <div class="card-body">
+        <div class="row">
+          <div class="col">
+            <label for="name">Name</label>
+            <input id="name" type="text" [(ngModel)]="currentUser.name">{{currentUser.name}}
+          </div>
+          <div class="col">
+            <label for="lastname">Last Name</label>
+            <input id="lastname" type="text" [(ngModel)]="currentUser.lastName">{{currentUser.lastName}}
+          </div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <app-custom-button [btnType]="logoutBtn" (click)="logout()"></app-custom-button>
+      </div>
+    </ng-container>
+  </ng-container>
+  {{currentUser.name}}
+</div>
+<router-outlet></router-outlet>
+

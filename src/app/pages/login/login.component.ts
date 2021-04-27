@@ -20,7 +20,11 @@ export class LoginComponent implements OnInit {
     private userService: UsersService
   ) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    if (this.authService.isUserLoggedIn()) {
+      this.router.navigateByUrl('/dashboard');
+    }
+  }
 
   login(username: string, password: string): void {
     if (username.trim() && password.trim()) {
