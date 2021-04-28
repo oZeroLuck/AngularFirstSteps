@@ -24,4 +24,9 @@ export class AppComponent{
   public isLoggedIn(): void {
     console.log(this.authService.isUserLoggedIn());
   }
+
+  public deleteAll(): void {
+    this.authService.logOut();
+    console.log('Done');
+  }
 }
