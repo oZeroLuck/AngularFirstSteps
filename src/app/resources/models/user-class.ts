@@ -4,6 +4,7 @@ export interface UserClass {
   lastName: string;
   dateOfBirth: string;
   isAdmin: boolean;
+  email: string;
   username: string;
   password: string;
 }

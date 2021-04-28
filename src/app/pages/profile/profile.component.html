@@ -32,6 +32,16 @@
             <input id="lastname" type="text" [(ngModel)]="user.lastName" class="form-control">
           </div>
         </div>
+        <div class="row">
+          <div class="col">
+            <label for="email" class="mr-2">Email</label>
+            <input id="email" type="text" [(ngModel)]="user.email" class="form-control">
+          </div>
+          <div class="col">
+            <label for="username" class="mr-2">Username</label>
+            <input id="username" type="text" [(ngModel)]="user.username" class="form-control">
+          </div>
+        </div>
       </ng-container>
       <ng-template #displayBlock>
         <div class="row">
@@ -48,6 +58,20 @@
             </div>
           </div>
         </div>
+        <div class="row">
+          <div class="col">
+            Email
+            <div class="form-control">
+              {{user.email}}
+            </div>
+          </div>
+          <div class="col">
+            Username
+            <div class="form-control">
+              {{user.username}}
+            </div>
+          </div>
+        </div>
       </ng-template>
       </div>
       <div class="card-footer">
@@ -55,7 +79,6 @@
           <ng-container *ngIf="editMode">
             <app-custom-button [btnType]="saveBtn" (click)="save(user)"></app-custom-button>
           </ng-container>
-          <app-custom-button [btnType]="logoutBtn" (emitter)="btnClick($event)"></app-custom-button>
         </div>
       </div>
     </div>
