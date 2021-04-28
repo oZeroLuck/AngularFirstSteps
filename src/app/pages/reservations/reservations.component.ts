@@ -93,11 +93,8 @@ export class ReservationsComponent implements OnInit {
   }
 
   isAdmin(): void {
-    console.log(!!this.userService.getByUsername(this.authService.getCurrentUser()).pipe(
-      map(u => u.isAdmin)
-    ));
-    this.currentRole = !!this.userService.getByUsername(this.authService.getCurrentUser()).pipe(
-      map(u => u.isAdmin)
+    this.userService.getById(this.authService.getCurrentUser()).pipe(
+      map(u => this.currentRole = u.isAdmin)
     );
     console.log(this.currentRole);
   }
