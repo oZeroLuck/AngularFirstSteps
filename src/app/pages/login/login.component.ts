@@ -17,7 +17,6 @@ export class LoginComponent implements OnInit {
   constructor(
     private authService: AuthenticationService,
     private router: Router,
-    private userService: UsersService
   ) { }
 
   ngOnInit(): void {
@@ -34,12 +33,8 @@ export class LoginComponent implements OnInit {
       if (sessionStorage.getItem('role') === 'ADMIN') {
         this.router.navigateByUrl('/homepage/customers');
       } else {
-        this.userService.getByUsername(this.authService.getCurrentUser()).pipe(
-          map(user => {
-            sessionStorage.setItem('userId', user.id.toString());
-            this.router.navigateByUrl('/homepage/customers/reservations/' + user.id);
-          })
-        );
+        const userId = sessionStorage.getItem('id');
+        this.router.navigateByUrl('/homepage/customers/reservations/' + userId);
       }
     }
   }

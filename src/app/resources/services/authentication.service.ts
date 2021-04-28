@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 
-import { UsersService } from './users.service';
+import { InMemoryDataService } from './in-memory-data.service';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -14,41 +14,35 @@ export class AuthenticationService {
 
   constructor(
     private http: HttpClient,
-    private userService: UsersService) { }
+    private inMemory: InMemoryDataService) { }
 
-  authenticate(username: string, password: string): Observable<any> {
-    if (this.userService.getByUsername(username)) {
-    return this.http.post<any>(this.apiUrl, {username, password})
-      .pipe(
-        map(
-          userData => {
-            sessionStorage.setItem('username', username);
-            const tokenStr = 'Bearer ' + userData.token;
-            sessionStorage.setItem('token', tokenStr);
-            if (this.userService.getByUsername(username).pipe(
-              map(user => user.isAdmin)
-            )) {
-              sessionStorage.setItem('role', 'ADMIN');
-            } else {
-              sessionStorage.setItem('role', 'CUSTOMER');
-            }
-            return userData;
-          }
-        )
-      );
-    }
+  authenticate(username: string, password: string): any {
+    return this.inMemory.authenticate({username, password}).pipe(
+      map(
+        (userData: any) => {
+          console.log(userData.body);
+          sessionStorage.setItem('id', userData.body.id);
+          sessionStorage.setItem('role', userData.body.role);
+          return userData;
+        }
+      )
+    );
   }
 
-  getCurrentUser(): any {
-    return sessionStorage.getItem('username');
+  getCurrentUser(): number {
+    return parseInt(sessionStorage.getItem('id'), 10);
   }
 
   isUserLoggedIn(): boolean {
-    const user = sessionStorage.getItem('username');
-    return !(user === null);
+    console.log('id: ' + sessionStorage.getItem('id'));
+    console.log('role: ' + sessionStorage.getItem('role'));
+    return !(sessionStorage.getItem('id') === null);
   }
 
   logOut(): void {
+    sessionStorage.removeItem('role');
+    sessionStorage.removeItem('id');
+    sessionStorage.removeItem('token');
     sessionStorage.removeItem('username');
   }
 
