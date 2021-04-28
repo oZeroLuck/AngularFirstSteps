@@ -9,7 +9,7 @@ import { UsersService } from '../../resources/services/users.service';
 import { UserClass } from '../../resources/models/user-class';
 import { ActionWrapper } from '../../resources/models/action-wrapper';
 import { AdminResTable } from '../../resources/custom-configs/table-cfg/table-admin-res-config';
-import {AuthenticationService} from '../../resources/services/authentication.service';
+import { AuthenticationService } from '../../resources/services/authentication.service';
 
 @Component({
   selector: 'app-reservations',
