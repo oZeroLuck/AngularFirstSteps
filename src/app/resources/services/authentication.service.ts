@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 
 import { InMemoryDataService } from './in-memory-data.service';
-import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -43,7 +42,6 @@ export class AuthenticationService {
     sessionStorage.removeItem('role');
     sessionStorage.removeItem('id');
     sessionStorage.removeItem('token');
-    sessionStorage.removeItem('username');
   }
 
 }
