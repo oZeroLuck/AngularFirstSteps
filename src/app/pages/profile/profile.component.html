@@ -1,7 +1,6 @@
 <app-nav-bar></app-nav-bar>
 <ng-container *ngIf="currentUser$ | async as user ">
-  <app-profile-card [userData]="user"></app-profile-card>
-  <hr>
+  <!--<app-profile-card [userData]="user"></app-profile-card>-->
   <div class="container">
     <div class="card">
       <div class="card-header">
@@ -9,30 +8,56 @@
           <div class="col">
             <h2>{{user.username}}'s Profile</h2>
           </div>
-          <div class="col col-sm-3">
-            <app-custom-button [btnType]="editBtn"></app-custom-button>
-          </div>
+          <ng-container *ngIf="editMode; else editBlock">
+            <div class="col col-sm-3">
+              <app-custom-button [btnType]="cancelBtn" (emitter)="btnClick($event)"></app-custom-button>
+            </div>
+          </ng-container>
+          <ng-template #editBlock>
+            <div class="col col-sm-3">
+              <app-custom-button [btnType]="editBtn" (emitter)="btnClick($event)"></app-custom-button>
+            </div>
+          </ng-template>
         </div>
       </div>
-      <ng-container >
-        <div class="card-body">
-          <div class="row">
-            <div class="col">
-              <label for="name" class="mr-2">Name: </label>
-              <input id="name" type="text" [(ngModel)]="user.name" class="form form-text">
-            </div>
-            <div class="col">
-              <label for="lastname" class="mr-2">Last Name: </label>
-              <input id="lastname" type="text" [(ngModel)]="user.lastName" class="form form-text">
-            </div>
+      <div class="card-body">
+      <ng-container *ngIf="editMode; else displayBlock">
+        <div class="row">
+          <div class="col">
+            <label for="name" class="mr-2">Name</label>
+            <input id="name" type="text" [(ngModel)]="user.name" class="form-control">
           </div>
-        </div>
-        <div class="card-footer">
-          <div class="d-flex flex-row-reverse">
-            <app-custom-button [btnType]="logoutBtn" (click)="logout()"></app-custom-button>
+          <div class="col">
+            <label for="lastname" class="mr-2">Last Name</label>
+            <input id="lastname" type="text" [(ngModel)]="user.lastName" class="form-control">
           </div>
         </div>
       </ng-container>
+      <ng-template #displayBlock>
+        <div class="row">
+          <div class="col">
+            Name
+            <div class="form-control">
+              {{user.name}}
+            </div>
+          </div>
+          <div class="col">
+            Last Name
+            <div class="form-control">
+              {{user.lastName}}
+            </div>
+          </div>
+        </div>
+      </ng-template>
+      </div>
+      <div class="card-footer">
+        <div class="d-flex flex-row-reverse">
+          <ng-container *ngIf="editMode">
+            <app-custom-button [btnType]="saveBtn" (click)="save(user)"></app-custom-button>
+          </ng-container>
+          <app-custom-button [btnType]="logoutBtn" (emitter)="btnClick($event)"></app-custom-button>
+        </div>
+      </div>
     </div>
   </div>
 </ng-container>

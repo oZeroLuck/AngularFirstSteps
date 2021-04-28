@@ -6,7 +6,7 @@
     </div>
     <div class="card-body">
 <ng-container *ngFor="let key of keys">
-  <ng-container *ngIf="key !== 'id'">
+  <ng-container *ngIf="key !== 'id' && key !== 'password'">
     <ng-container *ngIf="isDate(object[key]); else elseBlock">
       <div class="row mb-2">
         <label for="user-{{key}}" class="col-form-label mr-2">{{key}}:</label>

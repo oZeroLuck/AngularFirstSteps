@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { UsersService } from '../../resources/services/users.service';
-import {AuthenticationService} from '../../resources/services/authentication.service';
+import { AuthenticationService } from '../../resources/services/authentication.service';
 import { UserClass } from '../../resources/models/user-class';
 import { LogoutBtn } from '../../resources/custom-configs/buttons/logout-btn';
 import { Router } from '@angular/router';
-import {Observable} from 'rxjs';
+import { Observable } from 'rxjs';
 import { EditBtn } from '../../resources/custom-configs/buttons/edit-btn';
+import {CancelBtn} from '../../resources/custom-configs/buttons/cancel-btn';
+import {SaveBtn} from '../../resources/custom-configs/buttons/save-btn';
 import {map} from 'rxjs/operators';
 
 @Component({
@@ -22,6 +24,8 @@ export class ProfileComponent implements OnInit {
 
   logoutBtn = LogoutBtn;
   editBtn = EditBtn;
+  cancelBtn = CancelBtn;
+  saveBtn = SaveBtn;
 
   constructor(
     private userService: UsersService,
@@ -31,15 +35,33 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.getCurrentUser();
-    this.editMode = true;
-    console.log(this.currentUser$);
+    this.editMode = false;
+  }
+
+  btnClick(action: string): void {
+    switch (action) {
+      case 'edit':
+        this.editMode = true;
+        break;
+      case 'logout':
+        this.logout();
+        break;
+      case 'cancel':
+        this.editMode = false;
+        break;
+      default:
+        console.log('Wtf just happened?');
+    }
   }
 
   getCurrentUser(): void {
     const currentUserId = this.authService.getCurrentUser();
-    console.log(currentUserId);
     this.currentUser$ = this.userService.getById(currentUserId);
-    this.userService.getById(currentUserId).subscribe(o => console.log(o));
+  }
+
+  save(user: UserClass): void {
+    this.userService.update(user).subscribe();
+    this.editMode = false;
   }
 
   logout(): void {
