@@ -3,12 +3,11 @@ import { UsersService } from '../../resources/services/users.service';
 import { AuthenticationService } from '../../resources/services/authentication.service';
 import { UserClass } from '../../resources/models/user-class';
 import { LogoutBtn } from '../../resources/custom-configs/buttons/logout-btn';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { EditBtn } from '../../resources/custom-configs/buttons/edit-btn';
 import {CancelBtn} from '../../resources/custom-configs/buttons/cancel-btn';
 import {SaveBtn} from '../../resources/custom-configs/buttons/save-btn';
-import {map} from 'rxjs/operators';
 
 @Component({
   selector: 'app-profile',
@@ -30,7 +29,8 @@ export class ProfileComponent implements OnInit {
   constructor(
     private userService: UsersService,
     private authService: AuthenticationService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
@@ -55,7 +55,12 @@ export class ProfileComponent implements OnInit {
   }
 
   getCurrentUser(): void {
-    const currentUserId = this.authService.getCurrentUser();
+    let currentUserId: number;
+    if (sessionStorage.getItem('role') === 'ADMIN') {
+      currentUserId = this.authService.getCurrentUser();
+    } else {
+      currentUserId = parseInt(this.route.snapshot.paramMap.get('id'), 10);
+    }
     this.currentUser$ = this.userService.getById(currentUserId);
   }
 

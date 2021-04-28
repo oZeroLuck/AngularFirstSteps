@@ -25,7 +25,6 @@ import { FormsModule } from '@angular/forms';
 import { ResFormComponent } from './pages/res-form/res-form.component';
 
 import { ProfileComponent } from './pages/profile/profile.component';
-import { ProfileCardComponent } from './components/profile-card/profile-card.component';
 import { AuthInterceptorService } from './auth-interceptor.service';
 
 export function tokenGetter(): any {
@@ -45,8 +44,7 @@ export function tokenGetter(): any {
     FormComponent,
     ReservationsComponent,
     ResFormComponent,
-    ProfileComponent,
-    ProfileCardComponent
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
