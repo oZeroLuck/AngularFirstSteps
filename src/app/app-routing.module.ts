@@ -14,7 +14,7 @@ import { AdminAuthGuard } from './admin-auth-guard.service';
 import { BasicAuthGuard } from './basic-auth-guard.service';
 
 const routes: Routes = [
-  {path: '', redirectTo: '/dashboard', pathMatch: 'full'},
+  {path: '', redirectTo: '/login', pathMatch: 'full'},
   {path: 'login', component: LoginComponent},
   {path: 'dashboard', component: NavBarComponent, canActivate: [BasicAuthGuard]},
   {path: 'homepage/customers',
