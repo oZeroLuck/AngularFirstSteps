@@ -12,4 +12,11 @@ export class NavBarComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  currentRole(): boolean {
+    return sessionStorage.getItem('role') === 'ADMIN';
+  }
+
+  getCustomerId(): string {
+    return sessionStorage.getItem('id');
+  }
 }

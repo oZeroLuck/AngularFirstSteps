@@ -8,7 +8,12 @@
     <div class="collapse navbar-collapse" id="navbarContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link" routerLink="/homepage/customers" routerLinkActive="active">Homepage</a>
+          <ng-container *ngIf="currentRole(); else customerBlock">
+            <a class="nav-link" routerLink="/homepage/customers" routerLinkActive="active">Homepage</a>
+          </ng-container>
+          <ng-template #customerBlock>
+            <a class="nav-link" routerLink="/homepage/customers/reservations/{{getCustomerId()}}" routerLinkActive="active">Homepage</a>
+          </ng-template>
         </li>
         <li class="nav-item">
           <a class="nav-link" routerLink="/carPark" routerLinkActive="active">Car Park</a>
