@@ -36,10 +36,10 @@ export class ProfileComponent implements OnInit {
   }
 
   getCurrentUser(): void {
-    const currentUserName = this.authService.getCurrentUser();
-    console.log(currentUserName);
-    this.currentUser$ = this.userService.getByUsername(currentUserName);
-    this.userService.getByUsername(currentUserName).subscribe(o => console.log(o));
+    const currentUserId = this.authService.getCurrentUser();
+    console.log(currentUserId);
+    this.currentUser$ = this.userService.getById(currentUserId);
+    this.userService.getById(currentUserId).subscribe(o => console.log(o));
   }
 
   logout(): void {
