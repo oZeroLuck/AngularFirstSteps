@@ -20,6 +20,7 @@ const routes: Routes = [
   {path: 'homepage/customers',
     children: [
       {path: '', component: AdminHomepageComponent, canActivate: [AdminAuthGuard]},
+      {path: 'profile/:id', component: ProfileComponent},
       {path: 'reservations', canActivate: [BasicAuthGuard], children: [
           {path: ':userId', children: [
               {path: '', component: ReservationsComponent},

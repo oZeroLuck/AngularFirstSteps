@@ -1,5 +1,4 @@
-<hr>
-<nav class="navbar navbar-expand-sm navbar-light bg-light">
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark mb-4">
   <div class="container-fluid">
     <a class="navbar-brand">CarRental</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -19,10 +18,15 @@
           <a class="nav-link" routerLink="/carPark" routerLinkActive="active">Car Park</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/profile" routerLinkActive="active">Profile</a>
+          <ng-container *ngIf="currentRole(); else customerProfile">
+            <a class="nav-link" routerLink="/profile" routerLinkActive="active">Profile</a>
+          </ng-container>
+          <ng-template #customerProfile>
+            <a class="nav-link" routerLink="/homepage/customers/profile/{{getCustomerId()}}" routerLinkActive="active">Profile</a>
+          </ng-template>
         </li>
       </ul>
     </div>
+    <app-custom-button [btnType]="logoutBtn" (click)="logout()">Logout</app-custom-button>
   </div>
 </nav>
-<hr>
