@@ -12,6 +12,7 @@ import { ProfileComponent } from './pages/profile/profile.component';
 
 import { AdminAuthGuard } from './admin-auth-guard.service';
 import { BasicAuthGuard } from './basic-auth-guard.service';
+import {ModalBasicComponent} from './components/modal-password/modal-basic.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/login', pathMatch: 'full'},
