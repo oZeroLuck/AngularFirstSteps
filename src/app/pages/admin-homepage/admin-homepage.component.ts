@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserClass } from '../../resources/models/user-class';
 import { UserTable } from '../../resources/custom-configs/table-cfg/table-user-config';
-import { UsersService } from '../../resources/services/users.service';
+import { UsersService } from '../../resources/services/model-services/users.service';
 import { Observable } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ActionWrapper } from '../../resources/models/action-wrapper';

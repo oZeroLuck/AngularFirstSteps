@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ReservationsService } from '../../resources/services/reservations.service';
+import { ReservationsService } from '../../resources/services/model-services/reservations.service';
 import { ReservationClass } from '../../resources/models/reservation-class';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CancelBtn } from '../../resources/custom-configs/buttons/cancel-btn';
-import { VehicleService } from '../../resources/services/vehicle.service';
+import { VehicleService } from '../../resources/services/model-services/vehicle.service';
 import { VehicleClass } from '../../resources/models/vehicle-class';
 import * as moment from 'moment';
 import * as _ from 'lodash';

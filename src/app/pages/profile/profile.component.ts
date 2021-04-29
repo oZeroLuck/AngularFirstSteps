@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { UsersService } from '../../resources/services/users.service';
-import { AuthenticationService } from '../../resources/services/authentication.service';
+import { UsersService } from '../../resources/services/model-services/users.service';
+import { AuthenticationService } from '../../resources/services/authentication/authentication.service';
 import { UserClass } from '../../resources/models/user-class';
 import { LogoutBtn } from '../../resources/custom-configs/buttons/logout-btn';
 import { Router, ActivatedRoute } from '@angular/router';

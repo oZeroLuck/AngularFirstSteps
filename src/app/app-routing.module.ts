@@ -10,8 +10,8 @@ import { ResFormComponent } from './pages/res-form/res-form.component';
 import { LoginComponent } from './pages/login/login.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 
-import { AdminAuthGuard } from './admin-auth-guard.service';
-import { BasicAuthGuard } from './basic-auth-guard.service';
+import { AdminAuthGuard } from './resources/services/authentication/admin-auth-guard.service';
+import { BasicAuthGuard } from './resources/services/authentication/basic-auth-guard.service';
 import {ModalBasicComponent} from './components/modal-password/modal-basic.component';
 
 const routes: Routes = [

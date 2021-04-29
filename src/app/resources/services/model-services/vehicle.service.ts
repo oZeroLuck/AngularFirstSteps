@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { VehicleClass } from '../models/vehicle-class';
+import { VehicleClass } from '../../models/vehicle-class';
 import { Observable, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, tap } from 'rxjs/operators';

@@ -25,7 +25,7 @@ import { FormsModule } from '@angular/forms';
 import { ResFormComponent } from './pages/res-form/res-form.component';
 
 import { ProfileComponent } from './pages/profile/profile.component';
-import { AuthInterceptorService } from './auth-interceptor.service';
+import { AuthInterceptorService } from './resources/services/authentication/auth-interceptor.service';
 import { ModalBasicComponent } from './components/modal-password/modal-basic.component';
 
 export function tokenGetter(): any {

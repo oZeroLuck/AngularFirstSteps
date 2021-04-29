@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { ReservationsService } from '../../resources/services/reservations.service';
+import { ReservationsService } from '../../resources/services/model-services/reservations.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ReservationClass } from '../../resources/models/reservation-class';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ReservationTable } from '../../resources/custom-configs/table-cfg/table-reservation-config';
-import { UsersService } from '../../resources/services/users.service';
+import { UsersService } from '../../resources/services/model-services/users.service';
 import { UserClass } from '../../resources/models/user-class';
 import { ActionWrapper } from '../../resources/models/action-wrapper';
 import { AdminResTable } from '../../resources/custom-configs/table-cfg/table-admin-res-config';
-import { AuthenticationService } from '../../resources/services/authentication.service';
+import { AuthenticationService } from '../../resources/services/authentication/authentication.service';
 
 @Component({
   selector: 'app-reservations',

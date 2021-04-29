@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginBtn } from '../../resources/custom-configs/buttons/login-btn';
-import { AuthenticationService} from '../../resources/services/authentication.service';
+import { AuthenticationService} from '../../resources/services/authentication/authentication.service';
 import { Router } from '@angular/router';
-import { UsersService } from '../../resources/services/users.service';
+import { UsersService } from '../../resources/services/model-services/users.service';
 import { map } from 'rxjs/operators';
 
 @Component({

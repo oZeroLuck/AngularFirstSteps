@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { ReservationClass } from '../models/reservation-class';
+import { ReservationClass } from '../../models/reservation-class';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, tap, map} from 'rxjs/operators';
 import * as moment from 'moment';
