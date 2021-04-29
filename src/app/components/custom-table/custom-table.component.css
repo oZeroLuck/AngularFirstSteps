@@ -3,7 +3,7 @@ table {
 }
 
 .hover:hover {
-  background-color: aqua;
+  background-color: lightgrey;
 }
 
 .clickable:hover {
