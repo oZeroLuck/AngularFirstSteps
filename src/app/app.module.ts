@@ -27,6 +27,7 @@ import { ResFormComponent } from './pages/res-form/res-form.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { AuthInterceptorService } from './resources/services/authentication/auth-interceptor.service';
 import { ModalBasicComponent } from './components/modal-password/modal-basic.component';
+import { CustomFormComponent } from './components/custom-form/custom-form.component';
 
 export function tokenGetter(): any {
   return localStorage.getItem('access_token');
@@ -47,7 +48,8 @@ export function tokenGetter(): any {
     ResFormComponent,
     ProfileComponent,
     ModalBasicComponent,
-    ModalBasicComponent
+    ModalBasicComponent,
+    CustomFormComponent
   ],
   imports: [
     BrowserModule,

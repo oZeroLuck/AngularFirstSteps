@@ -1,0 +1,31 @@
+<div class="container">
+  <div class="card">
+    <div class="card-header" *ngIf="objClass === 'customer'; else vehicleBlock">
+      {{obj.username}}'s Profile
+    </div>
+    <ng-template #vehicleBlock>
+      Vehicle's Info
+    </ng-template>
+    <div class="card-body">
+      <div class="form-group">
+        <div class="row" *ngFor="let row of rows">
+          <div class="col" *ngFor="let key of row">
+            <label for="form{{key}}">{{key}}</label>
+            <input id="form{{key}}" type="text" name="{{key}}" class="form-control"
+                   required minlength="2" [(ngModel)]="obj[key]" #key="ngModel">
+            <div class="alert alert-danger" *ngIf="key.invalid && (key.dirty || key.touched)">
+              <div *ngIf="key.errors.required">
+                {{key}} is required
+              </div>
+              <div *ngIf="key.errors.minlength">
+                {{key}} must be at least 2 character long
+              </div>
+            </div>
+          </div>
+          <div class="col" *ngIf="row.length < 2">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
