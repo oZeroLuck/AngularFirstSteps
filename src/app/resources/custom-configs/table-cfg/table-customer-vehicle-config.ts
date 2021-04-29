@@ -1,7 +1,4 @@
 import { CustomTableConfig, MyHeaders, MyOrder, MyPagination, MySearch } from './table-config';
-import { PrimaryButton } from '../buttons/primaryBtn';
-import { EditBtn } from '../buttons/edit-btn';
-import { DeleteBtn } from '../buttons/delete-btn';
 
 const TheHeaders: MyHeaders[] = [
   {key: 'plate', label: 'Licence Plate'},
