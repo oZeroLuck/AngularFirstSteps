@@ -19,7 +19,7 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService } from './resources/services/in-memory-data.service';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
-import { FormComponent } from './pages/form/form.component';
+import { FormComponent } from './pages/vehicle-edit/form.component';
 import { ReservationsComponent } from './pages/reservations/reservations.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { ResFormComponent } from './pages/res-form/res-form.component';
