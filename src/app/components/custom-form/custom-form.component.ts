@@ -1,20 +1,37 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {UsersService} from '../../resources/services/model-services/users.service';
 import {VehicleService} from '../../resources/services/model-services/vehicle.service';
+import {SaveBtn} from '../../resources/custom-configs/buttons/save-btn';
 import * as _ from 'lodash';
 import * as moment from 'moment';
+import {CancelBtn} from '../../resources/custom-configs/buttons/cancel-btn';
+import {ActionWrapper} from '../../resources/models/action-wrapper';
+import {EditBtn} from '../../resources/custom-configs/buttons/edit-btn';
+import {EditPswBtn} from '../../resources/custom-configs/buttons/edit-psw-btn';
+
+interface Row {
+  items: string[];
+}
 
 @Component({
   selector: 'app-custom-form',
   templateUrl: './custom-form.component.html',
   styleUrls: ['./custom-form.component.css']
 })
+
 export class CustomFormComponent implements OnInit {
   @Input() obj: any;
   @Input() objClass: string;
-  @Input() actionType: string;
+  @Input() disabled: boolean;
 
-  rows = [];
+  @Output() emitter = new EventEmitter<any>();
+
+  saveBtn = SaveBtn;
+  cancelBtn = CancelBtn;
+  editBtn = EditBtn;
+  editPswd = EditPswBtn;
+
+  rows: Row[] = [];
   objKeys: any;
   classService: any;
 
@@ -45,14 +62,15 @@ export class CustomFormComponent implements OnInit {
     console.log(this.objKeys);
     const length = this.objKeys.length;
     for (let i = 0; i < length; i += 2) {
-      const temp: string[] = [];
-      temp.push(this.objKeys[i]);
-      temp.push(this.objKeys[i + 1]);
-      this.rows.push(temp);
+      const row: Row = {items: []};
+      row.items.push(this.objKeys[i]);
+      row.items.push(this.objKeys[i + 1]);
+      console.log(row);
+      this.rows.push(row);
     }
-    console.log(this.rows[this.rows.length - 1]);
+    console.log(this.rows[this.rows.length - 1].items);
     // tslint:disable-next-line:only-arrow-functions
-    _.remove(this.rows[this.rows.length - 1], function(o): any {
+    _.remove(this.rows[this.rows.length - 1].items, function(o): any {
       return o === undefined;
     });
     console.log(this.rows);
@@ -61,6 +79,14 @@ export class CustomFormComponent implements OnInit {
   isDate(value: string): boolean {
     const datedValue = moment(value);
     return (datedValue.isValid() && isNaN(Number(value)));
+  }
+
+  btnClick(action: string): void {
+    if (action === 'save') {
+      this.emitter.emit(this.obj);
+    } else {
+      this.emitter.emit(action);
+    }
   }
 
 }

@@ -1,31 +1,64 @@
 <div class="container">
   <div class="card">
-    <div class="card-header" *ngIf="objClass === 'customer'; else vehicleBlock">
-      {{obj.username}}'s Profile
+    <div class="card-header">
+      <div class="row">
+        <div class="col">
+          <ng-container *ngIf="objClass === 'customer'; else vehicleBlock">
+            <h2>{{obj.username}}'s Profile</h2>
+          </ng-container>
+          <ng-template #vehicleBlock>
+            <h2>Vehicle's Info</h2>
+          </ng-template>
+        </div>
+        <ng-container *ngIf="disabled">
+          <div class="col">
+            <div class="d-flex flex-row-reverse">
+              <app-custom-button [btnType]="editBtn" (emitter)="btnClick($event)"></app-custom-button>
+            </div>
+          </div>
+        </ng-container>
+      </div>
     </div>
-    <ng-template #vehicleBlock>
-      Vehicle's Info
-    </ng-template>
     <div class="card-body">
       <div class="form-group">
         <div class="row" *ngFor="let row of rows">
-          <div class="col" *ngFor="let key of row">
-            <label for="form{{key}}">{{key}}</label>
-            <input id="form{{key}}" type="text" name="{{key}}" class="form-control"
-                   required minlength="2" [(ngModel)]="obj[key]" #key="ngModel">
-            <div class="alert alert-danger" *ngIf="key.invalid && (key.dirty || key.touched)">
-              <div *ngIf="key.errors.required">
-                {{key}} is required
+          <div class="col" *ngFor="let key of row.items">
+            <ng-container *ngIf="isDate(obj[key]); else textBlock">
+              <label for="date-{{key}}">{{key}}</label>
+              <input id="date-{{key}}" type="date" name="{{key}}" class="form-control"
+                     required [(ngModel)]="obj[key]" #date="ngModel" [disabled]="disabled">
+              <div *ngIf="date.invalid && (date.dirty || date.touched)" class="alert alert-danger">
+                <div *ngIf="date.errors.required">
+                  {{key}} is required
+                </div>
               </div>
-              <div *ngIf="key.errors.minlength">
-                {{key}} must be at least 2 character long
+            </ng-container>
+            <ng-template #textBlock>
+            <label for="form-{{key}}">{{key}}</label>
+            <input id="form-{{key}}" type="text" name="{{key}}" class="form-control"
+                   required minlength="2" [(ngModel)]="obj[key]" #item="ngModel" [disabled]="disabled">
+              <div *ngIf="item.invalid && (item.dirty || item.touched)" class="alert alert-danger">
+                <div *ngIf="item.errors.required">
+                  {{key}} is required
+                </div>
+                <div *ngIf="item.errors.minlength">
+                  {{key}} must be at least 2 character long
+                </div>
               </div>
-            </div>
+            </ng-template>
           </div>
-          <div class="col" *ngIf="row.length < 2">
+          <div class="col" *ngIf="row.items.length < 2">
           </div>
         </div>
       </div>
     </div>
+    <ng-container *ngIf="!disabled">
+      <div class="card-footer">
+        <div class="d-flex flex-row-reverse">
+          <app-custom-button [btnType]="saveBtn" (emitter)="btnClick($event)"></app-custom-button>
+          <app-custom-button [btnType]="cancelBtn" (emitter)="btnClick($event)"></app-custom-button>
+        </div>
+      </div>
+    </ng-container>
   </div>
 </div>
