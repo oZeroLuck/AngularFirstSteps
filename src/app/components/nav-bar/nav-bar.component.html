@@ -17,16 +17,26 @@
         <li class="nav-item">
           <a class="nav-link" routerLink="/carPark" routerLinkActive="active">Car Park</a>
         </li>
-        <li class="nav-item">
-          <ng-container *ngIf="currentRole(); else customerProfile">
-            <a class="nav-link" routerLink="/profile" routerLinkActive="active">Profile</a>
-          </ng-container>
-          <ng-template #customerProfile>
-            <a class="nav-link" routerLink="/homepage/customers/profile/{{getCustomerId()}}" routerLinkActive="active">Profile</a>
-          </ng-template>
-        </li>
       </ul>
     </div>
-    <app-custom-button [btnType]="logoutBtn" (click)="logout()">Logout</app-custom-button>
+    <ul class="navbar-nav">
+      <li class="nav-item dropdown">
+        <button class="btn btn-outline-success dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Reserved Area
+        </button>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <ng-container *ngIf="currentRole(); else customerProfile">
+            <a class="dropdown-item" routerLink="/profile" routerLinkActive="active">Profile</a>
+          </ng-container>
+          <ng-template #customerProfile>
+            <a class="dropdown-item" routerLink="/homepage/customers/profile/{{getCustomerId()}}" routerLinkActive="active">Profile</a>
+          </ng-template>
+          <div class="dropdown-divider"></div>
+          <div class="dropdown-item">
+            <app-custom-button [btnType]="logoutBtn" (click)="logout()"></app-custom-button>
+          </div>
+        </div>
+      </li>
+    </ul>
   </div>
 </nav>
