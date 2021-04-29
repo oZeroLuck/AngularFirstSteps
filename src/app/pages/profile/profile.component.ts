@@ -6,8 +6,9 @@ import { LogoutBtn } from '../../resources/custom-configs/buttons/logout-btn';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { EditBtn } from '../../resources/custom-configs/buttons/edit-btn';
-import {CancelBtn} from '../../resources/custom-configs/buttons/cancel-btn';
-import {SaveBtn} from '../../resources/custom-configs/buttons/save-btn';
+import { CancelBtn } from '../../resources/custom-configs/buttons/cancel-btn';
+import { SaveBtn } from '../../resources/custom-configs/buttons/save-btn';
+import { EditPswBtn } from '../../resources/custom-configs/buttons/edit-psw-btn';
 
 @Component({
   selector: 'app-profile',
@@ -25,6 +26,7 @@ export class ProfileComponent implements OnInit {
   editBtn = EditBtn;
   cancelBtn = CancelBtn;
   saveBtn = SaveBtn;
+  changePswd = EditPswBtn;
 
   constructor(
     private userService: UsersService,
@@ -49,6 +51,9 @@ export class ProfileComponent implements OnInit {
       case 'cancel':
         this.editMode = false;
         break;
+      case 'changePswd':
+        console.log('Changing pswd');
+        break;
       default:
         console.log('Wtf just happened?');
     }
@@ -67,6 +72,16 @@ export class ProfileComponent implements OnInit {
   save(user: UserClass): void {
     this.userService.update(user).subscribe();
     this.editMode = false;
+  }
+
+  checkPswd(user: UserClass, $event: any): void {
+    if (user.password === $event.current && $event.new === $event.confirm) {
+      console.log($event.new);
+      user.password = $event.new;
+      this.userService.update(user).subscribe();
+    } else {
+      console.log('PswdError');
+    }
   }
 
   logout(): void {
