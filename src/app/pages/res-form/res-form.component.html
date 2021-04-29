@@ -2,11 +2,11 @@
     <div class="row">
       <div class="col">
         <label for="startDate"></label>
-        <input #startDate id="startDate" type="date" min="{{reservation.startDate}}" [(ngModel)]="reservation.startDate">
+        <input class="form-control" #startDate id="startDate" type="date" min="{{reservation.startDate}}" [(ngModel)]="reservation.startDate">
       </div>
       <div class="col">
         <label for="endDate"></label>
-        <input #endDate id="endDate" type="date" min="{{reservation.endDate}}" [(ngModel)]="reservation.endDate">
+        <input class="form-control" #endDate id="endDate" type="date" min="{{reservation.endDate}}" [(ngModel)]="reservation.endDate">
       </div>
       <ng-container *ngIf="action === 'add'; else saveBlock">
         <div class="col">
