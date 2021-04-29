@@ -1,0 +1,27 @@
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Update password</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="form-group">
+      <label for="oldPswd" class="col-form-label">Current Password</label>
+      <input #currentPswd id="oldPswd" type="password" class="form-control">
+    </div>
+    <div class="form-group">
+      <label for="newPswd">NewPassword</label>
+      <input #newPswd id="newPswd" type="password" class="form-control">
+    </div>
+    <div class="form-group">
+      <label for="confirmNewPswd">Confirm Password</label>
+      <input #confirmPswd id="confirmNewPswd" type="password" class="form-control">
+    </div>
+  </div>
+  <div class="modal-footer">
+    <app-custom-button [btnType]="saveBtn" (click)="saveClicked(currentPswd.value, newPswd.value, confirmPswd.value); modal.close()"></app-custom-button>
+  </div>
+</ng-template>
+
+<app-custom-button [btnType]="pswdBtn" (click)="open(content)"></app-custom-button>
