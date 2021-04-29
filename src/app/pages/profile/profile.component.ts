@@ -45,9 +45,6 @@ export class ProfileComponent implements OnInit {
       case 'edit':
         this.editMode = true;
         break;
-      case 'logout':
-        this.logout();
-        break;
       case 'cancel':
         this.editMode = false;
         break;
@@ -84,8 +81,11 @@ export class ProfileComponent implements OnInit {
     }
   }
 
-  logout(): void {
-    this.authService.logOut();
-    this.router.navigateByUrl('/login');
+  dispatch(event: any): void {
+    if (typeof event === 'string') {
+      this.editMode = event !== 'cancel';
+    } else {
+      this.userService.update(event).subscribe();
+    }
   }
 }
