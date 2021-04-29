@@ -13,10 +13,12 @@
           <label for="password" class="form-label">Password</label>
           <input #password type="password" class="form-control" id="password">
         </div>
+        <!-- Not used for now
         <div class="mb-3 form-check">
           <input type="checkbox" class="form-check-input" id="remember_me">
           <label class="form-check-label" for="remember_me">Remember me</label>
         </div>
+        -->
         <app-custom-button [btnType]="loginBtn" (click)="login(username.value, password.value)"></app-custom-button>
       </form>
     </div>

@@ -21,32 +21,78 @@
       </div>
       <div class="card-body">
       <ng-container *ngIf="editMode; else displayBlock">
-        <div class="row">
-          <div class="col">
-            <label for="name">Name</label>
-            <input id="name" type="text" [(ngModel)]="user.name" class="form-control">
-          </div>
-          <div class="col">
-            <label for="lastname">Last Name</label>
-            <input id="lastname" type="text" [(ngModel)]="user.lastName" class="form-control">
-          </div>
-        </div>
-        <div class="row">
-          <div class="col">
-            <label for="email">Email</label>
-            <input id="email" type="text" [(ngModel)]="user.email" class="form-control">
-          </div>
-          <div class="col">
-            <label for="username">Username</label>
-            <input id="username" type="text" [(ngModel)]="user.username" class="form-control">
-          </div>
-        </div>
-        <div class="row">
-          <div class="col col-sm">
-            <label for="dateOfBirth">Date of birth</label>
-            <input id="dateOfBirth" type="date" [(ngModel)]="user.dateOfBirth" class="form-control">
-          </div>
-        </div>
+        <form>
+          <div class="form-group">
+            <div class="row">
+              <div class="col">
+                <label for="name">Name</label>
+                <input id="name" type="text" name="name" class="form-control" [ngModelOptions]="{standalone: true}"
+                      required minlength="2" [(ngModel)]="user.name" #name="ngModel">
+                <div *ngIf="name.invalid && (name.dirty || name.touched)" class="alert alert-danger">
+                  <div *ngIf="name.errors.required">
+                    Name is required
+                  </div>
+                  <div *ngIf="name.errors.minlength">
+                    Name must be at least 2 character long
+                  </div>
+                </div>
+              </div>
+              <div class="col">
+                <label for="lastname">Last Name</label>
+                <input id="lastname" name="lastName" type="text" class="form-control" [ngModelOptions]="{standalone: true}"
+                       required minlength="2" [(ngModel)]="user.lastName" #lastName="ngModel">
+                <div *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)" class="alert alert-danger">
+                  <div *ngIf="lastName.errors.required">
+                    Last Name is required
+                  </div>
+                  <div *ngIf="lastName.errors.minlength">
+                    Last Name must be at least 2 character long
+                  </div>
+                </div>
+              </div>
+            </div>
+              <div class="row">
+                <div class="col">
+                  <label for="email">Email</label>
+                  <input id="email" name="email" type="email" class="form-control" [ngModelOptions]="{standalone: true}"
+                         required email [(ngModel)]="user.email" #email="ngModel">
+                  <div *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)" class="alert alert-danger">
+                    <div *ngIf="email.errors.required">
+                      Email is required
+                    </div>
+                    <div *ngIf="email.errors.email">
+                      Email isn't valid
+                    </div>
+                  </div>
+                </div>
+                <div class="col">
+                  <label for="username">Username</label>
+                  <input id="username" name="username" type="text" class="form-control" [ngModelOptions]="{standalone: true}"
+                         required minlength="4" [(ngModel)]="user.username" #username="ngModel">
+                  <div *ngIf="username.invalid && (username.dirty || username.touched)" class="alert alert-danger">
+                    <div *ngIf="username.errors.required">
+                      Username is required
+                    </div>
+                    <div *ngIf="username.errors.minlength">
+                      Username must be at least 4 character long
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col col-sm">
+                  <label for="dateOfBirth">Date of birth</label>
+                  <input id="dateOfBirth" name="date" type="date" [ngModelOptions]="{standalone: true}"
+                         required [(ngModel)]="user.dateOfBirth" class="form-control" #date="ngModel">
+                  <div *ngIf="date.invalid && (date.dirty || date.touched)" class="alert alert-danger">
+                    <div *ngIf="date.errors.required">
+                      Username is required
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </form>
       </ng-container>
       <ng-template #displayBlock>
         <div class="row">
@@ -100,3 +146,4 @@
     </div>
   </div>
 </ng-container>
+
