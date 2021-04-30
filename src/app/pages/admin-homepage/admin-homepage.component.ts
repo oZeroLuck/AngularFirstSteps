@@ -17,7 +17,7 @@ import * as _ from 'lodash';
 })
 export class AdminHomepageComponent implements OnInit {
 
-  users$: Observable<UserClass[]>;
+  users: UserClass[];
   testTable = UserTable;
 
   error: boolean;
@@ -36,7 +36,7 @@ export class AdminHomepageComponent implements OnInit {
   }
 
   getUsers(): void {
-    this.users$ = this.usersService.getUsers();
+    this.usersService.getUsers().subscribe(us => this.users = us);
   }
 
   dispatch($event: ActionWrapper): void {
@@ -64,21 +64,26 @@ export class AdminHomepageComponent implements OnInit {
   }
 
   delete(user: UserClass): void {
-    const reservations = this.resService.getResByCustomer(user.id).pipe(
-      map((rs) => _.filter(rs, ['pending', 'approved']))
-    );
-    if (reservations === undefined) {
+    this.resService.getResByCustomer(user.id).subscribe( rs => {
+        const reservations = _.filter(rs, ['pending', 'approved']);
+        this.check(reservations, user);
+      });
+  }
+
+  resetError(event: boolean): void {
+    this.error = event;
+  }
+
+  check(reservations: any, user: UserClass): void {
+    if (reservations.length < 1) {
       this.usersService.delete(user)
         .subscribe();
+      this.error = false;
     } else {
       this.error = true;
       this.errMsg = 'Cannot delete this user because he/she has reservations';
     }
     this.getUsers();
-  }
-
-  resetError(event: boolean): void {
-    this.error = event;
   }
 
 }

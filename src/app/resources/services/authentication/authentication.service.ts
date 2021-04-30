@@ -8,7 +8,7 @@ import { InMemoryDataService } from '../in-memory-data.service';
   providedIn: 'root'
 })
 export class AuthenticationService {
-
+  // Future usage?
   private apiUrl = 'api/tokenDb';
 
   constructor(
@@ -33,8 +33,6 @@ export class AuthenticationService {
   }
 
   isUserLoggedIn(): boolean {
-    console.log('id: ' + sessionStorage.getItem('id'));
-    console.log('role: ' + sessionStorage.getItem('role'));
     return !(sessionStorage.getItem('id') === null);
   }
 
@@ -49,11 +47,5 @@ export class AuthenticationService {
 export class User{
   constructor(
     public status: string
-  ) {}
-}
-
-export class JwtResponse{
-  constructor(
-    public jwttoken: string
   ) {}
 }

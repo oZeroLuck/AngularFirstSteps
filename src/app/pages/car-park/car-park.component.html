@@ -3,12 +3,10 @@
   <div *ngIf="error">
     <app-alert-message [message]="errMsg" [type]="'error'" (emitter)="resetError($event)"></app-alert-message>
   </div>
-  <div *ngIf="vehicles$ | async as itemList">
-    <ng-container *ngIf="currentUserRole(); else customerBlock">
-      <app-custom-table [tableConfig]="vehicleTable" [dataSource]="itemList" (emitter)="dispatch($event)"></app-custom-table>
-    </ng-container>
-    <ng-template #customerBlock>
-      <app-custom-table [tableConfig]="cVehicleTable" [dataSource]="itemList"></app-custom-table>
-    </ng-template>
-  </div>
+  <ng-container *ngIf="currentUserRole(); else customerBlock">
+    <app-custom-table [tableConfig]="vehicleTable" [dataSource]="vehicles" (emitter)="dispatch($event)"></app-custom-table>
+  </ng-container>
+  <ng-template #customerBlock>
+    <app-custom-table [tableConfig]="cVehicleTable" [dataSource]="vehicles"></app-custom-table>
+  </ng-template>
 </div>

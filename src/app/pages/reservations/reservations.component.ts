@@ -23,7 +23,7 @@ export class ReservationsComponent implements OnInit {
   currentRole: boolean;
   adminResTable = AdminResTable;
   tableConfig = ReservationTable;
-  reservations$: Observable<ReservationClass[]>;
+  reservations: ReservationClass[];
   backBtn = BackBtn;
   user: UserClass;
 
@@ -41,9 +41,8 @@ export class ReservationsComponent implements OnInit {
   }
 
   getReservations(): void {
-    console.log(parseInt(this.route.snapshot.paramMap.get('userId'), 10));
     const toInt = parseInt(this.route.snapshot.paramMap.get('userId'), 10);
-    this.reservations$ = this.resService.getResByCustomer(toInt);
+    this.resService.getResByCustomer(toInt).subscribe(rs => this.reservations = rs);
     this.userService.getById(toInt)
       .subscribe(user => this.user = user);
   }
@@ -92,7 +91,6 @@ export class ReservationsComponent implements OnInit {
   }
 
   notPending(status: string): boolean {
-    console.log('Checking ' + status);
     return !(status.toLowerCase() === 'approved' || status.toLowerCase() === 'denied');
   }
 
@@ -100,7 +98,6 @@ export class ReservationsComponent implements OnInit {
     this.userService.getById(this.authService.getCurrentUser()).pipe(
       map(u => this.currentRole = u.isAdmin)
     );
-    console.log(this.currentRole);
   }
 
   back(): void {

@@ -3,7 +3,5 @@
   <div *ngIf="error">
     <app-alert-message [message]="errMsg" [type]="'error'" (emitter)="resetError($event)"></app-alert-message>
   </div>
-  <div *ngIf="users$ | async as itemList">
-    <app-custom-table [tableConfig]="testTable" [dataSource]="itemList" (emitter)="dispatch($event)"></app-custom-table>
-  </div>
+    <app-custom-table [tableConfig]="testTable" [dataSource]="users" (emitter)="dispatch($event)"></app-custom-table>
 </div>

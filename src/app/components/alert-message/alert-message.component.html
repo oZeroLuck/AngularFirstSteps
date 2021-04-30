@@ -3,9 +3,10 @@
     <button type="button" class="close" data-dismiss="alert" (click)="emit()">&times;</button>
     <strong>Error!</strong><p> {{message}}</p>
   </div>
-  <ng-container *ngIf="type === 'message'">
-    <div class="alert alert-warning fade show">
-      <strong>Warning!</strong><p> {{message}}</p>
-    </div>
-  </ng-container>
 </ng-container>
+<ng-container *ngIf="type === 'message'">
+  <div class="alert alert-warning fade show">
+    <strong>Warning!</strong><p> {{message}}</p>
+  </div>
+</ng-container>
+

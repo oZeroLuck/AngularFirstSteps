@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
 import { CustomTableConfig } from '../../resources/custom-configs/table-cfg/table-config';
 import * as _ from 'lodash';
 import * as moment from 'moment';
@@ -9,7 +9,7 @@ import * as moment from 'moment';
   styleUrls: ['./custom-table.component.css']
 })
 
-export class CustomTableComponent implements OnInit {
+export class CustomTableComponent implements OnChanges {
   @Input() tableConfig: CustomTableConfig;
   @Input() dataSource: any[];
 
@@ -31,7 +31,7 @@ export class CustomTableComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit(): void {
+  ngOnChanges(): void {
     this.hasAddBtn(this.tableConfig.actions);
     this.lastSortedColumn = this.tableConfig.order.defaultColumn;
     this.orderType = this.getType(this.tableConfig.order.orderType);

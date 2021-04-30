@@ -17,7 +17,7 @@ export class CarParkComponent implements OnInit {
 
   cVehicleTable = CustomerVehicleTable;
   vehicleTable = VehicleTable;
-  vehicles$: Observable<VehicleClass[]>;
+  vehicles: VehicleClass[];
   error: boolean;
   errMsg: string;
 
@@ -33,7 +33,7 @@ export class CarParkComponent implements OnInit {
   }
 
   getVehicles(): void {
-    this.vehicles$ = this.vehicleService.getVehicles();
+    this.vehicleService.getVehicles().subscribe(vs => this.vehicles = vs);
   }
 
   dispatch($event: ActionWrapper): void {
