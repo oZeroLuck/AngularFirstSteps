@@ -10,10 +10,8 @@ import * as _ from 'lodash';
 import { Observable, of } from 'rxjs';
 import { ReservationTable } from '../../resources/custom-configs/table-cfg/table-reservation-config';
 import { NewResTable } from '../../resources/custom-configs/table-cfg/table-new-reservation-config';
-import { ReserveBtn } from '../../resources/custom-configs/buttons/reserve-btn';
 import {ActionWrapper} from '../../resources/models/action-wrapper';
 import {EditBtn} from '../../resources/custom-configs/buttons/edit-btn';
-import {isEmpty} from 'rxjs/operators';
 
 
 @Component({
