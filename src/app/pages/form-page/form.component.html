@@ -1,5 +1,7 @@
 <app-nav-bar></app-nav-bar>
-<ng-container *ngIf="error">
-  <app-alert-message [message]="errMsg" [type]="'error'"></app-alert-message>
-</ng-container>
-<app-custom-form [obj]="object" [objClass]="theClass" (emitter)="actionDispatcher($event)"></app-custom-form>
+<div class="container">
+  <ng-container *ngIf="error">
+    <app-alert-message [message]="errMsg" [type]="'error'"></app-alert-message>
+  </ng-container>
+  <app-custom-form [obj]="object" [objClass]="theClass" (emitter)="actionDispatcher($event)"></app-custom-form>
+</div>

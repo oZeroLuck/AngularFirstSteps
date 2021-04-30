@@ -7,7 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { CustomerVehicleTable } from '../../resources/custom-configs/table-cfg/table-customer-vehicle-config';
 import { ReservationsService } from '../../resources/services/model-services/reservations.service';
-
+import * as _ from 'lodash';
 @Component({
   selector: 'app-car-park',
   templateUrl: './car-park.component.html',
@@ -28,7 +28,7 @@ export class CarParkComponent implements OnInit {
     private route: ActivatedRoute) {}
 
   ngOnInit(): void {
-    this.error = false;
+    // this.error = false;
     this.getVehicles();
   }
 
@@ -56,15 +56,13 @@ export class CarParkComponent implements OnInit {
   }
 
   delete(vehicle: VehicleClass): void {
-    const reservation = this.resService.getResByVehicle(vehicle.id);
-    if (reservation === undefined) {
-      this.vehicleService.delete(vehicle)
-        .subscribe();
-    } else {
-      this.error = true;
-      this.errMsg = 'There are reservations for this vehicle :' + vehicle.id;
-    }
-    this.getVehicles();
+    let reservation;
+    this.resService.getResByVehicle(vehicle.id).subscribe(x => {
+      // tslint:disable-next-line:only-arrow-functions
+      reservation = _.filter(x, function(o): any { return o.status === 'approved'; });
+      console.log(x);
+      this.checkUndefined(reservation, vehicle);
+    });
   }
 
   currentUserRole(): boolean {
@@ -73,5 +71,20 @@ export class CarParkComponent implements OnInit {
 
   resetError(event: boolean): void {
     this.error = event;
+  }
+
+  checkUndefined(object: any, vehicle: VehicleClass): void {
+    console.log('checking' + object);
+    console.log(object.length < 1);
+    if (object.length < 1) {
+      console.log('deleting');
+      this.vehicleService.delete(vehicle)
+        .subscribe();
+      this.error = false;
+    } else {
+      this.error = true;
+      this.errMsg = 'There are reservations for this vehicle :' + vehicle.id;
+    }
+    this.getVehicles();
   }
 }
