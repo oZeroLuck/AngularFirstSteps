@@ -32,6 +32,14 @@ export class ReservationsService {
     );
   }
 
+  getResByVehicle(id: number): Observable<ReservationClass[]> {
+    const url = `${this.reservationUrl}/?vehicleId=${id}`;
+    return this.http.get<ReservationClass[]>(url).pipe(
+      tap(_ => console.log(`Fetched reservations of vehicleId = ${id}`)),
+      catchError(this.handleError<ReservationClass>(`getReservations with vehicleId`))
+    );
+  }
+
   getResByDates(startDate: string, endDate: string): Observable<ReservationClass[]> {
     return this.http.get<ReservationClass[]>(this.reservationUrl).pipe(
       map((o) => o.filter(res => {
