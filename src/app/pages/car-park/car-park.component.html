@@ -1,4 +1,7 @@
 <app-nav-bar></app-nav-bar>
+<div *ngIf="error">
+  <app-alert-message [message]="errMsg" [type]="'error'" (emitter)="resetError($event)"></app-alert-message>
+</div>
 <div *ngIf="vehicles$ | async as itemList">
   <ng-container *ngIf="currentUserRole(); else customerBlock">
     <app-custom-table [tableConfig]="vehicleTable" [dataSource]="itemList" (emitter)="dispatch($event)"></app-custom-table>

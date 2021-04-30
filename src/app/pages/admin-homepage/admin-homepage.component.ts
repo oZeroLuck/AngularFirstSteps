@@ -6,6 +6,9 @@ import { Observable } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ActionWrapper } from '../../resources/models/action-wrapper';
 import { HttpClient } from '@angular/common/http';
+import { ReservationsService } from '../../resources/services/model-services/reservations.service';
+import { map } from 'rxjs/operators';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-admin-homepage',
@@ -17,13 +20,18 @@ export class AdminHomepageComponent implements OnInit {
   users$: Observable<UserClass[]>;
   testTable = UserTable;
 
+  error: boolean;
+  errMsg: string;
+
   constructor(
     private usersService: UsersService,
+    private resService: ReservationsService,
     private router: Router,
     private route: ActivatedRoute,
     public http: HttpClient) { }
 
   ngOnInit(): void {
+    this.error = false;
     this.getUsers();
   }
 
@@ -35,7 +43,6 @@ export class AdminHomepageComponent implements OnInit {
     console.log($event.action);
     switch ($event.action) {
       case 'add':
-        console.log('Im here');
         this.router.navigate(['./customer/add'], {relativeTo: this.route});
         break;
       case 'edit':
@@ -50,15 +57,28 @@ export class AdminHomepageComponent implements OnInit {
         this.router.navigate(['./reservations/' + $event.obj.id], {relativeTo: this.route});
         break;
       default :
-        console.log('WRONG OP CODE');
+        this.error = true;
+        this.errMsg = 'Operation not supported';
         break;
     }
   }
 
   delete(user: UserClass): void {
-    this.usersService.delete(user)
-      .subscribe();
+    const reservations = this.resService.getResByCustomer(user.id).pipe(
+      map((rs) => _.filter(rs, ['pending', 'approved']))
+    );
+    if (reservations === undefined) {
+      this.usersService.delete(user)
+        .subscribe();
+    } else {
+      this.error = true;
+      this.errMsg = 'Cannot delete this user because he/she has reservations';
+    }
     this.getUsers();
+  }
+
+  resetError(event: boolean): void {
+    this.error = event;
   }
 
 }

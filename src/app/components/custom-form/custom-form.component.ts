@@ -62,6 +62,7 @@ export class CustomFormComponent implements OnInit {
     console.log(this.objKeys);
     const length = this.objKeys.length;
     for (let i = 0; i < length; i += 2) {
+      console.log(i);
       const row: Row = {items: []};
       row.items.push(this.objKeys[i]);
       row.items.push(this.objKeys[i + 1]);

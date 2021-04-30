@@ -5,7 +5,8 @@ import { VehicleService } from '../../resources/services/model-services/vehicle.
 import { ActionWrapper } from '../../resources/models/action-wrapper';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import {CustomerVehicleTable} from '../../resources/custom-configs/table-cfg/table-customer-vehicle-config';
+import { CustomerVehicleTable } from '../../resources/custom-configs/table-cfg/table-customer-vehicle-config';
+import { ReservationsService } from '../../resources/services/model-services/reservations.service';
 
 @Component({
   selector: 'app-car-park',
@@ -17,13 +18,17 @@ export class CarParkComponent implements OnInit {
   cVehicleTable = CustomerVehicleTable;
   vehicleTable = VehicleTable;
   vehicles$: Observable<VehicleClass[]>;
+  error: boolean;
+  errMsg: string;
 
   constructor(
     private vehicleService: VehicleService,
+    private resService: ReservationsService,
     private router: Router,
     private route: ActivatedRoute) {}
 
   ngOnInit(): void {
+    this.error = false;
     this.getVehicles();
   }
 
@@ -51,12 +56,22 @@ export class CarParkComponent implements OnInit {
   }
 
   delete(vehicle: VehicleClass): void {
-    this.vehicleService.delete(vehicle)
-      .subscribe();
+    const reservation = this.resService.getResByVehicle(vehicle.id);
+    if (reservation === undefined) {
+      this.vehicleService.delete(vehicle)
+        .subscribe();
+    } else {
+      this.error = true;
+      this.errMsg = 'There are reservations for this vehicle :' + vehicle.id;
+    }
     this.getVehicles();
   }
 
   currentUserRole(): boolean {
     return sessionStorage.getItem('role') === 'ADMIN';
+  }
+
+  resetError(event: boolean): void {
+    this.error = event;
   }
 }

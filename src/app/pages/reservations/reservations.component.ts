@@ -10,6 +10,8 @@ import { UserClass } from '../../resources/models/user-class';
 import { ActionWrapper } from '../../resources/models/action-wrapper';
 import { AdminResTable } from '../../resources/custom-configs/table-cfg/table-admin-res-config';
 import { AuthenticationService } from '../../resources/services/authentication/authentication.service';
+import {BackBtn} from '../../resources/custom-configs/buttons/back-btn';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-reservations',
@@ -22,12 +24,14 @@ export class ReservationsComponent implements OnInit {
   adminResTable = AdminResTable;
   tableConfig = ReservationTable;
   reservations$: Observable<ReservationClass[]>;
+  backBtn = BackBtn;
   user: UserClass;
 
   constructor(
     private resService: ReservationsService,
     private userService: UsersService,
     private authService: AuthenticationService,
+    private location: Location,
     private router: Router,
     private route: ActivatedRoute) { }
 
@@ -97,5 +101,9 @@ export class ReservationsComponent implements OnInit {
       map(u => this.currentRole = u.isAdmin)
     );
     console.log(this.currentRole);
+  }
+
+  back(): void {
+    this.location.back();
   }
 }
