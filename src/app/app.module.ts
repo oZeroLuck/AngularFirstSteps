@@ -29,7 +29,7 @@ import { AuthInterceptorService } from './resources/services/authentication/auth
 import { ModalBasicComponent } from './components/modal-password/modal-basic.component';
 import { CustomFormComponent } from './components/custom-form/custom-form.component';
 import { AlertMessageComponent } from './components/alert-message/alert-message.component';
-import { DecamelfyPipe } from './decamelfy.pipe';
+import { DecamelfyPipe } from './resources/pipes/decamelfy.pipe';
 
 export function tokenGetter(): any {
   return localStorage.getItem('access_token');

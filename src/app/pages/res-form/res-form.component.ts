@@ -2,16 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { ReservationsService } from '../../resources/services/model-services/reservations.service';
 import { ReservationClass } from '../../resources/models/reservation-class';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CancelBtn } from '../../resources/custom-configs/buttons/cancel-btn';
 import { VehicleService } from '../../resources/services/model-services/vehicle.service';
 import { VehicleClass } from '../../resources/models/vehicle-class';
 import * as moment from 'moment';
 import * as _ from 'lodash';
-import { Observable, of } from 'rxjs';
-import { ReservationTable } from '../../resources/custom-configs/table-cfg/table-reservation-config';
 import { NewResTable } from '../../resources/custom-configs/table-cfg/table-new-reservation-config';
-import {ActionWrapper} from '../../resources/models/action-wrapper';
-import {EditBtn} from '../../resources/custom-configs/buttons/edit-btn';
+import { BackBtn } from '../../resources/custom-configs/buttons/back-btn';
+import { SaveBtn } from '../../resources/custom-configs/buttons/save-btn';
+import { EditResTable } from '../../resources/custom-configs/table-cfg/table-edit-res';
 
 
 @Component({
@@ -22,22 +20,21 @@ import {EditBtn} from '../../resources/custom-configs/buttons/edit-btn';
 export class ResFormComponent implements OnInit {
 
   tableConfig = NewResTable;
-  resTable = ReservationTable;
+  editConfig = EditResTable;
 
-  editBtn = EditBtn;
-  cancelBtn = CancelBtn;
+  editBtn = SaveBtn;
+  backBtn = BackBtn;
 
   currentUser: string;
   reservation: ReservationClass;
   action: string;
-  available$: Observable<VehicleClass[]>;
-  allRes$: Observable<ReservationClass[]>;
-  finalList$: Observable<VehicleClass[]>;
+  minDate: string;
 
-  allVehicles: VehicleClass[];
-  allReservations: ReservationClass[];
+  available: VehicleClass[] = [];
+  selectedVehicle: VehicleClass;
 
-  test: VehicleClass[];
+  error = false;
+  errMsg = 'Start date is equal or after end date';
 
   constructor(
     private vehicleService: VehicleService,
@@ -50,10 +47,25 @@ export class ResFormComponent implements OnInit {
   }
 
   getAvailable(startDate, endDate): void {
-    this.available$ = this.vehicleService.getVehicles();
-    this.allRes$ = this.resService.getResByDates(startDate, endDate);
+    this.available = [];
+    if (moment(startDate).isBefore(moment(endDate))) {
+      this.resService.getResByDates(startDate, endDate).subscribe(x => {
+        const ids = x.map(o => o.vehicleId);
+        this.getAvailableVehicles(ids);
+      });
+    } else {
+      this.error = true;
+    }
+  }
 
-    console.log(this.test);
+  getAvailableVehicles(ids: number[]): void {
+    // tslint:disable-next-line:prefer-for-of
+    for (let i = 0; i < ids.length; i++ ) {
+      this.vehicleService.getById(ids[i]).subscribe(
+        v => this.available.push(v)
+      );
+    }
+    this.error = false;
   }
 
   getReservation(): void {
@@ -62,7 +74,12 @@ export class ResFormComponent implements OnInit {
     if (this.action === 'edit') {
       const id = this.route.snapshot.paramMap.get('id');
       this.resService.getResById(id)
-        .subscribe(res => this.reservation = res);
+        .subscribe(res => {
+          this.reservation = res;
+          this.vehicleService.getById(res.vehicleId).subscribe(
+            v => this.selectedVehicle = v
+          );
+        });
     } else {
       console.log('New class');
       this.reservation = {
@@ -74,16 +91,31 @@ export class ResFormComponent implements OnInit {
         status: 'pending'
       };
       this.getAvailable(this.reservation.startDate, this.reservation.endDate);
+      this.minDate = this.reservation.startDate;
     }
   }
 
-  btnAction($event: ActionWrapper): void {
-    if ($event.action === 'book') {
-      this.reservation.vehicleId = $event.obj.id;
-      this.addReservation(this.reservation);
+  btnAction(event: any): void {
+    if (typeof event !== 'string') {
+      switch (event.action) {
+        case 'book':
+          this.reservation.vehicleId = event.obj.id;
+          this.addReservation(this.reservation);
+          this.back();
+          break;
+        case 'select':
+          this.reservation.vehicleId = event.obj.id;
+          this.selectedVehicle = event.obj;
+          break;
+        default:
+          console.log('error');
+      }
     } else {
-      this.reservation.status = 'Pending';
-      this.updateReservation(this.reservation);
+      if (event === 'save') {
+        this.reservation.status = 'pending';
+        this.updateReservation(this.reservation);
+      }
+      this.back();
     }
   }
 
@@ -91,7 +123,6 @@ export class ResFormComponent implements OnInit {
     if (this.checkDates(reservation)) {
       this.resService.update(reservation)
         .subscribe();
-      this.router.navigate(['../../'], {relativeTo: this.route});
     } else {
       console.log('Error');
     }
@@ -101,7 +132,6 @@ export class ResFormComponent implements OnInit {
     if (this.checkDates(reservation)) {
       this.resService.add(reservation)
         .subscribe();
-      this.router.navigate(['../'], {relativeTo: this.route});
     } else {
       console.log('Error');
     }
@@ -128,48 +158,16 @@ export class ResFormComponent implements OnInit {
     console.log(message);
     return noError;
   }
-}
 
-/*
-
-  getAvailable(startDate: string, endDate: string): void {
-    this.allRes$ = this.resService.getResByDates(startDate, endDate);
-    this.available$ = this.vehicleService.getVehicles();
-    this.available$.pipe(
-      map((vehicles) => vehicles.forEach( (vehicle, index) => {
-        this.allRes$.pipe(
-          map(res => { if (_.find(res, ['vehicleId', vehicle.id]))
-            {
-            }})
-        );
-         this.available$ = of(vehicles); })));
+  back(): void {
+    if (this.action === 'add') {
+      this.router.navigate(['../'], {relativeTo: this.route});
+    } else {
+      this.router.navigate(['../../'], {relativeTo: this.route});
+    }
   }
 
-available.filter(
-        (v, index) => {
-          if (this.allRes$.pipe(
-            map(res => res.findIndex(vId => !(vId.vehicleId === v.id)))
-          )) {
-            available = available.splice(index, 1);
-          }
-        }
-      ))
-    ).subscribe(available => this.test = available);
-
-
-    this.available$.pipe(
-      map((available) => available.filter((v) => {
-        if (this.allRes$.pipe(
-          map((res) => res.find(found => !(v.id === found.vehicleId)))
-        )) { return true;
-        }
-    })));
-
-        console.log('pipeday');
-    this.available$.pipe(
-      map((vs) => { vs.forEach((v, index) => { if (this.allRes$.pipe(
-        map((rs) => _.find(rs, ['vehicleId', v.id])))) {
-        console.log('hello');
-        vs.splice(index, 1);
-      } else {console.log('nosplice'); }}); this.available$ = of(vs); }));
-*/
+  errorReset(event: boolean): void {
+    this.error = event;
+  }
+}

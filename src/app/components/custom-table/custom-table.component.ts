@@ -9,7 +9,7 @@ import * as moment from 'moment';
   styleUrls: ['./custom-table.component.css']
 })
 
-export class CustomTableComponent implements OnChanges {
+export class CustomTableComponent implements OnChanges, OnInit {
   @Input() tableConfig: CustomTableConfig;
   @Input() dataSource: any[];
 
@@ -31,13 +31,18 @@ export class CustomTableComponent implements OnChanges {
 
   constructor() { }
 
-  ngOnChanges(): void {
-    this.hasAddBtn(this.tableConfig.actions);
-    this.lastSortedColumn = this.tableConfig.order.defaultColumn;
-    this.orderType = this.getType(this.tableConfig.order.orderType);
+  ngOnInit(): void {
     this.currentElementPerPage = this.tableConfig.pagination.itemPerPage;
-    this.searchBy('', '');
-    this.orderBy(this.lastSortedColumn);
+  }
+
+  ngOnChanges(): void {
+    if (this.dataSource !== undefined) {
+      this.hasAddBtn(this.tableConfig.actions);
+      this.lastSortedColumn = this.tableConfig.order.defaultColumn;
+      this.orderType = this.getType(this.tableConfig.order.orderType);
+      this.searchBy('', '');
+      this.orderBy(this.lastSortedColumn);
+    }
   }
 
   hasAddBtn(buttons: any[]): void {

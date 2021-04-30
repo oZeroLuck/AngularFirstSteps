@@ -1,34 +1,58 @@
 <app-nav-bar></app-nav-bar>
 <div class="container" *ngIf="reservation">
-    <div class="row">
+  <app-alert-message *ngIf="error" [message]="errMsg" [type]="'error'" (emitter)="errorReset($event)"></app-alert-message>
+  <ng-container *ngIf="action === 'add'; else editHeader">
+    <div class="row mb-3">
       <div class="col">
-        <label for="startDate"></label>
-        <input class="form-control" #startDate id="startDate" type="date" min="{{reservation.startDate}}" [(ngModel)]="reservation.startDate">
+        <label for="startDate">Start Date</label>
+        <input class="form-control" #startDate id="startDate" type="date" min="{{minDate}}"
+               [(ngModel)]="reservation.startDate" (ngModelChange)="getAvailable(startDate.value, endDate.value)">
       </div>
       <div class="col">
-        <label for="endDate"></label>
-        <input class="form-control" #endDate id="endDate" type="date" min="{{reservation.endDate}}" [(ngModel)]="reservation.endDate">
+        <label for="endDate">End Date</label>
+        <input class="form-control" #endDate id="endDate" type="date" min="{{minDate}}"
+               [(ngModel)]="reservation.endDate" (ngModelChange)="getAvailable(startDate.value, endDate.value)">
       </div>
-      <ng-container *ngIf="action === 'add'; else saveBlock">
-        <div class="col">
-          <button type="button" class="btn btn-info" (click)="getAvailable(startDate.value, endDate.value)">Search</button>
-        </div>
-      </ng-container>
-      <ng-template #saveBlock>
-        <app-custom-button [btnType]="editBtn" (emitter)="btnAction($event)"></app-custom-button>
-      </ng-template>
     </div>
-  <ng-container *ngIf="action === 'add'">
-    <ng-container *ngIf="available$ | async as Vehicles; else noVehicles">
-      <app-custom-table [tableConfig]="tableConfig" [dataSource]="Vehicles" (emitter)="btnAction($event)"></app-custom-table>
-    </ng-container>
   </ng-container>
-  <ng-template #noVehicles>
-    <h1>No vehicles available between the selected dates</h1>
+  <ng-template #editHeader>
+    <div class="row mb-2 ml-4">
+      <div class="col">
+        <div class="row mt-4">
+          <label for="editStartDate">Start Date</label>
+          <input class="form-control" #startDate id="editStartDate" type="date" min="{{minDate}}"
+                 [(ngModel)]="reservation.startDate" (ngModelChange)="getAvailable(startDate.value, endDate.value)">
+        </div>
+        <div class="row mt-2">
+          <label for="editEndDate">End Date</label>
+          <input class="form-control" #endDate id="editEndDate" type="date" min="{{minDate}}"
+                 [(ngModel)]="reservation.endDate" (ngModelChange)="getAvailable(startDate.value, endDate.value)">
+        </div>
+        <div class="d-flex flex-row-reverse mt-2">
+          <app-custom-button [btnType]="editBtn" (emitter)="btnAction($event)"></app-custom-button>
+        </div>
+      </div>
+      <div class="col">
+        <div class="row">
+          <app-custom-form [obj]="selectedVehicle" [objClass]="'vehicle'" [disabled]="true"></app-custom-form>
+        </div>
+      </div>
+    </div>
   </ng-template>
-    <div class="row">
-      <app-custom-button [btnType]="cancelBtn" (emitter)="btnAction($event)"></app-custom-button>
+  <ng-container *ngIf="action === 'add'; else editBlock">
+    <app-custom-table [tableConfig]="tableConfig" [dataSource]="available" (emitter)="btnAction($event)"></app-custom-table>
+  </ng-container>
+  <ng-template #editBlock>
+    <app-custom-table [tableConfig]="editConfig" [dataSource]="available" (emitter)="btnAction($event)"></app-custom-table>
+  </ng-template>
+    <div class="row mt-3">
+      <div class="col">
+        <div class="d-flex flex-row-reverse">
+          <app-custom-button [btnType]="backBtn" (emitter)="btnAction($event)"></app-custom-button>
+        </div>
+      </div>
     </div>
 </div>
 <hr>
+
 

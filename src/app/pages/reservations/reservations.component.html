@@ -1,16 +1,16 @@
 <app-nav-bar></app-nav-bar>
 <div class="container">
-  <div class="row mb-3">
+  <div *ngIf="user" class="row mb-3">
     <h2>{{user.name}}'s Reservations</h2>
   </div>
   <app-alert-message *ngIf="error" [message]="errMsg" [type]="'error'" (emitter)="resetError($event)"></app-alert-message>
-  <ng-container *ngIf="currentRole; else adminBlock">
+  <ng-container *ngIf="!currentRole; else adminBlock">
     <app-custom-table [dataSource]="reservations" [tableConfig]="tableConfig" (emitter)="dispatch($event)"></app-custom-table></ng-container>
   <ng-template #adminBlock>
     <app-custom-table [dataSource]="reservations" [tableConfig]="adminResTable" (emitter)="dispatch($event)"></app-custom-table>
   </ng-template>
   <br>
-  <div class="row mt-3" *ngIf="!currentRole">
+  <div class="row mt-3" *ngIf="currentRole">
     <div class="col">
       <div class="d-flex flex-row-reverse">
         <app-custom-button [btnType]="backBtn" (click)="back()"></app-custom-button>

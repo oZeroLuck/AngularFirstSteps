@@ -12,10 +12,15 @@
             </ng-template>
           </ng-container>
           <ng-template #vehicleBlock>
-            <h2>Vehicle's Info</h2>
+            <ng-container *ngIf="disabled; else notDisabled">
+              <h2>Selected vehicle's Info</h2>
+            </ng-container>
+            <ng-template #notDisabled>
+              <h2>Vehicle's Info</h2>
+            </ng-template>
           </ng-template>
         </div>
-        <ng-container *ngIf="disabled">
+        <ng-container *ngIf="disabled && objClass === 'customer'">
           <div class="col">
             <div class="d-flex flex-row-reverse">
               <app-custom-button [btnType]="editBtn" (emitter)="btnClick($event)"></app-custom-button>
@@ -29,7 +34,7 @@
         <div class="row" *ngFor="let row of rows">
           <div class="col" *ngFor="let key of row.items">
             <ng-container *ngIf="isDate(obj[key]); else textBlock">
-              <label for="date-{{key}}">{{key}}</label>
+              <label for="date-{{key}}">{{key | decamelfy}}</label>
               <input id="date-{{key}}" type="date" name="{{key}}" class="form-control"
                      required [(ngModel)]="obj[key]" #date="ngModel" [disabled]="disabled">
               <div *ngIf="date.invalid && (date.dirty || date.touched)" class="alert alert-danger">
@@ -40,7 +45,7 @@
             </ng-container>
             <ng-template #textBlock>
               <ng-container *ngIf="key !== 'email'; else emailBlock">
-                <label for="form-{{key}}">{{key}}</label>
+                <label for="form-{{key}}">{{key | decamelfy}}</label>
                 <input id="form-{{key}}" type="text" name="{{key}}" class="form-control"
                        required minlength="2" [(ngModel)]="obj[key]" #item="ngModel" [disabled]="disabled">
                   <div *ngIf="item.invalid && (item.dirty || item.touched)" class="alert alert-danger">
@@ -53,7 +58,7 @@
                   </div>
               </ng-container>
               <ng-template #emailBlock>
-                <label for="email-{{key}}">{{key}}</label>
+                <label for="email-{{key}}">{{key | decamelfy}}</label>
                 <input id="email-{{key}}" type="text" name="{{key}}" class="form-control"
                        required email [(ngModel)]="obj[key]" #email="ngModel" [disabled]="disabled">
                 <div *ngIf="email.invalid && (email.dirty || email.touched)" class="alert alert-danger">

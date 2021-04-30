@@ -100,9 +100,7 @@ export class ReservationsComponent implements OnInit {
   }
 
   isAdmin(): void {
-    this.userService.getById(this.authService.getCurrentUser()).pipe(
-      map(u => this.currentRole = u.isAdmin)
-    );
+    this.currentRole = sessionStorage.getItem('role') === 'ADMIN';
   }
 
   back(): void {

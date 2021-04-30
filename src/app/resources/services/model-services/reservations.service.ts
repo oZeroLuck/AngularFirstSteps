@@ -43,7 +43,7 @@ export class ReservationsService {
   getResByDates(startDate: string, endDate: string): Observable<ReservationClass[]> {
     return this.http.get<ReservationClass[]>(this.reservationUrl).pipe(
       map((o) => o.filter(res => {
-        if ((moment(res.startDate).subtract(1, 'day').isBefore(endDate)
+        if (!(moment(res.startDate).subtract(1, 'day').isBefore(endDate)
               && moment(startDate).add(1, 'day').isBefore(res.endDate))) {
           return res;
         }

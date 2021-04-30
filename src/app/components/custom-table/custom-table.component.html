@@ -17,7 +17,7 @@
     </div>
     <div class="form-inline">
       <ng-container *ngIf="isInDate(selectBox.value); else textBox">
-        <input #searchDate type="date" (keyup)="searchBy(searchDate.value, selectBox.value)">
+        <input #searchDate type="date" class="form-control" (keyup)="searchBy(searchDate.value, selectBox.value)">
       </ng-container>
       <ng-template #textBox>
       <input #searchBox (input)="searchBy(searchBox.value, selectBox.value); countPages(currentElementPerPage.toString());"
@@ -49,7 +49,7 @@
   </div>
   </div>
   <div class="card-body">
-    <ng-container *ngIf="dataSource.length > 0; else emptyBlock">
+    <ng-container *ngIf="dataSource && dataSource.length > 0; else emptyBlock">
       <table class="table table-bordered table-striped align-content-end">
         <tr>
           <th class="clickable" *ngFor="let header of tableConfig.headers" (click)="orderBy(header.key)">
