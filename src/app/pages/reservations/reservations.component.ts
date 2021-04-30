@@ -26,6 +26,8 @@ export class ReservationsComponent implements OnInit {
   reservations: ReservationClass[];
   backBtn = BackBtn;
   user: UserClass;
+  error: boolean;
+  errMsg: string;
 
   constructor(
     private resService: ReservationsService,
@@ -36,6 +38,7 @@ export class ReservationsComponent implements OnInit {
     private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.error = false;
     this.isAdmin();
     this.getReservations();
   }
@@ -62,7 +65,8 @@ export class ReservationsComponent implements OnInit {
             .subscribe();
           this.getReservations();
         } else {
-          console.log('notPending');
+          this.error = true;
+          this.errMsg = `The reservations status isn't "pending"`;
         }
         break;
       case 'deny':
@@ -74,7 +78,8 @@ export class ReservationsComponent implements OnInit {
           this.getReservations();
           }
         } else {
-          console.log('NotPending');
+          this.error = true;
+          this.errMsg = `The reservations status isn't "pending"`;
         }
         break;
       case 'delete':
@@ -102,5 +107,9 @@ export class ReservationsComponent implements OnInit {
 
   back(): void {
     this.location.back();
+  }
+
+  resetError(event: boolean): void {
+    this.error = event;
   }
 }

@@ -10,10 +10,10 @@ export class InMemoryDataService implements InMemoryDbService {
   // tslint:disable-next-line:typedef
   createDb() {
     const usersList = [
-      {id: -1, name: 'Fabio', lastName: 'Hu', dateOfBirth: '1997-12-29',
-        email: 'fabio@mail.com', isAdmin: true, username: 'Admin', password: 'dddd'},
-      {id: 1, name: 'Giada', lastName: 'Sborchia', dateOfBirth: '1999-12-16',
-        email: 'giada@mail.com', isAdmin: false, username: 'User.Giada', password: 'dddd'},
+      {id: -1, name: 'Fabio', lastName: 'Hu', email: 'fabio@mail.com',
+        isAdmin: true, username: 'Admin', password: 'dddd', dateOfBirth: '1997-12-29'},
+      {id: 1, name: 'Giada', lastName: 'Sborchia', email: 'giada@mail.com',
+         isAdmin: false, username: 'User.Giada', password: 'dddd', dateOfBirth: '1999-12-16'},
       {id: 2, name: 'Francesca', lastName: 'Mecca', dateOfBirth: '1998-12-18',
         email: 'francesca@mail.com', isAdmin: false, username: 'User.Franci', password: 'dddd'},
       {id: 3, name: 'Alice', lastName: 'Erba', dateOfBirth: '2005-09-07',

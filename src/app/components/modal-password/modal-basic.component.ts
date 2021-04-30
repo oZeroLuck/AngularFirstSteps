@@ -1,8 +1,9 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 
-import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {EditPswBtn} from '../../resources/custom-configs/buttons/edit-psw-btn';
 import {SaveBtn} from '../../resources/custom-configs/buttons/save-btn';
+import {UserClass} from '../../resources/models/user-class';
 
 @Component({
   selector: 'app-modal-basic',
@@ -10,9 +11,19 @@ import {SaveBtn} from '../../resources/custom-configs/buttons/save-btn';
   styleUrls: ['./modal-basic.component.css']
 })
 export class ModalBasicComponent{
+  @Input() user: UserClass;
+  @Output() emitter = new EventEmitter<any>();
   saveBtn = SaveBtn;
   pswdBtn = EditPswBtn;
-  @Output() emitter = new EventEmitter<any>();
+
+  error = false;
+  errMsg = 'Current password is wrong';
+  confirmError: boolean;
+  confirmErrorMsg = '"New" and "confirm" are different';
+  sameError = false;
+  sameErrorMsg = 'New password cannot be same as current password';
+  empty = false;
+  emptyMsg = 'These fields must be filled';
 
   constructor(private modalService: NgbModal) {}
 
@@ -22,7 +33,33 @@ export class ModalBasicComponent{
   }
 
   saveClicked(currentPswd: string, newPswd: string, confirmPswd: string): void {
-    this.emitter.emit({current: currentPswd, new: newPswd, confirm: confirmPswd});
+    let errors = false;
+    if (!(currentPswd.trim() && newPswd.trim() && confirmPswd.trim())) {
+      this.empty = true;
+    }
+    if (this.user.password !== currentPswd) {
+      this.error = true;
+    }
+    if (this.user.password === newPswd) {
+      this.sameError = true;
+    }
+    if (newPswd !== confirmPswd) {
+      this.confirmError = true;
+    }
+    if (this.error || this.sameError || this.confirmError || this.empty) {
+      errors = true;
+    }
+    if (!errors) {
+      this.emitter.emit({current: currentPswd, new: newPswd, confirm: confirmPswd});
+      this.modalService.dismissAll();
+    }
+  }
+
+  resetErrors(event: boolean): void {
+    this.error = event;
+    this.sameError = event;
+    this.confirmError = event;
+    this.empty = event;
   }
 
 }

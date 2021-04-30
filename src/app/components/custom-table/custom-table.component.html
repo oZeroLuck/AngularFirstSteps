@@ -108,34 +108,24 @@
     <hr>
   <div class="d-flex justify-content-center">
     <div class="mr-2">
-      <ng-container *ngIf="currentPage > 0; else previousDisabled">
-        <button type="button" class="btn btn-info" (click)="setCurrentPage(currentPage - 1)"><</button>
-      </ng-container>
-      <ng-template #previousDisabled>
-        <button type="button" class="btn btn-info" disabled><</button>
-      </ng-template>
+      <button type="button" class="btn btn-info" (click)="setCurrentPage(currentPage - 1)"
+              [disabled]="!(currentPage > 0)">
+        <
+      </button>
     </div>
     <div class="d-inline-flex vertical-align">
       <ng-container *ngFor="let pageLink of linkNumber">
-        <ng-container *ngIf="pageLink != currentPage + 1; else disabledBtn">
-          <button type="button" class="btn btn-info" (click)="setCurrentPage(pageLink - 1)">
-            {{pageLink}}
-          </button>
-        </ng-container>
-        <ng-template #disabledBtn>
-          <button type="button" class="btn btn-info" disabled>
-            {{pageLink}}
-          </button>
-        </ng-template>
+        <button type="button" class="btn btn-info" (click)="setCurrentPage(pageLink - 1)"
+                [disabled]="!(pageLink != currentPage + 1)">
+          {{pageLink}}
+        </button>
       </ng-container>
     </div>
     <div class="ml-2">
-      <ng-container *ngIf="currentPage < pagesNumber - 1; else nextDisabled">
-        <button type="button" class="btn btn-info" (click)="setCurrentPage(currentPage + 1)">></button>
-      </ng-container>
-      <ng-template #nextDisabled>
-        <button type="button" class="btn btn-info" disabled>></button>
-      </ng-template>
+      <button type="button" class="btn btn-info" (click)="setCurrentPage(currentPage + 1)"
+              [disabled]="!(currentPage < pagesNumber - 1)">
+        >
+      </button>
     </div>
   </div>
   </div>

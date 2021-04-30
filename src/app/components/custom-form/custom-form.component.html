@@ -39,17 +39,32 @@
               </div>
             </ng-container>
             <ng-template #textBlock>
-            <label for="form-{{key}}">{{key}}</label>
-            <input id="form-{{key}}" type="text" name="{{key}}" class="form-control"
-                   required minlength="2" [(ngModel)]="obj[key]" #item="ngModel" [disabled]="disabled">
-              <div *ngIf="item.invalid && (item.dirty || item.touched)" class="alert alert-danger">
-                <div *ngIf="item.errors.required">
-                  {{key}} is required
+              <ng-container *ngIf="key !== 'email'; else emailBlock">
+                <label for="form-{{key}}">{{key}}</label>
+                <input id="form-{{key}}" type="text" name="{{key}}" class="form-control"
+                       required minlength="2" [(ngModel)]="obj[key]" #item="ngModel" [disabled]="disabled">
+                  <div *ngIf="item.invalid && (item.dirty || item.touched)" class="alert alert-danger">
+                    <div *ngIf="item.errors.required">
+                      {{key}} is required
+                    </div>
+                    <div *ngIf="item.errors.minlength">
+                      {{key}} must be at least 2 character long
+                    </div>
+                  </div>
+              </ng-container>
+              <ng-template #emailBlock>
+                <label for="email-{{key}}">{{key}}</label>
+                <input id="email-{{key}}" type="text" name="{{key}}" class="form-control"
+                       required email [(ngModel)]="obj[key]" #email="ngModel" [disabled]="disabled">
+                <div *ngIf="email.invalid && (email.dirty || email.touched)" class="alert alert-danger">
+                  <div *ngIf="email.errors.required">
+                    {{key}} is required
+                  </div>
+                  <div *ngIf="email.errors.email">
+                    Input not an email
+                  </div>
                 </div>
-                <div *ngIf="item.errors.minlength">
-                  {{key}} must be at least 2 character long
-                </div>
-              </div>
+              </ng-template>
             </ng-template>
           </div>
           <div class="col" *ngIf="row.items.length < 2">
@@ -61,7 +76,7 @@
       <div class="card-footer">
         <div class="d-flex flex-row-reverse">
           <app-custom-button [btnType]="saveBtn" (emitter)="btnClick($event)"></app-custom-button>
-          <app-custom-button [btnType]="cancelBtn" (emitter)="btnClick($event)"></app-custom-button>
+          <app-custom-button [btnType]="cancelBtn" (emitter)="btnClick($event);"></app-custom-button>
         </div>
       </div>
     </ng-container>

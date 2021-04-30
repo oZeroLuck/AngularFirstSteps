@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
 import {UsersService} from '../../resources/services/model-services/users.service';
 import {VehicleService} from '../../resources/services/model-services/vehicle.service';
 import {SaveBtn} from '../../resources/custom-configs/buttons/save-btn';
@@ -19,7 +19,7 @@ interface Row {
   styleUrls: ['./custom-form.component.css']
 })
 
-export class CustomFormComponent implements OnInit {
+export class CustomFormComponent implements OnChanges {
   @Input() obj: any;
   @Input() objClass: string;
   @Input() disabled: boolean;
@@ -40,7 +40,8 @@ export class CustomFormComponent implements OnInit {
     private vehicleService: VehicleService
   ) { }
 
-  ngOnInit(): void {
+  ngOnChanges(): void {
+    this.rows = [];
     this.getService();
     this.getKeys();
   }
@@ -59,22 +60,17 @@ export class CustomFormComponent implements OnInit {
     _.remove(this.objKeys, function(o): any {
       return o === 'id' || o === 'password' || o === 'isAdmin';
     });
-    console.log(this.objKeys);
     const length = this.objKeys.length;
     for (let i = 0; i < length; i += 2) {
-      console.log(i);
       const row: Row = {items: []};
       row.items.push(this.objKeys[i]);
       row.items.push(this.objKeys[i + 1]);
-      console.log(row);
       this.rows.push(row);
     }
-    console.log(this.rows[this.rows.length - 1].items);
     // tslint:disable-next-line:only-arrow-functions
     _.remove(this.rows[this.rows.length - 1].items, function(o): any {
       return o === undefined;
     });
-    console.log(this.rows);
   }
 
   isDate(value: string): boolean {

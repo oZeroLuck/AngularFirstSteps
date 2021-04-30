@@ -2,11 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UsersService } from '../../resources/services/model-services/users.service';
 import { AuthenticationService } from '../../resources/services/authentication/authentication.service';
 import { UserClass } from '../../resources/models/user-class';
-import { LogoutBtn } from '../../resources/custom-configs/buttons/logout-btn';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
-import { EditBtn } from '../../resources/custom-configs/buttons/edit-btn';
-import { CancelBtn } from '../../resources/custom-configs/buttons/cancel-btn';
 import { SaveBtn } from '../../resources/custom-configs/buttons/save-btn';
 import { EditPswBtn } from '../../resources/custom-configs/buttons/edit-psw-btn';
 
@@ -18,13 +14,7 @@ import { EditPswBtn } from '../../resources/custom-configs/buttons/edit-psw-btn'
 export class ProfileComponent implements OnInit {
 
   editMode: boolean;
-
-  currentUser$: Observable<UserClass>;
   currentUser: UserClass;
-
-  logoutBtn = LogoutBtn;
-  editBtn = EditBtn;
-  cancelBtn = CancelBtn;
   saveBtn = SaveBtn;
   changePswd = EditPswBtn;
 
@@ -40,22 +30,6 @@ export class ProfileComponent implements OnInit {
     this.editMode = false;
   }
 
-  btnClick(action: string): void {
-    switch (action) {
-      case 'edit':
-        this.editMode = true;
-        break;
-      case 'cancel':
-        this.editMode = false;
-        break;
-      case 'changePswd':
-        console.log('Changing pswd');
-        break;
-      default:
-        console.log('Wtf just happened?');
-    }
-  }
-
   getCurrentUser(): void {
     let currentUserId: number;
     if (sessionStorage.getItem('role') === 'ADMIN') {
@@ -63,7 +37,7 @@ export class ProfileComponent implements OnInit {
     } else {
       currentUserId = parseInt(this.route.snapshot.paramMap.get('id'), 10);
     }
-    this.currentUser$ = this.userService.getById(currentUserId);
+    this.userService.getById(currentUserId).subscribe(u => this.currentUser = u);
   }
 
   save(user: UserClass): void {
@@ -73,7 +47,6 @@ export class ProfileComponent implements OnInit {
 
   checkPswd(user: UserClass, $event: any): void {
     if (user.password === $event.current && $event.new === $event.confirm) {
-      console.log($event.new);
       user.password = $event.new;
       this.userService.update(user).subscribe();
     } else {
@@ -84,8 +57,10 @@ export class ProfileComponent implements OnInit {
   dispatch(event: any): void {
     if (typeof event === 'string') {
       this.editMode = event !== 'cancel';
+      this.getCurrentUser();
     } else {
       this.userService.update(event).subscribe();
+      this.editMode = false;
     }
   }
 }

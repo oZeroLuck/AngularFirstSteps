@@ -3,6 +3,7 @@
   <div class="row mb-3">
     <h2>{{user.name}}'s Reservations</h2>
   </div>
+  <app-alert-message *ngIf="error" [message]="errMsg" [type]="'error'" (emitter)="resetError($event)"></app-alert-message>
   <ng-container *ngIf="currentRole; else adminBlock">
     <app-custom-table [dataSource]="reservations" [tableConfig]="tableConfig" (emitter)="dispatch($event)"></app-custom-table></ng-container>
   <ng-template #adminBlock>

@@ -6,21 +6,25 @@
     </button>
   </div>
   <div class="modal-body">
+    <app-alert-message *ngIf="empty" [message]="emptyMsg" [type]="'error'" (emitter)="resetErrors($event)"></app-alert-message>
     <div class="form-group">
+      <app-alert-message *ngIf="error" [message]="errMsg" [type]="'error'" (emitter)="resetErrors($event)"></app-alert-message>
+      <app-alert-message *ngIf="sameError" [message]="sameErrorMsg" [type]="'error'" (emitter)="resetErrors($event)"></app-alert-message>
       <label for="oldPswd" class="col-form-label">Current Password</label>
-      <input #currentPswd name="oldPswd" id="oldPswd" type="password" class="form-control" required>
+      <input #currentPswd name="oldPswd" id="oldPswd" type="password" class="form-control">
     </div>
     <div class="form-group">
-      <label for="newPswd">NewPassword</label>
-      <input #newPswd id="newPswd" type="password" class="form-control" required>
+      <label for="newPswd">New Password</label>
+      <input #newPswd id="newPswd" type="password" class="form-control">
     </div>
     <div class="form-group">
+      <app-alert-message *ngIf="confirmError" [message]="confirmErrorMsg" [type]="'error'" (emitter)="resetErrors($event)"></app-alert-message>
       <label for="confirmNewPswd">Confirm Password</label>
-      <input #confirmPswd id="confirmNewPswd" type="password" class="form-control" required>
+      <input #confirmPswd id="confirmNewPswd" type="password" class="form-control">
     </div>
   </div>
   <div class="modal-footer">
-    <app-custom-button [btnType]="saveBtn" (click)="saveClicked(currentPswd.value, newPswd.value, confirmPswd.value); modal.close()"></app-custom-button>
+    <app-custom-button [btnType]="saveBtn" (click)="saveClicked(currentPswd.value, newPswd.value, confirmPswd.value)"></app-custom-button>
   </div>
 </ng-template>
 
