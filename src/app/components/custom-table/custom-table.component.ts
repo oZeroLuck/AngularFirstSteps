@@ -29,8 +29,6 @@ export class CustomTableComponent implements OnInit {
   found: number;
   dateKeys = [];
 
-  test: any;
-
   constructor() { }
 
   ngOnInit(): void {
@@ -40,9 +38,6 @@ export class CustomTableComponent implements OnInit {
     this.currentElementPerPage = this.tableConfig.pagination.itemPerPage;
     this.searchBy('', '');
     this.orderBy(this.lastSortedColumn);
-
-    this.test = null;
-    console.log(this.dateKeys);
   }
 
   hasAddBtn(buttons: any[]): void {
@@ -59,13 +54,10 @@ export class CustomTableComponent implements OnInit {
     if (filter.trim()) {
       // tslint:disable-next-line:only-arrow-functions
       if (this.isInDate(type)) {
-        console.log('Is date');
         filter = moment(filter).format('yyyy-MM-dd');
         doSearch = moment(filter).isValid();
-        console.log('date not valid');
       }
       if (doSearch) {
-        console.log('Doing Search');
         // tslint:disable-next-line:only-arrow-functions
         this.filteredList = _.filter(this.dataSource, function(ob): any {
           return ob[type].toLowerCase().indexOf(filter.toLocaleLowerCase()) > -1;
@@ -136,7 +128,6 @@ orderBy(label: string): void {
 
   btnClicked(actionType: any, item: any): void {
     const obj = {obj: item, action: actionType};
-    this.test = obj;
     this.emitter.emit(obj);
   }
 
@@ -157,7 +148,6 @@ orderBy(label: string): void {
   }
 
   isInDate(key: string): boolean {
-    console.log(_.includes(this.dateKeys, key));
     return _.includes(this.dateKeys, key);
   }
 }

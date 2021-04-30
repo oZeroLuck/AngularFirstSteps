@@ -1,4 +1,3 @@
-<div class="container-lg">
 <div class="card">
   <div class="card-header">
   <div class="row justify-content-center">
@@ -50,45 +49,50 @@
   </div>
   </div>
   <div class="card-body">
-  <table class="table table-bordered table-striped align-content-end">
-    <tr>
-      <th class="clickable" *ngFor="let header of tableConfig.headers" (click)="orderBy(header.key)">
-        {{header.label}}
-        <ng-container *ngIf="header.key === lastSortedColumn">
-          <ng-container class="align-self-center" *ngIf="orderType; else elseBlock">
-            <mat-icon class="material-icons-round vertical-align">expand_less</mat-icon>
-          </ng-container>
-          <ng-template #elseBlock>
-            <mat-icon class="material-icons-round vertical-align">keyboard_arrow_down</mat-icon>
-          </ng-template>
-        </ng-container>
-      </th>
-      <ng-container *ngIf="tableConfig.actions.length > 0">
-        <th>
-          Actions
-        </th>
-      </ng-container>
-    </tr>
-    <tr class="hover" *ngFor="let item of filteredList | paginator:currentPage:currentElementPerPage">
-      <td *ngFor="let header of tableConfig.headers">
-        <ng-container *ngIf="isDate(item[header.key], header.key); else notDate">
-          {{item[header.key] | date: 'dd/MM/yyyy'}}
-        </ng-container>
-        <ng-template #notDate>
-          {{item[header.key]}}
-        </ng-template>
-      </td>
-      <ng-container *ngIf="tableConfig.actions.length > 0">
-        <td>
-          <ng-container *ngFor="let button of tableConfig.actions">
-            <ng-container *ngIf="button !== addBtn">
-              <app-custom-button [btnType]="button" (emitter)="btnClicked($event, item)"></app-custom-button>
+    <ng-container *ngIf="dataSource.length > 0; else emptyBlock">
+      <table class="table table-bordered table-striped align-content-end">
+        <tr>
+          <th class="clickable" *ngFor="let header of tableConfig.headers" (click)="orderBy(header.key)">
+            {{header.label}}
+            <ng-container *ngIf="header.key === lastSortedColumn">
+              <ng-container class="align-self-center" *ngIf="orderType; else elseBlock">
+                <mat-icon class="material-icons-round vertical-align">expand_less</mat-icon>
+              </ng-container>
+              <ng-template #elseBlock>
+                <mat-icon class="material-icons-round vertical-align">keyboard_arrow_down</mat-icon>
+              </ng-template>
             </ng-container>
+          </th>
+          <ng-container *ngIf="tableConfig.actions.length > 0">
+            <th>
+              Actions
+            </th>
           </ng-container>
-        </td>
-      </ng-container>
-    </tr>
-  </table>
+        </tr>
+        <tr class="hover" *ngFor="let item of filteredList | paginator:currentPage:currentElementPerPage">
+          <td *ngFor="let header of tableConfig.headers">
+            <ng-container *ngIf="isDate(item[header.key], header.key); else notDate">
+              {{item[header.key] | date: 'dd/MM/yyyy'}}
+            </ng-container>
+            <ng-template #notDate>
+              {{item[header.key]}}
+            </ng-template>
+          </td>
+          <ng-container *ngIf="tableConfig.actions.length > 0">
+            <td>
+              <ng-container *ngFor="let button of tableConfig.actions">
+                <ng-container *ngIf="button !== addBtn">
+                  <app-custom-button [btnType]="button" (emitter)="btnClicked($event, item)"></app-custom-button>
+                </ng-container>
+              </ng-container>
+            </td>
+          </ng-container>
+        </tr>
+      </table>
+    </ng-container>
+    <ng-template #emptyBlock>
+      <app-alert-message [message]="'Nothing found'" [type]="'message'"></app-alert-message>
+    </ng-template>
   </div>
   <div class="card-footer">
   <div class="d-flex justify-content-center">
@@ -135,14 +139,4 @@
     </div>
   </div>
   </div>
-  <ng-container *ngIf="test !== null">
-    Selected:
-    <ng-container *ngFor="let header of tableConfig.headers">
-       {{test.obj[header.key]}} |
-    </ng-container>
-     {{test.action}}
-  </ng-container>
-  </div>
 </div>
-<br>
-<hr>
