@@ -19,7 +19,7 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService } from './resources/services/in-memory-data.service';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
-import { FormComponent } from './pages/vehicle-edit/form.component';
+import { FormComponent } from './pages/form-page/form.component';
 import { ReservationsComponent } from './pages/reservations/reservations.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { ResFormComponent } from './pages/res-form/res-form.component';
@@ -28,6 +28,7 @@ import { ProfileComponent } from './pages/profile/profile.component';
 import { AuthInterceptorService } from './resources/services/authentication/auth-interceptor.service';
 import { ModalBasicComponent } from './components/modal-password/modal-basic.component';
 import { CustomFormComponent } from './components/custom-form/custom-form.component';
+import { AlertMessageComponent } from './components/alert-message/alert-message.component';
 
 export function tokenGetter(): any {
   return localStorage.getItem('access_token');
@@ -49,7 +50,8 @@ export function tokenGetter(): any {
     ProfileComponent,
     ModalBasicComponent,
     ModalBasicComponent,
-    CustomFormComponent
+    CustomFormComponent,
+    AlertMessageComponent
   ],
   imports: [
     BrowserModule,
