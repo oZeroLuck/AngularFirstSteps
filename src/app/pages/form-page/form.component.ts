@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AddBtn } from '../../resources/custom-configs/buttons/add-btn';
-import { CancelBtn } from '../../resources/custom-configs/buttons/cancel-btn';
 import { Location } from '@angular/common';
 import { UsersService } from '../../resources/services/model-services/users.service';
 import { EventEmitter } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { EditBtn } from '../../resources/custom-configs/buttons/edit-btn';
 import { VehicleService } from '../../resources/services/model-services/vehicle.service';
 import * as moment from 'moment';
 
@@ -16,16 +14,16 @@ import * as moment from 'moment';
 })
 export class FormComponent implements OnInit {
   addBtn = AddBtn;
-  cancelBtn = CancelBtn;
-  editBtn = EditBtn;
 
   actionType: string;
   theClass: string;
 
   classService: any;
   object: any;
-  error = false;
   keys: any;
+
+  error = false;
+  errMsg: string;
 
   emitter = new EventEmitter<any>();
 
@@ -47,11 +45,12 @@ export class FormComponent implements OnInit {
     for (let i = 1; i < this.keys.length; i++) {
       if (!this.object[this.keys[i]].trim()) {
         this.error = true;
+        this.errMsg = 'You must fill the required fields';
       }
     }
-    if (!this.error) {
-      if (action === 'add') {
-         {
+    if (!this.error && action !== 'cancel') {
+      if (this.actionType === 'add') {
+        {
           this.classService.add(this.object)
             .subscribe(customer => {
               this.emitter.emit(customer);
@@ -60,9 +59,9 @@ export class FormComponent implements OnInit {
       } else {
         this.classService.update(this.object)
           .subscribe();
-        }
-      this.back();
+      }
     }
+    this.back();
   }
 
   getClass(): void {
@@ -70,7 +69,7 @@ export class FormComponent implements OnInit {
     switch (this.theClass) {
       case 'customer':
         this.classService = this.userService;
-        this.object = {id: null, name: '', lastName: '', dateOfBirth: new Date()};
+        this.object = {id: null, name: '', lastName: '', password: '', email: '', username: '' , dateOfBirth: new Date()};
         this.object.dateOfBirth = moment(this.object.dateOfBirth).format('YYYY-MM-DD');
         break;
       case 'vehicle':
@@ -81,6 +80,7 @@ export class FormComponent implements OnInit {
         console.log('Ops');
     }
     this.keys = Object.keys(this.object);
+    console.log(this.keys);
   }
 
   getActionType(): void {
