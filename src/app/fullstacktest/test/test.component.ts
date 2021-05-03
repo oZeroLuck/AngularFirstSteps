@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {FullstacktestService} from '../fullstacktest.service';
 import {ActivatedRoute} from '@angular/router';
 import {VehicleClass} from '../../resources/models/vehicle-class';
+import {ReservationClass} from '../../resources/models/reservation-class';
+import {ReservationsService} from '../../resources/services/model-services/reservations.service';
 
 @Component({
   selector: 'app-test',
@@ -13,9 +15,11 @@ export class TestComponent implements OnInit {
   message = '';
   userName = '';
   vehicle: VehicleClass;
+  reservations: ReservationClass[] = [];
 
   constructor(
     private fstck: FullstacktestService,
+    private resService: ReservationsService,
     private route: ActivatedRoute) { }
 
   ngOnInit(): void {
@@ -36,8 +40,27 @@ export class TestComponent implements OnInit {
       );
   }
 
+  getReservations(): void {
+    this.fstck.getReservations()
+      .subscribe(
+        response => {
+          this.reservations = response;
+          console.log(response);
+        }
+      );
+  }
+
+  getReservationsById(): void {
+    this.resService.getResByCustomer(parseInt(this.userName, 10))
+      .subscribe(
+        response => this.reservations = response
+      );
+  }
+
   handleVehicle(response: VehicleClass): void {
     this.vehicle = response;
+    console.log(response);
+    console.log(typeof response);
   }
 
   handleResponse(response: any): void {

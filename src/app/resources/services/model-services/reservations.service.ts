@@ -25,7 +25,7 @@ export class ReservationsService {
   }
 
   getResByCustomer(id: number): Observable<ReservationClass[]> {
-    const url = `${this.reservationUrl}/?userId=${id}`;
+    const url = `http://localhost:8050/reservation/getById/${id}`;
     return this.http.get<ReservationClass[]>(url).pipe(
       tap(_ => console.log(`Fetched reservations of userId = ${id}`)),
       catchError(this.handleError<ReservationClass>(`getReservations with userId`))

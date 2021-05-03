@@ -9,8 +9,21 @@
   <br>
   <div>
     <button type="button" (click)="getVehicle()" class="btn btn-primary">Get Vehicle</button>
-  </div>  <div *ngIf="vehicle !== undefined">
+  </div>
   <br>
-  <app-custom-form [obj]="vehicle" [disabled]="true" [objClass]="'vehicle'"></app-custom-form>
-</div>
+  <div *ngIf="vehicle !== undefined">
+    <br>
+    <app-custom-form [obj]="vehicle" [disabled]="true" [objClass]="'vehicle'"></app-custom-form>
+  </div>
+  <div>
+    </div>
+    <button type="button" (click)="getReservationsById()" class="btn btn-primary">Get reservations</button>
+  <div *ngIf="reservations.length > 0">
+    <div class="row" *ngFor="let res of reservations">
+      Res Id: {{res.id}} <br>
+      User Id: {{res.userId}} <br>
+      Vehicle Id: {{res.vehicleId}}<br>
+      <br>
+    </div>
+  </div>
 </div>
