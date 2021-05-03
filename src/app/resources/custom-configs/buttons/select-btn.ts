@@ -2,7 +2,7 @@ import { MyButtonConfig } from './button-config';
 
 export const SelectBtn: MyButtonConfig = {
   customCssClass: 'btn btn-outline-info',
-  icon: 'radio_button_unchecked',
+  icon: 'task_alt',
   text: 'Select',
   action: 'select'
 };
