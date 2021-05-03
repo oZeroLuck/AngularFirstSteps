@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FullstacktestService} from '../fullstacktest.service';
 import {ActivatedRoute} from '@angular/router';
+import {VehicleClass} from '../../resources/models/vehicle-class';
 
 @Component({
   selector: 'app-test',
@@ -11,6 +12,7 @@ export class TestComponent implements OnInit {
 
   message = '';
   userName = '';
+  vehicle: VehicleClass;
 
   constructor(
     private fstck: FullstacktestService,
@@ -25,6 +27,17 @@ export class TestComponent implements OnInit {
       .subscribe(
         response => this.handleResponse(response),
         error => this.handleError(error));
+  }
+
+  getVehicle(): void {
+    this.fstck.getVehicle(1)
+      .subscribe(
+        response => this.handleVehicle(response)
+      );
+  }
+
+  handleVehicle(response: VehicleClass): void {
+    this.vehicle = response;
   }
 
   handleResponse(response: any): void {

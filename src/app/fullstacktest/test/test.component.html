@@ -6,4 +6,11 @@
     <br>
     <h1>{{message}}</h1>
   </div>
+  <br>
+  <div>
+    <button type="button" (click)="getVehicle()" class="btn btn-primary">Get Vehicle</button>
+  </div>  <div *ngIf="vehicle !== undefined">
+  <br>
+  <app-custom-form [obj]="vehicle" [disabled]="true" [objClass]="'vehicle'"></app-custom-form>
+</div>
 </div>
