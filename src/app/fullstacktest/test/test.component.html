@@ -1,0 +1,9 @@
+<div class="container">
+  <div>
+    <button type="button" (click)="getGreetings()" class="btn btn-primary">Say hello</button>
+  </div>
+  <div *ngIf="message !== ''">
+    <br>
+    <h1>{{message}}</h1>
+  </div>
+</div>

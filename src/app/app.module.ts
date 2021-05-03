@@ -30,6 +30,7 @@ import { ModalBasicComponent } from './components/modal-password/modal-basic.com
 import { CustomFormComponent } from './components/custom-form/custom-form.component';
 import { AlertMessageComponent } from './components/alert-message/alert-message.component';
 import { DecamelfyPipe } from './resources/pipes/decamelfy.pipe';
+import { TestComponent } from './fullstacktest/test/test.component';
 
 export function tokenGetter(): any {
   return localStorage.getItem('access_token');
@@ -53,7 +54,8 @@ export function tokenGetter(): any {
     ModalBasicComponent,
     CustomFormComponent,
     AlertMessageComponent,
-    DecamelfyPipe
+    DecamelfyPipe,
+    TestComponent
   ],
   imports: [
     BrowserModule,
@@ -64,9 +66,6 @@ export function tokenGetter(): any {
     MatPaginatorModule,
     AppRoutingModule,
     HttpClientModule,
-    HttpClientInMemoryWebApiModule.forRoot(
-      InMemoryDataService, {dataEncapsulation: false}
-    ),
     FormsModule,
     ReactiveFormsModule
   ],
@@ -80,3 +79,9 @@ export function tokenGetter(): any {
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+/*
+    HttpClientInMemoryWebApiModule.forRoot(
+      InMemoryDataService, {dataEncapsulation: false}
+    ),
+ */
