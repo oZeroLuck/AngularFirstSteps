@@ -33,7 +33,7 @@ export class VehicleService {
   }
 
   add(vehicle: VehicleClass): Observable<VehicleClass> {
-    return this.http.post<VehicleClass>(this.vehicleUrl, vehicle, this.httpOptions).pipe(
+    return this.http.post<VehicleClass>('http://localhost:8050/jpa/add', vehicle, this.httpOptions).pipe(
       tap((newVehicle: VehicleClass) => console.log(`Added new Vehicle w/ id=${newVehicle.id}`)),
       catchError(this.handleError<VehicleClass>(`Add Customer`))
     );

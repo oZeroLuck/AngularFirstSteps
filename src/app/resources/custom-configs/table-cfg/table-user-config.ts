@@ -6,9 +6,10 @@ import { AddBtn } from '../buttons/add-btn';
 
 const TheHeaders: MyHeaders[] = [
   {key: 'username', label: 'Username'},
-  {key: 'name', label: 'Name'},
+  {key: 'firstName', label: 'Name'},
   {key: 'lastName', label: 'Surname'},
-  {key: 'dateOfBirth', label: 'Date of Birth'}
+  {key: 'email', label: 'E-mail'},
+  {key: 'birthDate', label: 'Date of Birth'}
 ];
 
 const TheOrder: MyOrder = {
@@ -17,7 +18,7 @@ const TheOrder: MyOrder = {
 };
 
 const TheSearch: MySearch = {
-  columns: ['name', 'lastName', 'dateOfBirth', 'username']
+  columns: ['firstName', 'lastName', 'username', 'email', 'birthDate']
 };
 
 const ThePagination: MyPagination = {

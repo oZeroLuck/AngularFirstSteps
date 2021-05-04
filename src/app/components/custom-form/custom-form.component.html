@@ -4,7 +4,7 @@
       <div class="row">
         <div class="col">
           <ng-container *ngIf="objClass === 'customer'; else vehicleBlock">
-            <ng-container *ngIf="obj.username === undefined; else profileBlock">
+            <ng-container *ngIf="action === 'add'; else profileBlock">
               <h2>New Customer</h2>
             </ng-container>
             <ng-template #profileBlock>

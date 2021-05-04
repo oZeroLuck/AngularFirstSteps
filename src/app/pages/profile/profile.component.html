@@ -1,5 +1,5 @@
 <app-nav-bar></app-nav-bar>
-<app-custom-form [obj]="currentUser" [objClass]="'customer'" [disabled]="!editMode" (emitter)="dispatch($event)"></app-custom-form>
+<app-custom-form [obj]="currentUser" [objClass]="'customer'" [action]="'edit'" [disabled]="!editMode" (emitter)="dispatch($event)"></app-custom-form>
 <div class="container p-2">
   <div class="d-flex flex-row-reverse">
     <app-modal-basic [user]="currentUser" (emitter)="checkPswd(currentUser, $event)"></app-modal-basic>

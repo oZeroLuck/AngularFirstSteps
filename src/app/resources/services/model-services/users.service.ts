@@ -8,7 +8,7 @@ import { catchError, tap} from 'rxjs/operators';
   providedIn: 'root'
 })
 export class UsersService {
-  private usersUrl = 'api/usersList';
+  private usersUrl = 'http://localhost:8050/user';
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -17,7 +17,7 @@ export class UsersService {
   constructor(private http: HttpClient) { }
 
   getUsers(): Observable<UserClass[]> {
-    const url = `${this.usersUrl}/?isAdmin=false`;
+    const url = `${this.usersUrl}/get/all`;
     return this.http.get<UserClass[]>(url)
       .pipe(
         tap(_ => console.log('Fetched Users')),
@@ -26,7 +26,7 @@ export class UsersService {
   }
 
   getById(id: number): Observable<UserClass> {
-    const url = `${this.usersUrl}/${id}`;
+    const url = `${this.usersUrl}/get/${id}`;
     return this.http.get<UserClass>(url).pipe(
       tap(_ => console.log(`Fetched user-id=${id}`)),
       catchError(this.handleError<UserClass>(`User getById id=${id}`))
@@ -34,7 +34,7 @@ export class UsersService {
   }
 
   getByUsername(username: string): Observable<UserClass> {
-    const url = `${this.usersUrl}/?username=${username}`;
+    const url = `${this.usersUrl}/login/${username}`;
     return this.http.get<UserClass>(url).pipe(
       tap(_ => console.log(`Fetched username=${username}`)),
       catchError(this.handleError<UserClass>(`User usename=${username}`))
@@ -42,21 +42,21 @@ export class UsersService {
   }
 
   add(customer: UserClass): Observable<UserClass> {
-    return this.http.post<UserClass>(this.usersUrl, customer, this.httpOptions).pipe(
-      tap((newCustomer: UserClass) => console.log(`Added new Customer w/ id=${newCustomer.id}`)),
+    return this.http.post<UserClass>(`${this.usersUrl}/create`, customer, this.httpOptions).pipe(
+      tap(_ => console.log(`Added new Customer`)),
       catchError(this.handleError<UserClass>(`Add Customer`))
     );
   }
 
   update(user: UserClass): Observable<any> {
-    return this.http.put(this.usersUrl, user, this.httpOptions).pipe(
+    return this.http.put(`${this.usersUrl}/edit`, user, this.httpOptions).pipe(
       tap(_ => console.log(`Updated user w/ id=${user.id}`)),
       catchError(this.handleError(`updateUser id=${user.id}`))
     );
   }
 
   delete(user: UserClass): Observable<UserClass> {
-    const url = `${this.usersUrl}/${user.id}`;
+    const url = `${this.usersUrl}/delete/${user.id}`;
 
     return this.http.delete<UserClass>(url, this.httpOptions)
       .pipe(

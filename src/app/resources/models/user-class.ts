@@ -1,8 +1,8 @@
 export interface UserClass {
   id: number;
-  name: string;
+  firstName: string;
   lastName: string;
-  dateOfBirth: string;
+  birthDate: string;
   isAdmin: boolean;
   email: string;
   username: string;

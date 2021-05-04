@@ -2,26 +2,23 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 
-import { InMemoryDataService } from '../in-memory-data.service';
+import {UsersService} from '../model-services/users.service';
+import {UserClass} from '../../models/user-class';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
   // Future usage?
-  private apiUrl = 'api/tokenDb';
+  private api = 'http://localhost:8050/auth';
 
-  constructor(
-    private http: HttpClient,
-    private inMemory: InMemoryDataService) { }
+  constructor(private http: HttpClient) { }
 
   authenticate(username: string, password: string): any {
-    return this.inMemory.authenticate({username, password}).pipe(
+    return this.http.get(`${this.api}/login/${username}`).pipe(
       map(
         (userData: any) => {
-          console.log(userData.body);
-          sessionStorage.setItem('id', userData.body.id);
-          sessionStorage.setItem('role', userData.body.role);
+          this.checkPassword(userData, password);
           return userData;
         }
       )
@@ -40,6 +37,18 @@ export class AuthenticationService {
     sessionStorage.removeItem('role');
     sessionStorage.removeItem('id');
     sessionStorage.removeItem('token');
+  }
+
+  checkPassword(user: any, password: string): void {
+    if (user.password === password) {
+      sessionStorage.setItem('id', user.id.toString());
+      if (user.isAdmin) {
+        sessionStorage.setItem('role', 'ADMIN');
+      } else {
+        sessionStorage.setItem('role', 'CUSTOMER');
+      }
+    }
+    console.log(user);
   }
 
 }

@@ -27,15 +27,21 @@ export class LoginComponent implements OnInit {
 
   login(username: string, password: string): void {
     if (username.trim() && password.trim()) {
-      this.authService.authenticate(username, password).subscribe();
+      this.authService.authenticate(username, password)
+        .subscribe(userData => {
+          if (userData) {
+            this.navigate();
+          }
+        });
     }
-    if (this.authService.authenticate(username, password)) {
-      if (sessionStorage.getItem('role') === 'ADMIN') {
-        this.router.navigateByUrl('/homepage/customers');
-      } else {
-        const userId = sessionStorage.getItem('id');
-        this.router.navigateByUrl('/homepage/customers/reservations/' + userId);
-      }
+  }
+
+  navigate(): void {
+    if (sessionStorage.getItem('role') === 'ADMIN') {
+      this.router.navigateByUrl('/homepage/customers');
+    } else {
+      const userId = sessionStorage.getItem('id');
+      this.router.navigateByUrl('/homepage/customers/reservations/' + userId);
     }
   }
 

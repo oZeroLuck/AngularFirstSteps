@@ -22,6 +22,7 @@ interface Row {
 export class CustomFormComponent implements OnChanges {
   @Input() obj: any;
   @Input() objClass: string;
+  @Input() action: string;
   @Input() disabled: boolean;
 
   @Output() emitter = new EventEmitter<any>();
@@ -56,10 +57,15 @@ export class CustomFormComponent implements OnChanges {
 
   getKeys(): void {
     this.objKeys = Object.keys(this.obj);
-    // tslint:disable-next-line:only-arrow-functions
-    _.remove(this.objKeys, function(o): any {
-      return o === 'id' || o === 'password' || o === 'isAdmin';
-    });
+    console.log(this.objKeys);
+    if (this.action === 'edit') {
+      console.log('I am edit mode');
+      // tslint:disable-next-line:only-arrow-functions
+      _.remove(this.objKeys, function(o): any {
+        return o === 'id' || o === 'password';
+      });
+    }
+    console.log(this.objKeys);
     const length = this.objKeys.length;
     for (let i = 0; i < length; i += 2) {
       const row: Row = {items: []};

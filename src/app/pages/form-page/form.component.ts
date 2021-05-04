@@ -42,26 +42,29 @@ export class FormComponent implements OnInit {
 
   actionDispatcher(action: string): void {
     this.error = false;
-    for (let i = 1; i < this.keys.length; i++) {
-      if (!this.object[this.keys[i]].trim()) {
-        this.error = true;
-        this.errMsg = 'You must fill the required fields';
-      }
-    }
-    if (!this.error && action !== 'cancel') {
-      if (this.actionType === 'add') {
-        {
-          this.classService.add(this.object)
-            .subscribe(customer => {
-              this.emitter.emit(customer);
-            });
+    console.log(this.object);
+    console.log(this.keys);
+    if (action !== 'cancel') {
+      for (let i = 1; i < this.keys.length; i++) {
+        if (!this.object[this.keys[i]].trim()) {
+          this.error = true;
+          this.errMsg = 'You must fill the required fields';
         }
-      } else {
-        this.classService.update(this.object)
-          .subscribe();
       }
+      if (!this.error) {
+        if (this.actionType === 'add') {
+          {
+            this.classService.add(this.object)
+              .subscribe(this.back());
+          }
+        } else {
+          this.classService.update(this.object)
+            .subscribe(this.back());
+        }
+      }
+    } else {
+      this.back();
     }
-    this.back();
   }
 
   getClass(): void {
@@ -69,12 +72,12 @@ export class FormComponent implements OnInit {
     switch (this.theClass) {
       case 'customer':
         this.classService = this.userService;
-        this.object = {id: null, name: '', lastName: '', password: '', email: '', username: '' , dateOfBirth: new Date()};
-        this.object.dateOfBirth = moment(this.object.dateOfBirth).format('YYYY-MM-DD');
+        this.object = {firstName: '', lastName: '', email: '', username: '' , birthDate: new Date(), password: ''};
+        this.object.birthDate = moment(this.object.birthDate).format('YYYY-MM-DD');
         break;
       case 'vehicle':
         this.classService = this.vehicleService;
-        this.object = {id: null, plate: '', brand: '', model: '', regYear: null};
+        this.object = {plate: '', brand: '', model: '', regYear: null};
         break;
       default:
         console.log('Ops');

@@ -1,13 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnChanges, OnInit} from '@angular/core';
 import { UserClass } from '../../resources/models/user-class';
 import { UserTable } from '../../resources/custom-configs/table-cfg/table-user-config';
 import { UsersService } from '../../resources/services/model-services/users.service';
-import { Observable } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ActionWrapper } from '../../resources/models/action-wrapper';
 import { HttpClient } from '@angular/common/http';
 import { ReservationsService } from '../../resources/services/model-services/reservations.service';
-import { map } from 'rxjs/operators';
 import * as _ from 'lodash';
 
 @Component({
@@ -15,7 +13,7 @@ import * as _ from 'lodash';
   templateUrl: './admin-homepage.component.html',
   styleUrls: ['./admin-homepage.component.css']
 })
-export class AdminHomepageComponent implements OnInit {
+export class AdminHomepageComponent implements OnInit, OnChanges {
 
   users: UserClass[];
   testTable = UserTable;
@@ -33,6 +31,10 @@ export class AdminHomepageComponent implements OnInit {
   ngOnInit(): void {
     this.error = false;
     this.getUsers();
+  }
+
+  ngOnChanges(): void {
+    this.ngOnInit();
   }
 
   getUsers(): void {

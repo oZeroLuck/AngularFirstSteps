@@ -18,6 +18,7 @@ export class CustomTableComponent implements OnChanges, OnInit {
   lastSortedColumn: string;
   orderType: boolean;
   filteredList: any[];
+  currentFilter = '';
 
   addBtn: any;
   start: number;
@@ -55,14 +56,19 @@ export class CustomTableComponent implements OnChanges, OnInit {
   }
 
   searchBy(filter: string, type: string): void {
-    let doSearch = true;
     if (filter.trim()) {
-      // tslint:disable-next-line:only-arrow-functions
+      this.currentFilter = filter;
       if (this.isInDate(type)) {
-        filter = moment(filter).format('yyyy-MM-dd');
-        doSearch = moment(filter).isValid();
-      }
-      if (doSearch) {
+        if (moment(filter).isValid()) {
+          // tslint:disable-next-line:only-arrow-functions
+          this.filteredList = _.filter(this.dataSource, function(ob): any {
+            if (moment(ob[type]).subtract(1, 'days').isAfter(filter)) {
+              console.log(ob[type]);
+              return ob[type];
+            }
+          });
+        }
+      } else {
         // tslint:disable-next-line:only-arrow-functions
         this.filteredList = _.filter(this.dataSource, function(ob): any {
           return ob[type].toLowerCase().indexOf(filter.toLocaleLowerCase()) > -1;
@@ -133,6 +139,7 @@ orderBy(label: string): void {
 
   btnClicked(actionType: any, item: any): void {
     const obj = {obj: item, action: actionType};
+    console.log(obj);
     this.emitter.emit(obj);
   }
 
