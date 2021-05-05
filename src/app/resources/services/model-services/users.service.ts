@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
-import { UserClass } from '../../models/user-class';
-import { Observable, of } from 'rxjs';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { catchError, tap} from 'rxjs/operators';
+import {Injectable} from '@angular/core';
+import {UserClass} from '../../models/user-class';
+import {Observable, of} from 'rxjs';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {catchError, tap} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -17,8 +17,7 @@ export class UsersService {
   constructor(private http: HttpClient) { }
 
   getUsers(): Observable<UserClass[]> {
-    const url = `${this.usersUrl}/get/all`;
-    return this.http.get<UserClass[]>(url)
+    return this.http.get<UserClass[]>(`${this.usersUrl}/get/all`)
       .pipe(
         tap(_ => console.log('Fetched Users')),
         catchError(this.handleError<UserClass[]>('getUsers', []))
