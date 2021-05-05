@@ -33,7 +33,7 @@ export class ProfileComponent implements OnInit {
   getCurrentUser(): void {
     let currentUserId: number;
     if (sessionStorage.getItem('role') === 'ADMIN') {
-      currentUserId = this.authService.getCurrentUser();
+      currentUserId = this.authService.getCurrentUserId();
     } else {
       currentUserId = parseInt(this.route.snapshot.paramMap.get('id'), 10);
     }

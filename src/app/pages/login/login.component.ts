@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginBtn } from '../../resources/custom-configs/buttons/login-btn';
 import { AuthenticationService} from '../../resources/services/authentication/authentication.service';
-import { Router } from '@angular/router';
-import { UsersService } from '../../resources/services/model-services/users.service';
-import { map } from 'rxjs/operators';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -17,6 +15,7 @@ export class LoginComponent implements OnInit {
   constructor(
     private authService: AuthenticationService,
     private router: Router,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
@@ -30,6 +29,7 @@ export class LoginComponent implements OnInit {
       this.authService.authenticate(username, password)
         .subscribe(userData => {
           if (userData) {
+            console.log('hi!');
             this.navigate();
           }
         });
@@ -38,10 +38,12 @@ export class LoginComponent implements OnInit {
 
   navigate(): void {
     if (sessionStorage.getItem('role') === 'ADMIN') {
-      this.router.navigateByUrl('/homepage/customers');
+      console.log('This is admin');
+      this.router.navigate(['../homepage/customers'], {relativeTo: this.route});
     } else {
+      console.log('This is customer');
       const userId = sessionStorage.getItem('id');
-      this.router.navigateByUrl('/homepage/customers/reservations/' + userId);
+      this.router.navigate(['../homepage/customers/reservations/' + userId], {relativeTo: this.route});
     }
   }
 
