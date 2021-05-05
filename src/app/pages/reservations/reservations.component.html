@@ -1,7 +1,7 @@
 <app-nav-bar></app-nav-bar>
 <div class="container">
   <div *ngIf="user" class="row mb-3">
-    <h2>{{user.name}}'s Reservations</h2>
+    <h2>{{user.firstName}}'s Reservations</h2>
   </div>
   <app-alert-message *ngIf="error" [message]="errMsg" [type]="'error'" (emitter)="resetError($event)"></app-alert-message>
   <ng-container *ngIf="!currentRole; else adminBlock">
