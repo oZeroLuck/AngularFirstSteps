@@ -16,8 +16,6 @@ import { CarParkComponent } from './pages/car-park/car-park.component';
 import { LoginComponent } from './pages/login/login.component';
 
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
-import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
-import { InMemoryDataService } from './resources/services/in-memory-data.service';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { FormComponent } from './pages/form-page/form.component';
 import { ReservationsComponent } from './pages/reservations/reservations.component';
@@ -25,12 +23,12 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { ResFormComponent } from './pages/res-form/res-form.component';
 
 import { ProfileComponent } from './pages/profile/profile.component';
-import { AuthInterceptorService } from './resources/services/authentication/auth-interceptor.service';
 import { ModalBasicComponent } from './components/modal-password/modal-basic.component';
 import { CustomFormComponent } from './components/custom-form/custom-form.component';
 import { AlertMessageComponent } from './components/alert-message/alert-message.component';
 import { DecamelfyPipe } from './resources/pipes/decamelfy.pipe';
 import { TestComponent } from './fullstacktest/test/test.component';
+import {AuthInterceptService} from './resources/services/authentication/auth-intercept.service';
 
 export function tokenGetter(): any {
   return localStorage.getItem('access_token');
@@ -72,16 +70,10 @@ export function tokenGetter(): any {
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: AuthInterceptorService,
+      useClass: AuthInterceptService,
       multi: true
     }
   ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
-
-/*
-    HttpClientInMemoryWebApiModule.forRoot(
-      InMemoryDataService, {dataEncapsulation: false}
-    ),
- */
