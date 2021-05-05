@@ -7,6 +7,7 @@ import { catchError, tap } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
+
 export class VehicleService {
   private vehicleUrl = 'http://localhost8050/vehicle';
 

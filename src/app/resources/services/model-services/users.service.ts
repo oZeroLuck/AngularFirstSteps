@@ -7,6 +7,7 @@ import {catchError, tap} from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
+
 export class UsersService {
   private usersUrl = 'http://localhost:8050/user';
 
