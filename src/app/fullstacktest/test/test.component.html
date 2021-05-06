@@ -1,29 +1,11 @@
 <div class="container">
-  <div>
-    <button type="button" (click)="getGreetings()" class="btn btn-primary">Say hello</button>
+  <div class="row">
+    {{currentUser.id}}
   </div>
-  <div *ngIf="message !== ''">
-    <br>
-    <h1>{{message}}</h1>
+  <div class="row">
+    {{currentUser.token}}
   </div>
-  <br>
-  <div>
-    <button type="button" (click)="getVehicle()" class="btn btn-primary">Get Vehicle</button>
-  </div>
-  <br>
-  <div *ngIf="vehicle !== undefined">
-    <br>
-    <app-custom-form [obj]="vehicle" [disabled]="true" [objClass]="'vehicle'"></app-custom-form>
-  </div>
-  <div>
-    </div>
-    <button type="button" (click)="getReservationsById()" class="btn btn-primary">Get reservations</button>
-  <div *ngIf="reservations.length > 0">
-    <div class="row" *ngFor="let res of reservations">
-      Res Id: {{res.id}} <br>
-      User Id: {{res.userId}} <br>
-      Vehicle Id: {{res.vehicleId}}<br>
-      <br>
-    </div>
+  <div class="row">
+    {{currentUser.username}}
   </div>
 </div>

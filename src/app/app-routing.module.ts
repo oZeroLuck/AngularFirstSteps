@@ -39,7 +39,7 @@ const routes: Routes = [
       {path: ':class/:action/:id', component: FormComponent, canActivate: [AdminAuthGuard]},
     ]},
   {path: 'profile', component: ProfileComponent, canActivate: [BasicAuthGuard]},
-  {path: 'test/:userName', component: TestComponent}
+  {path: 'test', component: TestComponent}
 ];
 
 @NgModule({

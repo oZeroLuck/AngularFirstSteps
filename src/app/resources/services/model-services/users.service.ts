@@ -4,6 +4,8 @@ import {Observable, of} from 'rxjs';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {catchError, tap} from 'rxjs/operators';
 
+const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+
 @Injectable({
   providedIn: 'root'
 })
@@ -11,14 +13,10 @@ import {catchError, tap} from 'rxjs/operators';
 export class UsersService {
   private usersUrl = 'http://localhost:8050/user';
 
-  httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-  };
-
   constructor(private http: HttpClient) { }
 
   getUsers(): Observable<UserClass[]> {
-    return this.http.get<UserClass[]>(`${this.usersUrl}/get/all`)
+    return this.http.get<UserClass[]>(`${this.usersUrl}/get/all`, {headers})
       .pipe(
         tap(_ => console.log('Fetched Users')),
         catchError(this.handleError<UserClass[]>('getUsers', []))
@@ -42,14 +40,14 @@ export class UsersService {
   }
 
   add(customer: UserClass): Observable<UserClass> {
-    return this.http.post<UserClass>(`${this.usersUrl}/create`, customer, this.httpOptions).pipe(
+    return this.http.post<UserClass>(`${this.usersUrl}/create`, customer, {headers}).pipe(
       tap(_ => console.log(`Added new Customer`)),
       catchError(this.handleError<UserClass>(`Add Customer`))
     );
   }
 
   update(user: UserClass): Observable<any> {
-    return this.http.put(`${this.usersUrl}/edit`, user, this.httpOptions).pipe(
+    return this.http.put(`${this.usersUrl}/edit`, user, {headers}).pipe(
       tap(_ => console.log(`Updated user w/ id=${user.id}`)),
       catchError(this.handleError(`updateUser id=${user.id}`))
     );
@@ -58,7 +56,7 @@ export class UsersService {
   delete(user: UserClass): Observable<UserClass> {
     const url = `${this.usersUrl}/delete/${user.id}`;
 
-    return this.http.delete<UserClass>(url, this.httpOptions)
+    return this.http.delete<UserClass>(url, {headers})
       .pipe(
         tap(_ => console.log(`Deleting user id=${user.id}`)),
         catchError(this.handleError<UserClass>(`deleteUser`))

@@ -13,7 +13,7 @@ export class AdminAuthGuard implements CanActivate {
   ) { }
 
   canActivate(): boolean {
-    if (!this.auth.isUserLoggedIn() && sessionStorage.getItem('role') !== 'ADMIN') {
+    if (!this.auth.isUserLoggedIn() && sessionStorage.getItem('role') !== 'ROLE_ADMIN') {
       this.router.navigate(['login']);
       return false;
     }

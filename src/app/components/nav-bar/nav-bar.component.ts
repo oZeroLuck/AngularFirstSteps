@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { LogoutBtn } from '../../resources/custom-configs/buttons/logout-btn';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../../resources/services/authentication/authentication.service';
+import {TokenStorageService} from '../../resources/services/authentication/token-storage.service';
 
 @Component({
   selector: 'app-nav-bar',
@@ -21,7 +22,7 @@ export class NavBarComponent implements OnInit {
   }
 
   currentRole(): boolean {
-    return sessionStorage.getItem('role') === 'ADMIN';
+    return sessionStorage.getItem('role') === 'ROLE_ADMIN';
   }
 
   getCustomerId(): string {

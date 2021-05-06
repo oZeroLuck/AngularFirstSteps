@@ -5,6 +5,7 @@ import { UserClass } from '../../resources/models/user-class';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SaveBtn } from '../../resources/custom-configs/buttons/save-btn';
 import { EditPswBtn } from '../../resources/custom-configs/buttons/edit-psw-btn';
+import {TokenStorageService} from '../../resources/services/authentication/token-storage.service';
 
 @Component({
   selector: 'app-profile',
@@ -21,6 +22,7 @@ export class ProfileComponent implements OnInit {
   constructor(
     private userService: UsersService,
     private authService: AuthenticationService,
+    private tokenService: TokenStorageService,
     private router: Router,
     private route: ActivatedRoute
   ) { }
@@ -32,8 +34,8 @@ export class ProfileComponent implements OnInit {
 
   getCurrentUser(): void {
     let currentUserId: number;
-    if (sessionStorage.getItem('role') === 'ADMIN') {
-      currentUserId = this.authService.getCurrentUserId();
+    if (sessionStorage.getItem('role') === 'ROLE_ADMIN') {
+      currentUserId = this.tokenService.getUser().id;
     } else {
       currentUserId = parseInt(this.route.snapshot.paramMap.get('id'), 10);
     }
