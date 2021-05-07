@@ -6,6 +6,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { SaveBtn } from '../../resources/custom-configs/buttons/save-btn';
 import { EditPswBtn } from '../../resources/custom-configs/buttons/edit-psw-btn';
 import {TokenStorageService} from '../../resources/services/authentication/token-storage.service';
+import {UpPswrdRequest} from '../../resources/models/up-pswrd-request';
 
 @Component({
   selector: 'app-profile',
@@ -47,10 +48,10 @@ export class ProfileComponent implements OnInit {
     this.editMode = false;
   }
 
-  checkPswd(user: UserClass, $event: any): void {
-    if (user.password === $event.current && $event.new === $event.confirm) {
-      user.password = $event.new;
-      this.userService.update(user).subscribe();
+  updatePswd(user: UserClass, $event: any): void {
+    if ($event.new === $event.confirm) {
+      const req = new UpPswrdRequest(user.id, $event.current, $event.new);
+      this.userService.updatePwrd(req).subscribe();
     } else {
       console.log('PswdError');
     }

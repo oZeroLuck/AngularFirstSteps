@@ -3,6 +3,7 @@ import {UserClass} from '../../models/user-class';
 import {Observable, of} from 'rxjs';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {catchError, tap} from 'rxjs/operators';
+import {UpPswrdRequest} from '../../models/up-pswrd-request';
 
 const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
@@ -60,6 +61,14 @@ export class UsersService {
       .pipe(
         tap(_ => console.log(`Deleting user id=${user.id}`)),
         catchError(this.handleError<UserClass>(`deleteUser`))
+      );
+  }
+
+  updatePwrd(req: UpPswrdRequest): Observable<UpPswrdRequest> {
+    return this.http.put<UpPswrdRequest>(`${this.usersUrl}/update/password`, req, {headers})
+      .pipe(
+        tap(_ => console.log(`Updating pass`)),
+        catchError(this.handleError<UserClass>(`updatePwrd`))
       );
   }
 

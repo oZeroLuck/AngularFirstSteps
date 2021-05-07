@@ -37,12 +37,6 @@ export class ModalBasicComponent{
     if (!(currentPswd.trim() && newPswd.trim() && confirmPswd.trim())) {
       this.empty = true;
     }
-    if (this.user.password !== currentPswd) {
-      this.error = true;
-    }
-    if (this.user.password === newPswd) {
-      this.sameError = true;
-    }
     if (newPswd !== confirmPswd) {
       this.confirmError = true;
     }
