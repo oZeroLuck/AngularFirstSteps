@@ -9,7 +9,6 @@ import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { ResFormComponent } from './pages/res-form/res-form.component';
 import { LoginComponent } from './pages/login/login.component';
 import { ProfileComponent } from './pages/profile/profile.component';
-import { TestComponent} from './fullstacktest/test/test.component';
 
 import { AdminAuthGuard } from './resources/services/authentication/admin-auth-guard.service';
 import { BasicAuthGuard } from './resources/services/authentication/basic-auth-guard.service';
@@ -38,8 +37,7 @@ const routes: Routes = [
       {path: ':class/:action', component: FormComponent, canActivate: [AdminAuthGuard]},
       {path: ':class/:action/:id', component: FormComponent, canActivate: [AdminAuthGuard]},
     ]},
-  {path: 'profile', component: ProfileComponent, canActivate: [BasicAuthGuard]},
-  {path: 'test', component: TestComponent}
+  {path: 'profile', component: ProfileComponent, canActivate: [BasicAuthGuard]}
 ];
 
 @NgModule({

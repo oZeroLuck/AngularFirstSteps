@@ -27,7 +27,6 @@ import { ModalBasicComponent } from './components/modal-password/modal-basic.com
 import { CustomFormComponent } from './components/custom-form/custom-form.component';
 import { AlertMessageComponent } from './components/alert-message/alert-message.component';
 import { DecamelfyPipe } from './resources/pipes/decamelfy.pipe';
-import { TestComponent } from './fullstacktest/test/test.component';
 import {AuthInterceptService} from './resources/services/authentication/auth-intercept.service';
 
 export function tokenGetter(): any {
@@ -52,8 +51,7 @@ export function tokenGetter(): any {
     ModalBasicComponent,
     CustomFormComponent,
     AlertMessageComponent,
-    DecamelfyPipe,
-    TestComponent
+    DecamelfyPipe
   ],
   imports: [
     BrowserModule,
