@@ -63,7 +63,6 @@ export class CustomTableComponent implements OnChanges, OnInit {
           // tslint:disable-next-line:only-arrow-functions
           this.filteredList = _.filter(this.dataSource, function(ob): any {
             if (moment(ob[type]).subtract(1, 'days').isAfter(filter)) {
-              console.log(ob[type]);
               return ob[type];
             }
           });
@@ -139,7 +138,6 @@ orderBy(label: string): void {
 
   btnClicked(actionType: any, item: any): void {
     const obj = {obj: item, action: actionType};
-    console.log(obj);
     this.emitter.emit(obj);
   }
 
@@ -148,7 +146,6 @@ orderBy(label: string): void {
   }
 
   isDate(value: any, key: string): boolean {
-    console.log(key);
     const datedValue = moment(value);
     if (datedValue.isValid() && isNaN(value)) {
       if (!_.includes(this.dateKeys, key)) {

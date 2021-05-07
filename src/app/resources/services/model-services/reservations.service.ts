@@ -49,21 +49,21 @@ export class ReservationsService {
   }
 
   add(reservation: ReservationClass): Observable<ReservationClass> {
-    return this.http.post<ReservationClass>(this.reservationUrl, reservation, this.httpOptions).pipe(
+    return this.http.post<ReservationClass>(`${this.reservationUrl}/create`, reservation, this.httpOptions).pipe(
       tap(_ => console.log(`Added new Reservation`)),
       catchError(this.handleError<ReservationClass>(`Add reservation`))
     );
   }
 
   update(reservation: ReservationClass): Observable<ReservationClass> {
-    return this.http.put(this.reservationUrl, reservation, this.httpOptions).pipe(
+    return this.http.put(`${this.reservationUrl}/update`, reservation, this.httpOptions).pipe(
       tap(_ => console.log(`Update reservation`)),
       catchError(this.handleError<ReservationClass>(`Update reservation`))
     );
   }
 
   delete(res: ReservationClass): Observable<ReservationClass> {
-    const url = `${this.reservationUrl}/${res.id}`;
+    const url = `${this.reservationUrl}/delete/${res.id}`;
 
     return this.http.delete<ReservationClass>(url, this.httpOptions)
       .pipe(

@@ -19,6 +19,8 @@ export class ProfileComponent implements OnInit {
   currentUser: UserClass;
   saveBtn = SaveBtn;
   changePswd = EditPswBtn;
+  error = false;
+  errMsg = '';
 
   constructor(
     private userService: UsersService,
@@ -49,12 +51,8 @@ export class ProfileComponent implements OnInit {
   }
 
   updatePswd(user: UserClass, $event: any): void {
-    if ($event.new === $event.confirm) {
-      const req = new UpPswrdRequest(user.id, $event.current, $event.new);
-      this.userService.updatePwrd(req).subscribe();
-    } else {
-      console.log('PswdError');
-    }
+    const req = new UpPswrdRequest(user.id, $event.current, $event.new);
+    this.userService.updatePwrd(req).subscribe();
   }
 
   dispatch(event: any): void {

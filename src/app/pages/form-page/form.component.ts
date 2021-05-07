@@ -89,10 +89,9 @@ export class FormComponent implements OnInit {
         break;
       default:
         console.log('Ops');
+        break;
     }
-    console.log(this.object);
     this.keys = Object.keys(this.object);
-    console.log(this.keys);
   }
 
   getActionType(): void {

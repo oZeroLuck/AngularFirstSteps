@@ -51,12 +51,12 @@ export class ResFormComponent implements OnInit {
   }
 
   getAvailable(startDate, endDate): void {
+    console.log('Getting available');
     this.available = [];
     if (this.checkDates(startDate, endDate)) {
-      // tslint:disable-next-line:only-arrow-functions
-      this.filteredRes = _.filter(this.allRes, function(r): any {
-        return moment(startDate).isAfter(moment(r.endDate)) || moment(endDate).isBefore(moment(r.startDate));
-      });
+      // tslint:disable-next-line:only-arrow-functions max-line-length
+      this.filteredRes = this.allRes.filter(r =>
+        moment(startDate).isAfter(moment(r.endDate)) || moment(endDate).isBefore(moment(r.startDate)));
       this.available = this.allVehicle.filter(v => _.find(this.filteredRes, ['vehicleId', v.id]));
     }
     console.log(this.available);
@@ -85,8 +85,10 @@ export class ResFormComponent implements OnInit {
       };
       this.resService.getResByDates().subscribe(res => {
         this.allRes = res;
+        console.log(res);
         this.vehicleService.getVehicles().subscribe(vs => {
           this.allVehicle = vs;
+          console.log(vs);
           this.getAvailable(this.reservation.startDate, this.reservation.endDate);
         });
       });
@@ -107,7 +109,9 @@ export class ResFormComponent implements OnInit {
           this.selectedVehicle = event.obj;
           break;
         default:
-          console.log('error');
+          this.error = true;
+          this.errMsg = 'Action code not Valid';
+          break;
       }
     } else {
       if (event === 'save') {
@@ -123,7 +127,8 @@ export class ResFormComponent implements OnInit {
       this.resService.update(reservation)
         .subscribe();
     } else {
-      console.log('Error');
+      this.error = true;
+      this.errMsg = `Couldn't update this reservation`;
     }
   }
 
@@ -131,52 +136,34 @@ export class ResFormComponent implements OnInit {
     if (this.checkDates(reservation.startDate, reservation.endDate)) {
       this.resService.add(reservation)
         .subscribe();
-    } else {
-      console.log('Error');
     }
   }
 
   checkDates(startDate, endDate): boolean {
-  const mStartDate = moment(startDate);
-  const mEndDate = moment(endDate);
-  if (mEndDate.isBefore(mStartDate) || mStartDate === mEndDate) {
-    this.errMsg = 'End is before start';
-    this.error = true;
-  }
-    // tslint:disable-next-line:only-arrow-functions
-  const test = _.find(this.allRes, function(r): any {
-    return mStartDate.isBefore(moment(r.endDate)) && mEndDate.isAfter(moment(r.endDate));
-  });
-  if (test.length > 0) {
-    this.errMsg = 'There are other reservations by the same dates';
-    this.error = true;
-  }
-  if (mStartDate.isBefore(moment(new Date()).add(1, 'days'))) {
-    this.errMsg = 'Dates are before today + 2';
-    this.error = true;
-  }
-  return !this.error;
-}
-
-  /*checkDates(reservation: ReservationClass): boolean {
-    let noError = true;
-    let message = 'No errors';
-    const mStartDate = moment(reservation.startDate);
-    const mEndDate = moment(reservation.endDate);
+    console.log(this.error);
+    const mStartDate = moment(startDate);
+    const mEndDate = moment(endDate);
     if (mEndDate.isBefore(mStartDate) || mStartDate === mEndDate) {
-      message = 'End is before start';
-      noError = false;
+      this.errMsg = 'End is before start';
+      this.error = true;
     }
-    _.find(this.available, function())
-      message = 'There are other reservations by the same dates';
-      noError = false;
-    if (mStartDate.isBefore(moment(new Date()).add(1, 'days'))) {
-      message = 'Dates are before today + 2';
-      noError = false;
+    if (this.allRes.length > 0) {
+        // tslint:disable-next-line:only-arrow-functions
+      const test = _.find(this.allRes, function(r): any {
+        return mStartDate.isBefore(moment(r.endDate)) && mEndDate.isAfter(moment(r.endDate));
+      });
+      if (test !== undefined) {
+        this.errMsg = 'There are other reservations by the same dates';
+        this.error = true;
+      }
+      if (mStartDate.isBefore(moment(new Date()).add(1, 'days'))) {
+        this.errMsg = 'Dates are before today + 2';
+        this.error = true;
+      }
     }
-    console.log(message);
-    return noError;
-  }*/
+    console.log(!this.error);
+    return !this.error;
+  }
 
   back(): void {
     if (this.action === 'add') {

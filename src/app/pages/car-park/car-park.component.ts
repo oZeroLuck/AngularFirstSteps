@@ -4,7 +4,6 @@ import { VehicleClass } from '../../resources/models/vehicle-class';
 import { VehicleService } from '../../resources/services/model-services/vehicle.service';
 import { ActionWrapper } from '../../resources/models/action-wrapper';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable } from 'rxjs';
 import { CustomerVehicleTable } from '../../resources/custom-configs/table-cfg/table-customer-vehicle-config';
 import { ReservationsService } from '../../resources/services/model-services/reservations.service';
 import * as _ from 'lodash';
@@ -28,13 +27,11 @@ export class CarParkComponent implements OnInit {
     private route: ActivatedRoute) {}
 
   ngOnInit(): void {
-    // this.error = false;
     this.getVehicles();
   }
 
   getVehicles(): void {
     this.vehicleService.getVehicles().subscribe(vs => this.vehicles = vs);
-    console.log(this)
   }
 
   dispatch($event: ActionWrapper): void {
@@ -61,7 +58,6 @@ export class CarParkComponent implements OnInit {
     this.resService.getResByVehicle(vehicle.id).subscribe(x => {
       // tslint:disable-next-line:only-arrow-functions
       reservation = _.filter(x, function(o): any { return o.status === 'approved'; });
-      console.log(x);
       this.checkUndefined(reservation, vehicle);
     });
   }
@@ -75,10 +71,7 @@ export class CarParkComponent implements OnInit {
   }
 
   checkUndefined(object: any, vehicle: VehicleClass): void {
-    console.log('checking' + object);
-    console.log(object.length < 1);
     if (object.length < 1) {
-      console.log('deleting');
       this.vehicleService.delete(vehicle)
         .subscribe();
       this.error = false;

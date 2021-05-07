@@ -38,14 +38,10 @@ export class AdminHomepageComponent implements OnInit, OnChanges {
   }
 
   getUsers(): void {
-    this.usersService.getUsers().subscribe(us => {
-      console.log(us);
-      this.users = us;
-    });
+    this.usersService.getUsers().subscribe(us => this.users = us);
   }
 
   dispatch($event: ActionWrapper): void {
-    console.log($event.action);
     switch ($event.action) {
       case 'add':
         this.router.navigate(['./customer/add'], {relativeTo: this.route});

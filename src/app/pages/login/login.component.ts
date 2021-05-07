@@ -49,10 +49,8 @@ export class LoginComponent implements OnInit {
     window.sessionStorage.setItem('role', this.tokenStorage.getUser().role);
     window.sessionStorage.setItem('id', this.tokenStorage.getUser().id);
     if (window.sessionStorage.getItem('role') === 'ROLE_ADMIN') {
-      console.log('Admin here');
       this.router.navigate(['../homepage/customers'], {relativeTo: this.route});
     } else {
-      console.log('Customer here');
       this.router.navigate(['../homepage/customers/reservations/' + window.sessionStorage.getItem('id')], {relativeTo: this.route});
     }
   }
