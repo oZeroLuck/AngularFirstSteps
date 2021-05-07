@@ -4,12 +4,13 @@ import { ReservationClass } from '../../models/reservation-class';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, tap, map} from 'rxjs/operators';
 import * as moment from 'moment';
+import {ResEdit} from '../../models/res-edit';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ReservationsService {
-  private reservationUrl = 'api/reservationList';
+  private reservationUrl = 'http://localhost:8050/reservation';
 
   httpOptions = {
     headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -18,7 +19,7 @@ export class ReservationsService {
   constructor(private http: HttpClient) { }
 
   getAll(): Observable<ReservationClass[]> {
-    return this.http.get<ReservationClass[]>(this.reservationUrl).pipe(
+    return this.http.get<ReservationClass[]>(`${this.reservationUrl}/getAll`, this.httpOptions).pipe(
       tap(_ => console.log(`Fetched all reservations`)),
       catchError(this.handleError<ReservationClass>(`getAll`))
     );
@@ -33,21 +34,17 @@ export class ReservationsService {
   }
 
   getResByVehicle(id: number): Observable<ReservationClass[]> {
-    const url = `${this.reservationUrl}/?vehicleId=${id}`;
+    const url = `${this.reservationUrl}/${id}`;
     return this.http.get<ReservationClass[]>(url).pipe(
       tap(_ => console.log(`Fetched reservations of vehicleId = ${id}`)),
       catchError(this.handleError<ReservationClass>(`getReservations with vehicleId`))
     );
   }
 
-  getResByDates(startDate: string, endDate: string): Observable<ReservationClass[]> {
-    return this.http.get<ReservationClass[]>(this.reservationUrl).pipe(
-      map((o) => o.filter(res => {
-        if (!(moment(res.startDate).subtract(1, 'day').isBefore(endDate)
-              && moment(startDate).add(1, 'day').isBefore(res.endDate))) {
-          return res;
-        }
-      }))
+  getResByDates(): Observable<ResEdit[]> {
+    return this.http.get<ResEdit[]>(`${this.reservationUrl}/getReserved`, this.httpOptions).pipe(
+      tap(_ => console.log(`Fetched reservations after today`)),
+      catchError(this.handleError<ReservationClass>(`Res by dates`))
     );
   }
 

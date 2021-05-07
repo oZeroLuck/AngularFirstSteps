@@ -10,6 +10,7 @@ import { NewResTable } from '../../resources/custom-configs/table-cfg/table-new-
 import { BackBtn } from '../../resources/custom-configs/buttons/back-btn';
 import { SaveBtn } from '../../resources/custom-configs/buttons/save-btn';
 import { EditResTable } from '../../resources/custom-configs/table-cfg/table-edit-res';
+import { ResEdit } from '../../resources/models/res-edit';
 
 
 @Component({
@@ -27,6 +28,9 @@ export class ResFormComponent implements OnInit {
 
   currentUser: string;
   reservation: ReservationClass;
+  allRes: ResEdit[];
+  filteredRes: ResEdit[];
+  allVehicle: VehicleClass[];
   action: string;
   minDate: string;
 
@@ -47,6 +51,19 @@ export class ResFormComponent implements OnInit {
   }
 
   getAvailable(startDate, endDate): void {
+    console.log('Getting available');
+    this.available = [];
+    if (moment(startDate).isBefore(moment(endDate))) {
+      // tslint:disable-next-line:only-arrow-functions
+      this.filteredRes = _.filter(this.allRes, function(r): any {
+        return moment(startDate).isAfter(moment(r.endDate)) || moment(endDate).isBefore(moment(r.startDate));
+      });
+      this.available = this.allVehicle.filter(v => _.find(this.filteredRes, ['vehicleId', v.id]));
+    }
+    console.log(this.available);
+  }
+
+  /*getAvailable(startDate, endDate): void {
     this.available = [];
     if (moment(startDate).isBefore(moment(endDate))) {
       this.resService.getResByDates(startDate, endDate).subscribe(x => {
@@ -56,9 +73,9 @@ export class ResFormComponent implements OnInit {
     } else {
       this.error = true;
     }
-  }
+  }*/
 
-  getAvailableVehicles(ids: number[]): void {
+  /*getAvailableVehicles(ids: number[]): void {
     // tslint:disable-next-line:prefer-for-of
     for (let i = 0; i < ids.length; i++ ) {
       this.vehicleService.getById(ids[i]).subscribe(
@@ -66,6 +83,10 @@ export class ResFormComponent implements OnInit {
       );
     }
     this.error = false;
+  }*/
+
+  getAll(): void {
+    this.resService.getResByDates().subscribe(res => this.allRes = res);
   }
 
   getReservation(): void {
@@ -81,7 +102,6 @@ export class ResFormComponent implements OnInit {
           );
         });
     } else {
-      console.log('New class');
       this.reservation = {
         id: null,
         userId: parseInt(this.currentUser, 10),
@@ -90,7 +110,13 @@ export class ResFormComponent implements OnInit {
         endDate: moment(new Date()).add(3, 'days').format('YYYY-MM-DD'),
         status: 'pending'
       };
-      this.getAvailable(this.reservation.startDate, this.reservation.endDate);
+      this.resService.getResByDates().subscribe(res => {
+        this.allRes = res;
+        this.vehicleService.getVehicles().subscribe(vs => {
+          this.allVehicle = vs;
+          this.getAvailable(this.reservation.startDate, this.reservation.endDate);
+        });
+      });
       this.minDate = this.reservation.startDate;
     }
   }
@@ -146,11 +172,11 @@ export class ResFormComponent implements OnInit {
       message = 'End is before start';
       noError = false;
     }
-    if (this.resService.getResByDates(reservation.startDate, reservation.endDate).pipe(
-      (rs) => _.find(rs, ['vehicleId', reservation.vehicleId]))) {
+    /*if (
+        _.find(this.available, ['vehicleId', reservation.vehicleId]))) {
       message = 'There are other reservations by the same dates';
       noError = false;
-    }
+    }*/
     if (mStartDate.isBefore(moment(new Date()).add(1, 'days'))) {
       message = 'Dates are before today + 2';
       noError = false;

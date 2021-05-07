@@ -58,12 +58,16 @@ export class CustomFormComponent implements OnChanges {
   getKeys(): void {
     this.objKeys = Object.keys(this.obj);
     console.log(this.objKeys);
+    // tslint:disable-next-line:only-arrow-functions
+    _.remove(this.objKeys, function(o): any {
+      return o === 'id';
+    });
     if (this.action === 'edit') {
       console.log('I am edit mode');
       // tslint:disable-next-line:only-arrow-functions
       _.remove(this.objKeys, function(o): any {
-        return o === 'id' || o === 'password';
-      });
+        return o === 'password';
+      } );
     }
     console.log(this.objKeys);
     const length = this.objKeys.length;

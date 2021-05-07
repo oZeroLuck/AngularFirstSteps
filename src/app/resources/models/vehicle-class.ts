@@ -5,6 +5,6 @@ export class VehicleClass {
     public type: string,
     public brand: string,
     public model: string,
-    public regYear: number
+    public registrationYear: number
   ) { }
 }

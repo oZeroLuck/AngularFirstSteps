@@ -38,7 +38,10 @@ export class AdminHomepageComponent implements OnInit, OnChanges {
   }
 
   getUsers(): void {
-    this.usersService.getUsers().subscribe(us => this.users = us);
+    this.usersService.getUsers().subscribe(us => {
+      console.log(us);
+      this.users = us;
+    });
   }
 
   dispatch($event: ActionWrapper): void {

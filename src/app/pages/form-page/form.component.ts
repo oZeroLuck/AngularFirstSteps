@@ -6,6 +6,7 @@ import { EventEmitter } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { VehicleService } from '../../resources/services/model-services/vehicle.service';
 import * as moment from 'moment';
+import {VehicleClass} from '../../resources/models/vehicle-class';
 
 @Component({
   selector: 'app-form',
@@ -46,9 +47,16 @@ export class FormComponent implements OnInit {
     console.log(this.keys);
     if (action !== 'cancel') {
       for (let i = 1; i < this.keys.length; i++) {
-        if (!this.object[this.keys[i]].trim()) {
-          this.error = true;
-          this.errMsg = 'You must fill the required fields';
+        if (typeof this.object[this.keys[i]] === 'string') {
+          if (!this.object[this.keys[i]].trim()) {
+            this.error = true;
+            this.errMsg = 'You must fill the required fields';
+          }
+        } else {
+          if (this.object[this.keys[i]] === null) {
+            this.error = true;
+            this.errMsg = 'You must fill the required fields';
+          }
         }
       }
       if (!this.error) {
@@ -77,11 +85,12 @@ export class FormComponent implements OnInit {
         break;
       case 'vehicle':
         this.classService = this.vehicleService;
-        this.object = {plate: '', brand: '', model: '', regYear: null};
+        this.object = new VehicleClass(null, '', '', '', '', null);
         break;
       default:
         console.log('Ops');
     }
+    console.log(this.object);
     this.keys = Object.keys(this.object);
     console.log(this.keys);
   }
@@ -94,7 +103,7 @@ export class FormComponent implements OnInit {
     const id = Number(this.route.snapshot.paramMap.get('id'));
     if (id !== 0) {
       this.classService.getById(id)
-        .subscribe(user => this.object = user);
+        .subscribe(obj => this.object = obj);
     }
   }
 

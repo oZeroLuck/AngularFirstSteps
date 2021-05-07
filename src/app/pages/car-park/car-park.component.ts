@@ -34,6 +34,7 @@ export class CarParkComponent implements OnInit {
 
   getVehicles(): void {
     this.vehicleService.getVehicles().subscribe(vs => this.vehicles = vs);
+    console.log(this)
   }
 
   dispatch($event: ActionWrapper): void {
@@ -66,7 +67,7 @@ export class CarParkComponent implements OnInit {
   }
 
   currentUserRole(): boolean {
-    return sessionStorage.getItem('role') === 'ADMIN';
+    return sessionStorage.getItem('role') === 'ROLE_ADMIN';
   }
 
   resetError(event: boolean): void {

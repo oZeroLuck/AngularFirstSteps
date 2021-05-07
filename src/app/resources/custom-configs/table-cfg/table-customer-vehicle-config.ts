@@ -1,10 +1,10 @@
 import { CustomTableConfig, MyHeaders, MyOrder, MyPagination, MySearch } from './table-config';
 
 const TheHeaders: MyHeaders[] = [
-  {key: 'plate', label: 'Licence Plate'},
+  {key: 'licencePlate', label: 'Licence Plate'},
   {key: 'brand', label: 'Brand'},
   {key: 'model', label: 'Model'},
-  {key: 'regYear', label: 'Year of Registration'}
+  {key: 'registrationYear', label: 'Year of Registration'}
 ];
 
 const TheOrder: MyOrder = {

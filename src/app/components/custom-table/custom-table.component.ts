@@ -148,6 +148,7 @@ orderBy(label: string): void {
   }
 
   isDate(value: any, key: string): boolean {
+    console.log(key);
     const datedValue = moment(value);
     if (datedValue.isValid() && isNaN(value)) {
       if (!_.includes(this.dateKeys, key)) {

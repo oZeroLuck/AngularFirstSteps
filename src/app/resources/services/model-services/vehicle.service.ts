@@ -9,7 +9,7 @@ import { catchError, tap } from 'rxjs/operators';
 })
 
 export class VehicleService {
-  private vehicleUrl = 'http://localhost8050/vehicle';
+  private vehicleUrl = 'http://localhost:8050/vehicle';
 
   httpOptions = {
     headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -18,7 +18,7 @@ export class VehicleService {
   constructor(private http: HttpClient) { }
 
   getVehicles(): Observable<VehicleClass[]> {
-    return this.http.get<VehicleClass[]>(`${this.vehicleUrl}/get/all`)
+    return this.http.get<VehicleClass[]>(`${this.vehicleUrl}/get/all`, this.httpOptions)
       .pipe(
         tap(_ => console.log('Fetched Vehicles')),
         catchError(this.handleError<VehicleClass[]>('getVehicles', []))

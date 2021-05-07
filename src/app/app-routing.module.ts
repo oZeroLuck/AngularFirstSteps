@@ -15,7 +15,7 @@ import { AdminAuthGuard } from './resources/services/authentication/admin-auth-g
 import { BasicAuthGuard } from './resources/services/authentication/basic-auth-guard.service';
 
 const routes: Routes = [
-  {path: '', redirectTo: '/test/Mark', pathMatch: 'full'},
+  {path: '', redirectTo: '/login', pathMatch: 'full'},
   {path: 'login', component: LoginComponent},
   {path: 'dashboard', component: NavBarComponent, canActivate: [BasicAuthGuard]},
   {path: 'homepage/customers', canActivate: [AdminAuthGuard],
