@@ -13,7 +13,7 @@ const TheHeaders: MyHeaders[] = [
 ];
 
 const TheOrder: MyOrder = {
-  defaultColumn: 'name',
+  defaultColumn: 'firstName',
   orderType: 'ascending'
 };
 

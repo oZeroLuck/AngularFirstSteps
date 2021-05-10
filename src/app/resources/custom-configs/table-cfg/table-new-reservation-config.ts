@@ -9,12 +9,12 @@ const TheHeaders: MyHeaders[] = [
 ];
 
 const TheOrder: MyOrder = {
-  defaultColumn: 'plate',
+  defaultColumn: 'licencePlate',
   orderType: 'ascending'
 };
 
 const TheSearch: MySearch = {
-  columns: ['plate', 'brand', 'model']
+  columns: ['licencePlate', 'brand', 'model']
 };
 
 const ThePagination: MyPagination = {

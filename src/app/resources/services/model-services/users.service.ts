@@ -32,23 +32,12 @@ export class UsersService {
     );
   }
 
-  getByUsername(username: string): Observable<UserClass> {
-    const url = `${this.usersUrl}/login/${username}`;
-    return this.http.get<UserClass>(url).pipe(
-      tap(_ => console.log(`Fetched username=${username}`)),
-      catchError(this.handleError<UserClass>(`User usename=${username}`))
-    );
-  }
-
   add(customer: UserClass): Observable<UserClass> {
-    return this.http.post<UserClass>(`${this.usersUrl}/create`, customer, {headers}).pipe(
-      tap(_ => console.log(`Added new Customer`)),
-      catchError(this.handleError<UserClass>(`Add Customer`))
-    );
+    return this.http.post<UserClass>(`${this.usersUrl}/create`, customer, {headers});
   }
 
   update(user: UserClass): Observable<any> {
-    return this.http.put(`${this.usersUrl}/edit`, user, {headers}).pipe(
+    return this.http.put(`${this.usersUrl}/update`, user, {headers}).pipe(
       tap(_ => console.log(`Updated user w/ id=${user.id}`)),
       catchError(this.handleError(`updateUser id=${user.id}`))
     );
@@ -80,3 +69,10 @@ export class UsersService {
     };
   }
 }
+
+/*
+.pipe(
+      tap(_ => console.log(`Added new Customer`)),
+      catchError(this.handleError<UserClass>(`Add Customer`)),
+    )
+ */

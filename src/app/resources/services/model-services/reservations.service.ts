@@ -5,6 +5,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, tap, map} from 'rxjs/operators';
 import * as moment from 'moment';
 import {ResEdit} from '../../models/res-edit';
+import {ResApproveRequest} from '../../models/res-approve-request';
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +27,7 @@ export class ReservationsService {
   }
 
   getResByCustomer(id: number): Observable<ReservationClass[]> {
-    const url = `http://localhost:8050/reservation/getById/${id}`;
+    const url = `${this.reservationUrl}/getById/${id}`;
     return this.http.get<ReservationClass[]>(url).pipe(
       tap(_ => console.log(`Fetched reservations of userId = ${id}`)),
       catchError(this.handleError<ReservationClass>(`getReservations with userId`))
@@ -62,20 +63,22 @@ export class ReservationsService {
     );
   }
 
+  approve(resRequest: ResApproveRequest): Observable<ResApproveRequest> {
+    return this.http.put(`${this.reservationUrl}/approve`, resRequest, this.httpOptions).pipe(
+      tap(_ => console.log(`Approve reservation`)),
+      catchError(this.handleError<ReservationClass>(`Approve reservation`))
+    );
+  }
+
   delete(res: ReservationClass): Observable<ReservationClass> {
     const url = `${this.reservationUrl}/delete/${res.id}`;
-
-    return this.http.delete<ReservationClass>(url, this.httpOptions)
-      .pipe(
-        tap(_ => console.log(`Deleting res id = ${res.id}`)),
-        catchError(this.handleError<ReservationClass>(`Delete Reservation`))
-      );
+    return this.http.delete<ReservationClass>(url, this.httpOptions);
   }
 
   getResById(resId: string): Observable<ReservationClass> {
-    const url = `${this.reservationUrl}/${resId}`;
+    const url = `${this.reservationUrl}/getRes/${resId}`;
 
-    return this.http.get<ReservationClass>(url).pipe(
+    return this.http.get<ReservationClass>(url, this.httpOptions).pipe(
       tap(_ => console.log(`Fetching resv w/ id = ${resId}`)),
       catchError(this.handleError<ReservationClass>(`Fetch res by Id`))
     );

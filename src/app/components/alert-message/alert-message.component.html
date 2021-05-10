@@ -1,7 +1,10 @@
 <ng-container *ngIf="type === 'error'">
-  <div class="alert alert-danger alert-dismissible fade show">
+  <div class="alert alert-danger d-flex align-items-center alert-dismissible fade show">
     <button type="button" class="close" data-dismiss="alert" (click)="emit()">&times;</button>
-    <strong>Error!</strong><p> {{message}}</p>
+    <span class="material-icons">
+      error
+    </span>
+    <div class="ml-2">{{message}}</div>
   </div>
 </ng-container>
 <ng-container *ngIf="type === 'message'">

@@ -2,19 +2,19 @@ import { CustomTableConfig, MyHeaders, MyOrder, MyPagination, MySearch } from '.
 import { SelectBtn } from '../buttons/select-btn';
 
 const TheHeaders: MyHeaders[] = [
-  {key: 'plate', label: 'Licence Plate'},
+  {key: 'licencePlate', label: 'Licence Plate'},
   {key: 'brand', label: 'Brand'},
   {key: 'model', label: 'Model'},
-  {key: 'regYear', label: 'Year of Registration'}
+  {key: 'registrationYear', label: 'Year of Registration'}
 ];
 
 const TheOrder: MyOrder = {
-  defaultColumn: 'plate',
+  defaultColumn: 'licencePlate',
   orderType: 'ascending'
 };
 
 const TheSearch: MySearch = {
-  columns: ['plate', 'brand', 'model']
+  columns: ['licencePlate', 'brand', 'model', 'registrationYear']
 };
 
 const ThePagination: MyPagination = {

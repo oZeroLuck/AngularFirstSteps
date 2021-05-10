@@ -36,6 +36,7 @@ export class ResFormComponent implements OnInit {
 
   available: VehicleClass[];
   selectedVehicle: VehicleClass;
+  oldVehicle: VehicleClass;
 
   error = false;
   errMsg = 'Start date is equal or after end date';
@@ -50,19 +51,8 @@ export class ResFormComponent implements OnInit {
     this.getReservation();
   }
 
-  getAvailable(startDate, endDate): void {
-    console.log('Getting available');
-    this.available = [];
-    if (this.checkDates(startDate, endDate)) {
-      // tslint:disable-next-line:only-arrow-functions max-line-length
-      this.filteredRes = this.allRes.filter(r =>
-        moment(startDate).isAfter(moment(r.endDate)) || moment(endDate).isBefore(moment(r.startDate)));
-      this.available = this.allVehicle.filter(v => _.find(this.filteredRes, ['vehicleId', v.id]));
-    }
-    console.log(this.available);
-  }
-
   getReservation(): void {
+    this.error = false;
     this.currentUser = this.route.snapshot.paramMap.get('userId');
     this.action = this.route.snapshot.paramMap.get('action');
     if (this.action === 'edit') {
@@ -71,9 +61,17 @@ export class ResFormComponent implements OnInit {
         .subscribe(res => {
           this.reservation = res;
           this.vehicleService.getById(res.vehicleId).subscribe(
-            v => this.selectedVehicle = v
+            v => {
+              this.selectedVehicle = v;
+              this.oldVehicle = v;
+              this.getAll();
+            }
           );
-        });
+        },
+          error => {
+          this.error = true;
+          this.errMsg = error.error;
+          });
     } else {
       this.reservation = {
         id: null,
@@ -83,30 +81,57 @@ export class ResFormComponent implements OnInit {
         endDate: moment(new Date()).add(3, 'days').format('YYYY-MM-DD'),
         status: 'pending'
       };
-      this.resService.getResByDates().subscribe(res => {
-        this.allRes = res;
-        console.log(res);
-        this.vehicleService.getVehicles().subscribe(vs => {
-          this.allVehicle = vs;
-          console.log(vs);
-          this.getAvailable(this.reservation.startDate, this.reservation.endDate);
-        });
-      });
+      this.getAll();
       this.minDate = this.reservation.startDate;
     }
   }
+
+  getAll(): void {
+    this.resService.getResByDates().subscribe(res => {
+      this.allRes = res;
+      console.log(res);
+      this.vehicleService.getVehicles().subscribe(vs => {
+        this.allVehicle = vs;
+        console.log(vs);
+        this.getAvailable(this.reservation.startDate, this.reservation.endDate);
+      });
+    });
+  }
+
+  getAvailable(startDate, endDate): void {
+    console.log('Getting available');
+    this.available = [];
+    if (this.checkDates(startDate, endDate)) {
+      if (this.allRes.length > 0) {
+        this.filteredRes = this.allRes.filter(r =>
+          !moment(startDate).isAfter(moment(r.endDate)) || moment(endDate).isBefore(moment(r.startDate)));
+        console.log('Filtered :', this.filteredRes);
+        this.available = this.allVehicle.filter(v => !_.find(this.filteredRes, ['vehicleId', v.id]));
+        console.log(this.selectedVehicle);
+        _.remove(this.available, ['id', this.selectedVehicle.id]);
+        if (this.oldVehicle !== undefined && this.oldVehicle !== this.selectedVehicle) {
+          this.available.push(this.oldVehicle);
+        }
+      } else {
+        this.available = this.allVehicle;
+      }
+    }
+    console.log('Available :', this.available);
+  }
+
 
   btnAction(event: any): void {
     if (typeof event !== 'string') {
       switch (event.action) {
         case 'book':
           this.reservation.vehicleId = event.obj.id;
+          console.log(this.reservation);
           this.addReservation(this.reservation);
-          this.back();
           break;
         case 'select':
           this.reservation.vehicleId = event.obj.id;
           this.selectedVehicle = event.obj;
+          this.getAvailable(this.reservation.startDate, this.reservation.endDate);
           break;
         default:
           this.error = true;
@@ -115,17 +140,24 @@ export class ResFormComponent implements OnInit {
       }
     } else {
       if (event === 'save') {
-        this.reservation.status = 'pending';
+        this.reservation.status = 'Pending';
         this.updateReservation(this.reservation);
+      } else {
+        this.back();
       }
-      this.back();
     }
   }
 
   updateReservation(reservation: ReservationClass): void {
     if (this.checkDates(reservation.startDate, reservation.endDate)) {
       this.resService.update(reservation)
-        .subscribe();
+        .subscribe(o => {
+          this.back();
+        },
+          error => {
+          this.error = true;
+          this.errMsg = error.error;
+          });
     } else {
       this.error = true;
       this.errMsg = `Couldn't update this reservation`;
@@ -135,29 +167,34 @@ export class ResFormComponent implements OnInit {
   addReservation(reservation: ReservationClass): void {
     if (this.checkDates(reservation.startDate, reservation.endDate)) {
       this.resService.add(reservation)
-        .subscribe();
+        .subscribe(o => {
+          this.back();
+        },
+      error => {
+        this.error = true;
+        this.errMsg = error.error;
+      });
     }
   }
 
   checkDates(startDate, endDate): boolean {
-    console.log(this.error);
     const mStartDate = moment(startDate);
     const mEndDate = moment(endDate);
     if (mEndDate.isBefore(mStartDate) || mStartDate === mEndDate) {
       this.errMsg = 'End is before start';
       this.error = true;
     }
-    if (this.allRes.length > 0) {
+    if (mStartDate.isBefore(moment(new Date()).add(1, 'days'))) {
+      this.errMsg = 'Dates are before today + 2';
+      this.error = true;
+    }
+    if (this.allRes.length > 0 && this.action === 'add') {
         // tslint:disable-next-line:only-arrow-functions
       const test = _.find(this.allRes, function(r): any {
         return mStartDate.isBefore(moment(r.endDate)) && mEndDate.isAfter(moment(r.endDate));
       });
       if (test !== undefined) {
         this.errMsg = 'There are other reservations by the same dates';
-        this.error = true;
-      }
-      if (mStartDate.isBefore(moment(new Date()).add(1, 'days'))) {
-        this.errMsg = 'Dates are before today + 2';
         this.error = true;
       }
     }

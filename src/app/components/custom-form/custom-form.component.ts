@@ -44,7 +44,9 @@ export class CustomFormComponent implements OnChanges {
   ngOnChanges(): void {
     this.rows = [];
     this.getService();
-    this.getKeys();
+    if (this.obj !== undefined) {
+      this.getKeys();
+    }
   }
 
   getService(): void {

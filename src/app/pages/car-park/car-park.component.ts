@@ -27,6 +27,7 @@ export class CarParkComponent implements OnInit {
     private route: ActivatedRoute) {}
 
   ngOnInit(): void {
+    this.error = false;
     this.getVehicles();
   }
 
@@ -73,12 +74,19 @@ export class CarParkComponent implements OnInit {
   checkUndefined(object: any, vehicle: VehicleClass): void {
     if (object.length < 1) {
       this.vehicleService.delete(vehicle)
-        .subscribe();
+        .subscribe(
+          v => {
+            this.getVehicles();
+          },
+          error => {
+            this.error = true;
+            this.errMsg = error.error;
+          }
+        );
       this.error = false;
     } else {
       this.error = true;
       this.errMsg = 'There are reservations for this vehicle :' + vehicle.id;
     }
-    this.getVehicles();
   }
 }

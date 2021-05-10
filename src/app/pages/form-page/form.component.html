@@ -3,5 +3,9 @@
   <ng-container *ngIf="error">
     <app-alert-message [message]="errMsg" [type]="'error'"></app-alert-message>
   </ng-container>
-  <app-custom-form [obj]="object" [objClass]="theClass" [action]="actionType" (emitter)="actionDispatcher($event)"></app-custom-form>
+  <app-custom-form *ngIf="object !== undefined"
+                   [obj]="object" [objClass]="theClass"
+                   [action]="actionType" (emitter)="actionDispatcher($event)">
+
+  </app-custom-form>
 </div>

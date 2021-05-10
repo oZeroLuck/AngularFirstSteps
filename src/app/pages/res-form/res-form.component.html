@@ -1,7 +1,9 @@
 <app-nav-bar></app-nav-bar>
 <div class="container" *ngIf="reservation">
   <app-alert-message *ngIf="error" [message]="errMsg" [type]="'error'" (emitter)="errorReset($event)"></app-alert-message>
+  <div class="card">
   <ng-container *ngIf="action === 'add'; else editHeader">
+    <div class="card-header">New Reservation</div>
     <div class="row mb-3">
       <div class="col">
         <label for="startDate">Start Date</label>
@@ -16,6 +18,8 @@
     </div>
   </ng-container>
   <ng-template #editHeader>
+    <div class="card-header"><h2>Edit Reservation</h2></div>
+    <br>
     <div class="row mb-2 ml-4">
       <div class="col">
         <div class="row mt-4">
@@ -28,9 +32,6 @@
           <input class="form-control" #endDate id="editEndDate" type="date" min="{{minDate}}"
                  [(ngModel)]="reservation.endDate" (ngModelChange)="getAvailable(startDate.value, endDate.value)">
         </div>
-        <div class="d-flex flex-row-reverse mt-2">
-          <app-custom-button [btnType]="editBtn" (emitter)="btnAction($event)"></app-custom-button>
-        </div>
       </div>
       <div class="col">
         <div class="row">
@@ -40,19 +41,32 @@
     </div>
   </ng-template>
   <ng-container *ngIf="action === 'add'; else editBlock">
-    <app-custom-table [tableConfig]="tableConfig" [dataSource]="available" (emitter)="btnAction($event)"></app-custom-table>
+    <app-custom-table class="container mb-2"
+      [tableConfig]="tableConfig"
+      [dataSource]="available"
+      (emitter)="btnAction($event)">
+    </app-custom-table>
   </ng-container>
   <ng-template #editBlock>
-    <app-custom-table [tableConfig]="editConfig" [dataSource]="available" (emitter)="btnAction($event)"></app-custom-table>
+    <app-custom-table class="container mb-2"
+      [tableConfig]="editConfig"
+      [dataSource]="available"
+      (emitter)="btnAction($event)">
+    </app-custom-table>
   </ng-template>
+    <div class="card-footer">
     <div class="row mt-3">
       <div class="col">
         <div class="d-flex flex-row-reverse">
           <app-custom-button [btnType]="backBtn" (emitter)="btnAction($event)"></app-custom-button>
+          <app-custom-button *ngIf="action === 'edit'"
+            [btnType]="editBtn" (emitter)="btnAction($event)">
+          </app-custom-button>
         </div>
       </div>
     </div>
+    </div>
+  </div>
 </div>
-<hr>
 
 

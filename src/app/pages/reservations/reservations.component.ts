@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ReservationsService } from '../../resources/services/model-services/reservations.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ReservationClass } from '../../resources/models/reservation-class';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { ReservationTable } from '../../resources/custom-configs/table-cfg/table-reservation-config';
 import { UsersService } from '../../resources/services/model-services/users.service';
 import { UserClass } from '../../resources/models/user-class';
@@ -12,6 +10,7 @@ import { AdminResTable } from '../../resources/custom-configs/table-cfg/table-ad
 import { AuthenticationService } from '../../resources/services/authentication/authentication.service';
 import {BackBtn} from '../../resources/custom-configs/buttons/back-btn';
 import {Location} from '@angular/common';
+import {ResApproveRequest} from '../../resources/models/res-approve-request';
 
 @Component({
   selector: 'app-reservations',
@@ -45,7 +44,11 @@ export class ReservationsComponent implements OnInit {
 
   getReservations(): void {
     const toInt = parseInt(this.route.snapshot.paramMap.get('userId'), 10);
-    this.resService.getResByCustomer(toInt).subscribe(rs => this.reservations = rs);
+    this.resService.getResByCustomer(toInt)
+      .subscribe(rs => {
+        this.reservations = rs;
+        console.log(rs);
+      });
     this.userService.getById(toInt)
       .subscribe(user => this.user = user);
   }
@@ -60,10 +63,15 @@ export class ReservationsComponent implements OnInit {
         break;
       case 'accept':
         if (this.notPending($event.obj.status)) {
-          $event.obj.status = 'Approved';
-          this.resService.update($event.obj)
-            .subscribe();
-          this.getReservations();
+          const request = new ResApproveRequest($event.obj, 'Approved');
+          this.resService.approve(request)
+            .subscribe(res => {
+              this.getReservations();
+            },
+              error => {
+              this.errMsg = error.error;
+              this.error = true;
+              });
         } else {
           this.error = true;
           this.errMsg = `The reservations status isn't "pending"`;
@@ -72,10 +80,15 @@ export class ReservationsComponent implements OnInit {
       case 'deny':
         if (this.notPending($event.obj.status)) {
           if (confirm('Are you sure?')) {
-          $event.obj.status = 'Denied';
-          this.resService.update($event.obj)
-            .subscribe();
-          this.getReservations();
+            const request = new ResApproveRequest($event.obj, 'Denied');
+            this.resService.approve(request)
+              .subscribe(next => {
+                this.getReservations();
+              },
+                error => {
+                  this.errMsg = error.error;
+                  this.error = true;
+                });
           }
         } else {
           this.error = true;
@@ -85,8 +98,13 @@ export class ReservationsComponent implements OnInit {
       case 'delete':
         if (confirm('Are you sure?')) {
           this.resService.delete($event.obj)
-            .subscribe();
-          this.getReservations();
+            .subscribe(next => {
+              this.getReservations();
+            },
+              error => {
+              this.error = true;
+              this.errMsg = error.error;
+              });
         }
         break;
       default:
@@ -100,7 +118,7 @@ export class ReservationsComponent implements OnInit {
   }
 
   isAdmin(): void {
-    this.currentRole = sessionStorage.getItem('role') === 'ADMIN';
+    this.currentRole = sessionStorage.getItem('role') === 'ROLE_ADMIN';
   }
 
   back(): void {

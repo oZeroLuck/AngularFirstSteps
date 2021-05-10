@@ -6,7 +6,7 @@ import { EventEmitter } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { VehicleService } from '../../resources/services/model-services/vehicle.service';
 import * as moment from 'moment';
-import {VehicleClass} from '../../resources/models/vehicle-class';
+import { VehicleClass } from '../../resources/models/vehicle-class';
 
 @Component({
   selector: 'app-form',
@@ -43,8 +43,6 @@ export class FormComponent implements OnInit {
 
   actionDispatcher(action: string): void {
     this.error = false;
-    console.log(this.object);
-    console.log(this.keys);
     if (action !== 'cancel') {
       for (let i = 1; i < this.keys.length; i++) {
         if (typeof this.object[this.keys[i]] === 'string') {
@@ -62,12 +60,20 @@ export class FormComponent implements OnInit {
       if (!this.error) {
         if (this.actionType === 'add') {
           {
-            this.classService.add(this.object)
-              .subscribe(this.back());
+            this.classService.add(this.object).subscribe(
+                result => {
+                  console.log(result);
+                  this.back();
+                },
+                error => {
+                  console.log(error);
+                });
           }
         } else {
           this.classService.update(this.object)
-            .subscribe(this.back());
+            .subscribe(_ => {
+              this.back();
+            });
         }
       }
     } else {
@@ -81,7 +87,7 @@ export class FormComponent implements OnInit {
       case 'customer':
         this.classService = this.userService;
         this.object = {firstName: '', lastName: '', email: '', username: '' , birthDate: new Date(), password: ''};
-        this.object.birthDate = moment(this.object.birthDate).format('YYYY-MM-DD');
+        this.object.birthDate = moment.utc(this.object.birthDate).format('YYYY-MM-DD');
         break;
       case 'vehicle':
         this.classService = this.vehicleService;

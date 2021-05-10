@@ -38,7 +38,13 @@ export class AdminHomepageComponent implements OnInit, OnChanges {
   }
 
   getUsers(): void {
-    this.usersService.getUsers().subscribe(us => this.users = us);
+    this.usersService.getUsers().subscribe(
+      us => this.users = us,
+      error => {
+          this.error = true;
+          this.errMsg = error.error;
+        }
+      );
   }
 
   dispatch($event: ActionWrapper): void {
@@ -66,6 +72,7 @@ export class AdminHomepageComponent implements OnInit, OnChanges {
 
   delete(user: UserClass): void {
     this.resService.getResByCustomer(user.id).subscribe( rs => {
+        console.log(rs);
         const reservations = _.filter(rs, ['pending', 'approved']);
         this.check(reservations, user);
       });
@@ -76,9 +83,10 @@ export class AdminHomepageComponent implements OnInit, OnChanges {
   }
 
   check(reservations: any, user: UserClass): void {
+    console.log(reservations);
     if (reservations.length < 1) {
       this.usersService.delete(user)
-        .subscribe();
+        .subscribe(o => { this.getUsers(); });
       this.error = false;
     } else {
       this.error = true;
