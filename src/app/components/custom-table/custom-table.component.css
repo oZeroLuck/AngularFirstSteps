@@ -17,3 +17,8 @@ table {
 .align-content-right {
   horiz-align: right;
 }
+
+.vl {
+  border-left: 6px solid lightskyblue;
+  height: 100%;
+}

@@ -119,11 +119,59 @@
       </button>
     </div>
     <div class="d-inline-flex vertical-align">
+      <button type="button" class="btn btn-info" (click)="setCurrentPage(0)"
+              [disabled]="currentPage == 0">
+        1
+      </button>
+      <ng-container *ngIf="linkNumber.length > 1">
+      <ng-container *ngIf="linkNumber.length <= 5; else tooManyBlock">
       <ng-container *ngFor="let pageLink of linkNumber">
-        <button type="button" class="btn btn-info" (click)="setCurrentPage(pageLink - 1)"
+        <button *ngIf="pageLink != 1 && pageLink != linkNumber.length"
+                type="button" class="btn btn-info" (click)="setCurrentPage(pageLink - 1)"
                 [disabled]="!(pageLink != currentPage + 1)">
           {{pageLink}}
         </button>
+      </ng-container>
+      </ng-container>
+      <ng-template #tooManyBlock>
+        <ng-container *ngIf="currentPage < 3; else pipeBlock">
+          <ng-container *ngFor="let pageLink of linkNumber | pageSelector:1:4">
+            <button *ngIf="pageLink != 1 && pageLink != linkNumber.length"
+                    type="button" class="btn btn-info" (click)="setCurrentPage(pageLink - 1)"
+                    [disabled]="!(pageLink != currentPage + 1)">
+              {{pageLink}}
+            </button>
+          </ng-container>
+          <div class="vl mr-2 ml-2"></div>
+        </ng-container>
+        <ng-template #pipeBlock>
+          <div class="vl mr-2 ml-2"></div>
+          <ng-container *ngIf="currentPage > linkNumber.length - 3; else middlePipeBlock">
+            <ng-container *ngFor="let pageLink of linkNumber | pageSelector:linkNumber.length - 4:linkNumber.length - 1">
+              <button *ngIf="pageLink != 1 && pageLink != linkNumber.length"
+                      type="button" class="btn btn-info" (click)="setCurrentPage(pageLink - 1)"
+                      [disabled]="!(pageLink != currentPage + 1)">
+                {{pageLink}}
+              </button>
+            </ng-container>
+          </ng-container>
+          <ng-template #middlePipeBlock>
+            <ng-container *ngFor="let pageLink of linkNumber | pageSelector:currentPage - 1:currentPage + 2">
+              <button *ngIf="pageLink != 1 && pageLink != linkNumber.length"
+                      type="button" class="btn btn-info" (click)="setCurrentPage(pageLink - 1)"
+                      [disabled]="!(pageLink != currentPage + 1)">
+                {{pageLink}}
+              </button>
+            </ng-container>
+            <div class="vl mr-2 ml-2"></div>
+          </ng-template>
+        </ng-template>
+      </ng-template>
+      <button *ngIf="linkNumber.length > 1"
+              type="button" class="btn btn-info" (click)="setCurrentPage(linkNumber.length - 1)"
+              [disabled]="currentPage == linkNumber.length">
+        {{linkNumber.length}}
+      </button>
       </ng-container>
     </div>
     <div class="ml-2">

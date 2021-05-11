@@ -28,6 +28,7 @@ import { CustomFormComponent } from './components/custom-form/custom-form.compon
 import { AlertMessageComponent } from './components/alert-message/alert-message.component';
 import { DecamelfyPipe } from './resources/pipes/decamelfy.pipe';
 import {AuthInterceptService} from './resources/services/authentication/auth-intercept.service';
+import { PageSelectorPipe } from './resources/pipes/page-selector.pipe';
 
 export function tokenGetter(): any {
   return localStorage.getItem('access_token');
@@ -51,7 +52,8 @@ export function tokenGetter(): any {
     ModalBasicComponent,
     CustomFormComponent,
     AlertMessageComponent,
-    DecamelfyPipe
+    DecamelfyPipe,
+    PageSelectorPipe
   ],
   imports: [
     BrowserModule,
