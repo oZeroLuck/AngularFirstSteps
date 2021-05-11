@@ -67,7 +67,7 @@ export class FormComponent implements OnInit {
                   this.back();
                 },
                 error => {
-                  console.log(error);
+                  console.log(error.error);
                 });
           }
         } else {
