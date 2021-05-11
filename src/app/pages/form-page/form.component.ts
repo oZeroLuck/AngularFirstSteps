@@ -60,7 +60,8 @@ export class FormComponent implements OnInit {
       if (!this.error) {
         if (this.actionType === 'add') {
           {
-            this.classService.add(this.object).subscribe(
+            this.classService.add(this.object)
+              .subscribe(
                 result => {
                   console.log(result);
                   this.back();
@@ -85,12 +86,12 @@ export class FormComponent implements OnInit {
     this.theClass = this.route.snapshot.paramMap.get('class');
     switch (this.theClass) {
       case 'customer':
-        this.classService = this.userService;
+        this.classService = this.userService as UsersService;
         this.object = {firstName: '', lastName: '', email: '', username: '' , birthDate: new Date(), password: ''};
         this.object.birthDate = moment.utc(this.object.birthDate).format('YYYY-MM-DD');
         break;
       case 'vehicle':
-        this.classService = this.vehicleService;
+        this.classService = this.vehicleService as VehicleService;
         this.object = new VehicleClass(null, '', '', '', '', null);
         break;
       default:

@@ -1,3 +1,7 @@
 html {
   background-color: #c0e8c5;
 }
+
+.icon-half {
+  transform: scale(0.5);
+}

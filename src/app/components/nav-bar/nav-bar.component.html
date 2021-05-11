@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-sm navbar-dark bg-dark mb-4">
   <div class="container-fluid">
-    <a class="navbar-brand">CarRental</a>
+    <a class="navbar-brand" href="#">CarRental</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -8,14 +8,29 @@
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
           <ng-container *ngIf="currentRole(); else customerBlock">
-            <a class="nav-link" routerLink="/homepage/customers" routerLinkActive="active">Homepage</a>
+            <a class="nav-link" routerLink="/homepage/customers" routerLinkActive="active">
+              <span class="material-icons" style="vertical-align: bottom">
+                home
+              </span>
+              Homepage
+            </a>
           </ng-container>
           <ng-template #customerBlock>
-            <a class="nav-link" routerLink="/homepage/customers/reservations/{{getCustomerId()}}" routerLinkActive="active">Homepage</a>
+            <a class="nav-link" routerLink="/homepage/customers/reservations/{{getCustomerId()}}" routerLinkActive="active">
+              <span class="material-icons" style="vertical-align: bottom">
+                home
+              </span>
+              Homepage
+            </a>
           </ng-template>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/carPark" routerLinkActive="active">Car Park</a>
+          <a class="nav-link" routerLink="/carPark" routerLinkActive="active">
+            <span class="material-icons" style="vertical-align: bottom">
+              directions_car_filled
+            </span>
+            Car Park
+          </a>
         </li>
       </ul>
     </div>
