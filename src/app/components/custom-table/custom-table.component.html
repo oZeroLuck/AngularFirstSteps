@@ -53,7 +53,7 @@
   </div>
   <div class="card-body">
     <ng-container *ngIf="dataSource && dataSource.length > 0; else emptyBlock">
-      <table class="table table-bordered table-striped align-content-end">
+      <table class="table table-bordered table-striped table-responsive-xl align-content-end">
         <tr>
           <th class="clickable" *ngFor="let header of tableConfig.headers" (click)="orderBy(header.key)">
             {{header.label}}
